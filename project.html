@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小黑盒幻想家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+@font-face { font-family: 'Zpix'; src: url('zpix-subset.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  --theme_dark: #171717;
+  --theme_light: #f5e6d3;
+  --theme_gold: #d4a017;
+  --ease-power: cubic-bezier(.86, 0, .07, 1);
+  --ease-smooth: cubic-bezier(.25, .1, .25, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+div { display: flex; }
+body {
+  background: var(--theme_dark);
+  color: var(--theme_light);
+  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===== SCROLLBAR ===== */
+.scroll_progress {
+  position: fixed; left: 0; top: 0;
+  width: .3rem; height: 0%;
+  background: var(--theme_gold);
+  z-index: 9998;
+  transition: none;
+}
+
+/* ===== NAV ===== */
+.project_nav {
+  position: fixed; top: 0; left: 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 3rem;
+  z-index: 100;
+  mix-blend-mode: difference;
+}
+.project_back {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: 1rem;
+  color: var(--theme_light);
+  text-decoration: none;
+  letter-spacing: .1rem;
+  transition: color .3s ease, letter-spacing .3s ease;
+  cursor: pointer;
+}
+.project_back:hover { color: var(--theme_gold); letter-spacing: .2rem; }
+.project_brand {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: 1rem;
+  color: var(--theme_light);
+  text-decoration: none;
+  letter-spacing: .1rem;
+}
+
+/* ===== PAGE ===== */
+.project_page {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+/* ===== HERO ===== */
+.project_hero {
+  width: 100%;
+  height: 100vh;
+  min-height: 40rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 5%;
+}
+.project_hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 60%;
+  background: linear-gradient(transparent, var(--theme_dark));
+  z-index: 1;
+}
+.project_hero_bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: .35;
+  transition: transform 8s ease;
+}
+.project_hero:hover .project_hero_bg {
+  transform: scale(1.05);
+}
+.hero_content {
+  position: relative; z-index: 2;
+  flex-direction: column;
+  gap: .8rem;
+}
+.project_num {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: 12rem;
+  color: transparent;
+  -webkit-text-stroke: .08rem rgba(245,230,211,.15);
+  position: absolute;
+  right: 5%;
+  bottom: 4rem;
+  z-index: 0;
+  line-height: 1;
+}
+.project_title {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: 4.5rem;
+  color: var(--theme_light);
+  letter-spacing: .3rem;
+  line-height: 1.1;
+}
+.project_subtitle {
+  font-size: 1.2rem;
+  color: var(--theme_gold);
+  letter-spacing: .4rem;
+}
+.project_meta {
+  align-items: center;
+  gap: 2rem;
+  margin-top: .5rem;
+}
+.project_date {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .85rem;
+  color: var(--theme_light);
+  opacity: .4;
+  letter-spacing: .2rem;
+}
+.project_count {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .85rem;
+  color: var(--theme_gold);
+  opacity: .6;
+  letter-spacing: .15rem;
+}
+.hero_scroll_hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+  opacity: .3;
+}
+.hero_scroll_hint p {
+  font-size: .7rem;
+  letter-spacing: .15rem;
+  text-transform: uppercase;
+}
+.hero_scroll_line {
+  width: .1rem; height: 3rem;
+  background: var(--theme_light);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: .3; }
+  50% { transform: scaleY(.4); opacity: .8; }
+}
+
+/* ===== DESC ===== */
+.project_desc_section {
+  width: 100%;
+  justify-content: center;
+  padding: 6rem 5%;
+}
+.project_desc {
+  max-width: 50rem;
+  font-size: 1.15rem;
+  line-height: 2.2;
+  color: var(--theme_light);
+  opacity: .6;
+}
+
+/* ===== GALLERY COMMON ===== */
+.project_gallery {
+  width: 90%;
+  max-width: 85rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0 0 4rem;
+}
+
+.gallery_row {
+  width: 100%;
+  gap: 1.2rem;
+}
+
+.gallery_item {
+  position: relative;
+  overflow: hidden;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+.gallery_item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .8s var(--ease-smooth);
+}
+.gallery_item:hover img {
+  transform: scale(1.06);
+}
+.gallery_item::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(23,23,23,.15);
+  transition: background .4s ease;
+}
+.gallery_item:hover::after {
+  background: transparent;
+}
+.gallery_idx {
+  position: absolute;
+  bottom: 1rem; left: 1.2rem;
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .7rem;
+  color: var(--theme_light);
+  opacity: 0;
+  transform: translateY(.5rem);
+  transition: opacity .4s ease, transform .4s ease;
+  z-index: 2;
+  letter-spacing: .1rem;
+}
+.gallery_item:hover .gallery_idx {
+  opacity: .7;
+  transform: translateY(0);
+}
+
+/* ===== EDITORIAL LAYOUT ===== */
+/* Row patterns: full / 2col / 3col / 1+2 / 2+1 */
+.row_full .gallery_item { width: 100%; aspect-ratio: 21/9; }
+.row_2col .gallery_item { width: calc(50% - .6rem); aspect-ratio: 4/3; }
+.row_3col .gallery_item { width: calc(33.333% - .8rem); aspect-ratio: 1/1; }
+.row_1x2 .gallery_item:first-child { width: 55%; aspect-ratio: 3/4; }
+.row_1x2 .gallery_item:nth-child(2) { width: calc(45% - 1.2rem); aspect-ratio: 3/4; }
+.row_2x1 .gallery_item:first-child { width: calc(45% - 1.2rem); aspect-ratio: 4/3; }
+.row_2x1 .gallery_item:nth-child(2) { width: 55%; aspect-ratio: 4/3; }
+.row_1x1x1 .gallery_item:first-child { width: 25%; aspect-ratio: 3/4; }
+.row_1x1x1 .gallery_item:nth-child(2) { width: calc(50% - 2.4rem); aspect-ratio: 3/4; }
+.row_1x1x1 .gallery_item:nth-child(3) { width: 25%; aspect-ratio: 3/4; }
+
+/* ===== SECTION DIVIDER ===== */
+.gallery_divider {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
+  gap: 1.5rem;
+}
+.gallery_divider_line {
+  flex: 1;
+  height: .05rem;
+  background: linear-gradient(90deg, transparent, rgba(245,230,211,.15), transparent);
+}
+.gallery_divider_text {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .7rem;
+  color: var(--theme_gold);
+  opacity: .4;
+  letter-spacing: .2rem;
+}
+
+/* ===== LIGHTBOX ===== */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.95);
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  cursor: pointer;
+}
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: .2rem;
+}
+.lightbox_info {
+  margin-top: 1.2rem;
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .75rem;
+  color: var(--theme_light);
+  opacity: .4;
+  letter-spacing: .15rem;
+}
+.lightbox_close {
+  position: absolute;
+  top: 2rem; right: 2.5rem;
+  font-size: 1.5rem;
+  color: var(--theme_light);
+  cursor: pointer;
+  font-family: 'Zpix', monospace;
+  opacity: .5;
+  transition: opacity .3s ease;
+}
+.lightbox_close:hover { opacity: 1; }
+.lightbox_nav {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  font-size: 2rem;
+  color: var(--theme_light);
+  cursor: pointer;
+  font-family: 'Zpix', monospace;
+  opacity: .3;
+  transition: opacity .3s ease;
+  padding: 2rem;
+  z-index: 10000;
+}
+.lightbox_nav:hover { opacity: .8; }
+.lightbox_prev { left: 1rem; }
+.lightbox_next { right: 1rem; }
+
+/* ===== COLLECTION GRID ===== */
+.collection_grid {
+  width: 90%;
+  max-width: 85rem;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 0 4rem;
+  justify-content: center;
+}
+.collection_card {
+  position: relative;
+  width: calc(50% - 1rem);
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: .4rem;
+  cursor: pointer;
+  border: .1rem solid rgba(245,230,211,.1);
+  transition: border-color .4s ease, transform .4s ease;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.collection_card:hover {
+  border-color: var(--theme_gold);
+  transform: translateY(-.5rem);
+}
+.collection_card_bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform .8s var(--ease-smooth);
+}
+.collection_card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(transparent 30%, rgba(23,23,23,.85));
+  z-index: 1;
+  transition: background .4s ease;
+}
+.collection_card:hover .collection_card_bg { transform: scale(1.08); }
+.collection_card:hover::after { background: linear-gradient(transparent 30%, rgba(23,23,23,.7)); }
+.collection_card_info {
+  position: relative;
+  z-index: 2;
+  flex-direction: column;
+  gap: .4rem;
+  padding: 1.8rem;
+}
+.collection_card_num {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .7rem;
+  color: var(--theme_gold);
+  opacity: .6;
+  letter-spacing: .1rem;
+}
+.collection_card_title {
+  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-size: 1.6rem;
+  color: var(--theme_light);
+  letter-spacing: .15rem;
+}
+.collection_card_desc {
+  font-size: .85rem;
+  color: var(--theme_light);
+  opacity: .5;
+  line-height: 1.6;
+  margin-top: .3rem;
+}
+.collection_card_arrow {
+  position: absolute;
+  top: 1.5rem; right: 1.5rem;
+  font-family: 'Zpix', monospace;
+  font-size: 1.2rem;
+  color: var(--theme_gold);
+  opacity: 0;
+  transform: translateX(-.5rem);
+  transition: opacity .4s ease, transform .4s ease;
+  z-index: 2;
+}
+.collection_card:hover .collection_card_arrow {
+  opacity: .8;
+  transform: translateX(0);
+}
+.collection_card.coming_soon {
+  opacity: .5;
+  cursor: default;
+}
+.collection_card.coming_soon:hover {
+  border-color: rgba(245,230,211,.15);
+  transform: none;
+}
+.collection_card.coming_soon:hover .collection_card_bg { transform: none; }
+.collection_card.coming_soon .collection_card_arrow { display: none; }
+
+@media (max-aspect-ratio: 1/1) {
+  .collection_card { width: 100%; }
+}
+
+/* ===== FOOTER ===== */
+.project_footer {
+  margin-top: 4rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 5%;
+}
+.project_footer_nav {
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.project_footer_nav a {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .85rem;
+  color: var(--theme_light);
+  opacity: .4;
+  text-decoration: none;
+  letter-spacing: .1rem;
+  transition: opacity .3s ease, color .3s ease, letter-spacing .3s ease;
+}
+.project_footer_nav a:hover {
+  opacity: 1;
+  color: var(--theme_gold);
+  letter-spacing: .2rem;
+}
+.project_copyright {
+  font-size: .75rem;
+  color: var(--theme_light);
+  opacity: .2;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-aspect-ratio: 1/1) {
+  .project_nav { padding: 1.5rem; }
+  .project_back, .project_brand { font-size: .85rem; }
+  .project_hero { padding: 4rem 5%; min-height: 30rem; }
+  .project_num { font-size: 7rem; }
+  .project_title { font-size: 2.8rem; }
+  .project_subtitle { font-size: 1rem; letter-spacing: .2rem; }
+  .project_desc_section { padding: 3rem 5%; }
+  .project_desc { font-size: 1rem; line-height: 2; }
+  .project_gallery { width: 95%; gap: .8rem; }
+  .gallery_row { gap: .8rem; }
+  .row_full .gallery_item { aspect-ratio: 16/10; }
+  .row_2col .gallery_item { width: 100%; }
+  .row_3col .gallery_item { width: calc(50% - .4rem); }
+  .row_1x2 .gallery_item:first-child,
+  .row_1x2 .gallery_item:nth-child(2) { width: 100%; }
+  .row_2x1 .gallery_item:first-child,
+  .row_2x1 .gallery_item:nth-child(2) { width: 100%; }
+  .row_1x1x1 .gallery_item:first-child,
+  .row_1x1x1 .gallery_item:nth-child(2),
+  .row_1x1x1 .gallery_item:nth-child(3) { width: calc(50% - .4rem); }
+  .gallery_row { flex-wrap: wrap; }
+  .hero_scroll_hint { display: none; }
+  .collection_card { width: 100%; }
+  .collection_card_title { font-size: 1.3rem; }
+  .collection_card_info { padding: 1.2rem; }
+  .lightbox_close { top: 1rem; right: 1.5rem; }
+  .lightbox_nav { padding: 1rem; font-size: 1.5rem; }
+  .project_footer_nav { gap: 1.5rem; }
+}
+@media (max-aspect-ratio: 3/4) {
+  .project_title { font-size: 2.2rem; letter-spacing: .15rem; }
+  .project_num { font-size: 5rem; }
+  .project_hero { min-height: 25rem; }
+}
+@media (max-aspect-ratio: 1/2) {
+  .project_title { font-size: 2rem; letter-spacing: .1rem; }
+  .project_num { font-size: 4rem; }
+  .row_3col .gallery_item { width: 100%; }
+  .row_1x1x1 .gallery_item:first-child,
+  .row_1x1x1 .gallery_item:nth-child(2),
+  .row_1x1x1 .gallery_item:nth-child(3) { width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="scroll_progress" id="scrollBar"></div>
+
+<div class="project_nav">
+  <a class="project_back" href="index.html">← BACK</a>
+  <a class="project_brand" href="index.html">小黑盒</a>
+</div>
+
+<div class="project_page">
+
+  <div class="project_hero">
+    <div class="project_hero_bg" id="heroBg"></div>
+    <p class="project_num eng" id="projectNum"></p>
+    <div class="hero_content">
+      <p class="project_title eng" id="projectTitle"></p>
+      <p class="project_subtitle" id="projectSubtitle"></p>
+      <div class="project_meta">
+        <p class="project_date eng" id="projectDate"></p>
+        <p class="project_count eng" id="projectCount"></p>
+      </div>
+    </div>
+    <div class="hero_scroll_hint">
+      <p class="eng">scroll</p>
+      <div class="hero_scroll_line"></div>
+    </div>
+  </div>
+
+  <div class="project_desc_section">
+    <p class="project_desc" id="projectDesc"></p>
+  </div>
+
+  <div class="project_gallery" id="projectGallery"></div>
+  <div class="collection_grid" id="collectionGrid" style="display:none"></div>
+
+  <div class="project_footer">
+    <div class="project_footer_nav" id="projectNav"></div>
+    <p class="project_copyright">&copy; 2026 小黑盒幻想家</p>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox_close">×</span>
+  <span class="lightbox_nav lightbox_prev">‹</span>
+  <span class="lightbox_nav lightbox_next">›</span>
+  <img id="lightboxImg" src="" alt="">
+  <p class="lightbox_info" id="lightboxInfo"></p>
+</div>
+
+<script>
+var projects = {
+  photo: {
+    num: '03',
+    title: 'Photography',
+    subtitle: '+ 建筑摄影作品集 +',
+    date: '2019 - 2026',
+    desc: '用镜头捕捉建筑与光影的诗意。每一帧都是空间与时间的对话，记录建筑在自然光线下最真实的表情。',
+    bg: 'zcool-photo/photo-01.jpg',
+    images: [
+      'zcool-photo/photo-01.jpg',
+      'zcool-photo/photo-04.jpg',
+      'zcool-photo/photo-05.jpg',
+      'zcool-photo/photo-06.jpg',
+      'zcool-photo/photo-07.jpg',
+      'zcool-photo/photo-08.jpg',
+      'zcool-photo/photo-09.jpg',
+      'zcool-photo/photo-10.jpg',
+      'zcool-photo/photo-11.jpg',
+      'zcool-photo/photo-12.jpg',
+      'zcool-photo/photo-13.jpg',
+      'zcool-photo/photo-14.jpg',
+      'zcool-photo/photo-15.jpg',
+      'zcool-photo/photo-16.jpg',
+      'zcool-photo/photo-17.jpg',
+      'zcool-photo/photo-18.jpg',
+      'zcool-photo/photo-19.jpg',
+      'zcool-photo/photo-20.jpg',
+      'zcool-photo/photo-21.jpg',
+      'zcool-photo/photo-22.jpg',
+      'zcool-photo/photo-23.jpg',
+      'zcool-photo/photo-24.jpg',
+      'zcool-photo/photo-25.jpg',
+      'zcool-photo/photo-26.jpg',
+      'zcool-photo/photo-27.jpg',
+      'zcool-photo/photo-28.jpg',
+      'zcool-photo/photo-29.jpg',
+      'zcool-photo/photo-30.jpg',
+      'zcool-photo/photo-31.jpg',
+      'zcool-photo/photo-32.jpg',
+      'zcool-photo/photo-33.jpg',
+      'zcool-photo/photo-34.jpg',
+      'zcool-photo/photo-35.jpg',
+      'zcool-photo/photo-36.jpg',
+      'zcool-photo/photo-37.jpg',
+      'zcool-photo/photo-38.jpg',
+      'zcool-photo/photo-39.jpg',
+      'zcool-photo/photo-40.jpg',
+      'zcool-photo/photo-41.jpg',
+      'zcool-photo/photo-42.jpg',
+      'zcool-photo/photo-43.jpg'
+    ],
+    rowPattern: ['full', '2col', '1x2', '1x2', 'full', '2col', '1x2', 'full', '2col', '2col', '1x2', '2col', '2col', '3col', 'full', '2col', '3col', '3col', '3col', '3col']
+  },
+  illustration: {
+    num: '03',
+    title: 'Illustration',
+    subtitle: '+ 绘画作品集 +',
+    date: '2022 - 2026',
+    desc: '绘画是最直接的表达方式。从Q版角色设计到油画风格肖像，从概念场景到动画风插画，每一笔都是想象力的释放与风格的探索。',
+    bg: 'illustration/illust-04.jpg',
+    images: [
+      'illustration/illust-01.png',
+      'illustration/illust-02.png',
+      'illustration/illust-03.png',
+      'illustration/illust-04.jpg',
+      'illustration/illust-05.jpg'
+    ],
+    rowPattern: ['full', '2col', '1x2']
+  },
+  music: {
+    num: '05',
+    title: 'Chiptune Music',
+    subtitle: '+ 芯片音乐创作 +',
+    date: '2025 - 2026',
+    desc: '用8位音符编织旋律。Chiptune 不只是怀旧，它是用最少的资源创造最丰富的情感。像素跳动的每一个音符，都是对经典的致敬和突破。',
+    bg: 'icon-music.png',
+    images: [
+      'portfolio/work-10.jpg', 'portfolio/work-11.jpg',
+      'portfolio/work-12.jpg', 'portfolio/work-13.jpg'
+    ],
+    rowPattern: ['full', '2col']
+  },
+  ui: {
+    num: '01',
+    title: '2026设计作品合集',
+    subtitle: '+ Design Collection 2026 +',
+    date: '2024 - 2026',
+    desc: '止于设计，不止AI。止于设计——是对设计本质的敬畏与坚守；不止AI——是对技术边界的清醒与超越。想了很多，写了不少，删了一些，仅此而已。',
+    bg: 'zcool-games/game-01.jpg',
+    type: 'collection',
+    children: [
+      {
+        id: 'tianwang',
+        num: '01',
+        title: '风调雨顺·四天王',
+        desc: '赛博朋克 × 东方神话概念设计',
+        bg: 'zcool-games/game-01.jpg'
+      },
+      {
+        id: null,
+        num: '02',
+        title: '更多作品即将上线',
+        desc: 'Coming Soon...',
+        bg: ''
+      }
+    ]
+  },
+  tianwang: {
+    num: '01',
+    title: '风调雨顺·四天王',
+    subtitle: '+ 概念设计 · 赛博东方 +',
+    date: '2024 - 2026',
+    desc: '人工智能时代，人类局限于肉体本身的价值逐渐降低，劳动力被智能操控下的机械取代。四大天王作为外星战神代表将其神性核心具象化，与神经网络连接的地球人类智慧相结合，由机械外壳包裹，神力和科技的碰撞结合共同战斗。本系列为概念设计作品，探索赛博朋克与东方神话的融合美学。',
+    bg: 'zcool-games/game-01.jpg',
+    parent: 'ui',
+    images: [
+      'zcool-games/game-01.jpg',
+      'zcool-games/game-02.jpg',
+      'zcool-games/game-03.jpg',
+      'zcool-games/game-04.jpg',
+      'zcool-games/game-05.jpg',
+      'zcool-games/game-06.jpg',
+      'zcool-games/game-07.jpg'
+    ],
+    rowPattern: ['full', 'full', 'full', 'full', 'full', 'full', 'full']
+  }
+};
+
+var rowSizes = { full: 1, '2col': 2, '3col': 3, '1x2': 2, '2x1': 2, '1x1x1': 3 };
+var rowPatternCycle = ['full', '1x2', '3col', '2x1', 'full', '2col', '1x1x1'];
+
+var keys = Object.keys(projects);
+var pid = location.hash.replace('#', '') || 'ui';
+var data = projects[pid];
+if (!data) { data = projects.ui; pid = 'ui'; }
+
+document.title = data.title + ' — 小黑盒幻想家';
+document.getElementById('heroBg').style.backgroundImage = 'url(' + data.bg + ')';
+document.getElementById('projectNum').textContent = data.num;
+document.getElementById('projectTitle').textContent = data.title;
+document.getElementById('projectSubtitle').textContent = data.subtitle;
+document.getElementById('projectDate').textContent = data.date;
+document.getElementById('projectDesc').textContent = data.desc;
+
+// Back button: sub-project goes back to parent collection
+var backBtn = document.querySelector('.project_back');
+if (data.parent) {
+  backBtn.href = 'project.html#' + data.parent;
+  backBtn.textContent = '← ' + projects[data.parent].title;
+  backBtn.onclick = function() { setTimeout(function() { location.reload(); }, 10); };
+}
+
+var allImages = data.images ? data.images.slice() : [];
+
+if (data.type === 'collection') {
+  // Collection view: show sub-project cards
+  document.getElementById('projectCount').textContent = data.children.length + ' projects';
+  document.getElementById('projectGallery').style.display = 'none';
+  var grid = document.getElementById('collectionGrid');
+  grid.style.display = '';
+
+  data.children.forEach(function(child) {
+    var card = document.createElement('div');
+    card.className = 'collection_card' + (child.id ? '' : ' coming_soon');
+
+    var bg = document.createElement('div');
+    bg.className = 'collection_card_bg';
+    if (child.bg) bg.style.backgroundImage = 'url(' + child.bg + ')';
+    else bg.style.background = 'linear-gradient(135deg, #222, #333)';
+    card.appendChild(bg);
+
+    var info = document.createElement('div');
+    info.className = 'collection_card_info';
+    info.innerHTML = '<p class="collection_card_num eng">' + child.num + '</p>' +
+      '<p class="collection_card_title">' + child.title + '</p>' +
+      '<p class="collection_card_desc">' + child.desc + '</p>';
+    card.appendChild(info);
+
+    var arrow = document.createElement('span');
+    arrow.className = 'collection_card_arrow';
+    arrow.textContent = '→';
+    card.appendChild(arrow);
+
+    if (child.id) {
+      card.addEventListener('click', function() {
+        location.hash = child.id;
+        location.reload();
+      });
+    }
+
+    grid.appendChild(card);
+  });
+
+} else {
+  // Gallery view
+  document.getElementById('projectCount').textContent = data.images.length + ' works';
+  document.getElementById('collectionGrid').style.display = 'none';
+
+var gallery = document.getElementById('projectGallery');
+var imgIdx = 0;
+var globalIdx = 0;
+
+function createItem(src, idx) {
+  var item = document.createElement('div');
+  item.className = 'gallery_item';
+  item.dataset.index = idx;
+  var img = document.createElement('img');
+  img.src = src;
+  img.alt = data.title + ' #' + (idx + 1);
+  img.loading = 'lazy';
+  var idxEl = document.createElement('span');
+  idxEl.className = 'gallery_idx eng';
+  idxEl.textContent = (idx + 1 < 10 ? '0' : '') + (idx + 1);
+  item.appendChild(img);
+  item.appendChild(idxEl);
+  return item;
+}
+
+if (data.rowPattern === 'auto-grid') {
+  var patIdx = 0;
+  while (imgIdx < allImages.length) {
+    var pat = rowPatternCycle[patIdx % rowPatternCycle.length];
+    var size = rowSizes[pat];
+    var remaining = allImages.length - imgIdx;
+    if (remaining < size) {
+      if (remaining === 1) pat = 'full';
+      else if (remaining === 2) pat = '2col';
+      else pat = '3col';
+      size = remaining;
+    }
+    var row = document.createElement('div');
+    row.className = 'gallery_row row_' + pat;
+    for (var j = 0; j < size && imgIdx < allImages.length; j++) {
+      row.appendChild(createItem(allImages[imgIdx], globalIdx));
+      imgIdx++; globalIdx++;
+    }
+    gallery.appendChild(row);
+
+    if (patIdx > 0 && patIdx % 4 === 0 && imgIdx < allImages.length) {
+      var divider = document.createElement('div');
+      divider.className = 'gallery_divider';
+      divider.innerHTML = '<div class="gallery_divider_line"></div><span class="gallery_divider_text">' +
+        (imgIdx) + ' / ' + allImages.length + '</span><div class="gallery_divider_line"></div>';
+      gallery.appendChild(divider);
+    }
+    patIdx++;
+  }
+} else {
+  var patterns = data.rowPattern;
+  var pIdx = 0;
+  while (imgIdx < allImages.length) {
+    var pat = patterns[pIdx % patterns.length];
+    var size = rowSizes[pat];
+    var remaining = allImages.length - imgIdx;
+    if (remaining < size) {
+      if (remaining === 1) pat = 'full';
+      else if (remaining === 2) pat = '2col';
+      else pat = '3col';
+      size = remaining;
+    }
+    var row = document.createElement('div');
+    row.className = 'gallery_row row_' + pat;
+    for (var j = 0; j < size && imgIdx < allImages.length; j++) {
+      row.appendChild(createItem(allImages[imgIdx], globalIdx));
+      imgIdx++; globalIdx++;
+    }
+    gallery.appendChild(row);
+    pIdx++;
+  }
+}
+} // end else (gallery view)
+
+// Footer nav
+var nav = document.getElementById('projectNav');
+var idx = keys.indexOf(pid);
+if (idx > 0) {
+  var prev = keys[idx - 1];
+  var a = document.createElement('a');
+  a.href = 'project.html#' + prev;
+  a.textContent = '← ' + projects[prev].title;
+  a.onclick = function() { setTimeout(function() { location.reload(); }, 10); };
+  nav.appendChild(a);
+}
+var home = document.createElement('a');
+home.href = 'index.html';
+home.textContent = 'HOME';
+nav.appendChild(home);
+if (idx < keys.length - 1) {
+  var next = keys[idx + 1];
+  var a2 = document.createElement('a');
+  a2.href = 'project.html#' + next;
+  a2.textContent = projects[next].title + ' →';
+  a2.onclick = function() { setTimeout(function() { location.reload(); }, 10); };
+  nav.appendChild(a2);
+}
+
+// Lightbox with nav
+var lightbox = document.getElementById('lightbox');
+var lightboxImg = document.getElementById('lightboxImg');
+var lightboxInfo = document.getElementById('lightboxInfo');
+var currentLbIdx = 0;
+
+function showLightbox(i) {
+  currentLbIdx = i;
+  lightboxImg.src = allImages[i];
+  lightboxInfo.textContent = (i + 1 < 10 ? '0' : '') + (i + 1) + ' / ' + allImages.length;
+  lightbox.classList.add('active');
+}
+
+gallery.addEventListener('click', function(e) {
+  var item = e.target.closest('.gallery_item');
+  if (!item) return;
+  showLightbox(parseInt(item.dataset.index));
+});
+
+document.querySelector('.lightbox_close').addEventListener('click', function(e) {
+  e.stopPropagation();
+  lightbox.classList.remove('active');
+});
+document.querySelector('.lightbox_prev').addEventListener('click', function(e) {
+  e.stopPropagation();
+  showLightbox((currentLbIdx - 1 + allImages.length) % allImages.length);
+});
+document.querySelector('.lightbox_next').addEventListener('click', function(e) {
+  e.stopPropagation();
+  showLightbox((currentLbIdx + 1) % allImages.length);
+});
+lightbox.addEventListener('click', function(e) {
+  if (e.target === lightbox) lightbox.classList.remove('active');
+});
+document.addEventListener('keydown', function(e) {
+  if (!lightbox.classList.contains('active')) return;
+  if (e.key === 'Escape') lightbox.classList.remove('active');
+  if (e.key === 'ArrowLeft') showLightbox((currentLbIdx - 1 + allImages.length) % allImages.length);
+  if (e.key === 'ArrowRight') showLightbox((currentLbIdx + 1) % allImages.length);
+});
+
+// Scroll progress bar
+var bar = document.getElementById('scrollBar');
+window.addEventListener('scroll', function() {
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.height = (h > 0 ? (window.scrollY / h * 100) : 0) + '%';
+});
+
+// GSAP animations
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.from('.hero_content', {
+  y: 60, opacity: 0, duration: 1.2, delay: .3, ease: 'power3.out'
+});
+gsap.from('.project_num', {
+  x: 80, opacity: 0, duration: 1.5, delay: .5, ease: 'power3.out'
+});
+gsap.from('.project_desc', {
+  y: 30, opacity: 0, duration: .8,
+  scrollTrigger: { trigger: '.project_desc_section', start: 'top 80%' }
+});
+
+document.querySelectorAll('.collection_card').forEach(function(card, i) {
+  gsap.from(card, {
+    y: 60, opacity: 0, duration: .8, delay: i * .15, ease: 'power2.out',
+    scrollTrigger: { trigger: '.collection_grid', start: 'top 85%' }
+  });
+});
+
+document.querySelectorAll('.gallery_row').forEach(function(row) {
+  var items = row.querySelectorAll('.gallery_item');
+  gsap.from(items, {
+    y: 60, opacity: 0, duration: .8, stagger: .15, ease: 'power2.out',
+    scrollTrigger: { trigger: row, start: 'top 85%' }
+  });
+});
+
+document.querySelectorAll('.gallery_divider').forEach(function(d) {
+  gsap.from(d, {
+    opacity: 0, duration: .6,
+    scrollTrigger: { trigger: d, start: 'top 90%' }
+  });
+});
+
+gsap.from('.project_footer', {
+  y: 30, opacity: 0, duration: .8,
+  scrollTrigger: { trigger: '.project_footer', start: 'top 90%' }
+});
+
+window.scrollTo(0, 0);
+history.scrollRestoration = 'manual';
+</script>
+</body>
+</html>

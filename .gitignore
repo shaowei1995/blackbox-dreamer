@@ -1,0 +1,24 @@
+# Unused assets
+anim/
+frames/
+gameboy-frames/
+21/
+cursors/
+zcool-design/
+.netlify/
+node_modules/
+
+# Unused media
+mascot-live.mov
+mascot-live.webm
+mascot-anim.webm
+gameboy-anim.webm
+mascot-anim.mp4
+mascot-live.mp4
+gameboy-anim.mp4
+portfolio-intro.mp4
+portfolio-bg.jpg
+skill-extra.mp4
+
+# Backup
+*.bak
