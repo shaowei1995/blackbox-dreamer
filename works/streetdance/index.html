@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>这！就是街舞 — 小黑盒幻想家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+@font-face { font-family: 'Zpix'; src: url('../../zpix-subset.woff2') format('woff2'); font-display: swap; }
+
+:root {
+  --theme_dark: #0e0e12;
+  --theme_light: #f5e6d3;
+  --theme_gold: #d4a017;
+  --theme_red: #e84545;
+  --ease-power: cubic-bezier(.86,0,.07,1);
+  --ease-smooth: cubic-bezier(.25,.1,.25,1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+div { display: flex; }
+body {
+  background: var(--theme_dark);
+  color: var(--theme_light);
+  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* SCROLL PROGRESS */
+.scroll_progress {
+  position: fixed; left: 0; top: 0;
+  width: .3rem; height: 0%;
+  background: var(--theme_red);
+  z-index: 9998;
+}
+
+/* NAV */
+.project_nav {
+  position: fixed; top: 0; left: 0;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 3rem;
+  z-index: 100;
+  mix-blend-mode: difference;
+}
+.project_back {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .9rem;
+  color: var(--theme_light);
+  text-decoration: none;
+  letter-spacing: .1rem;
+  transition: color .3s ease, letter-spacing .3s ease;
+  cursor: pointer;
+}
+.project_back:hover { color: var(--theme_red); letter-spacing: .2rem; }
+.project_brand {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .9rem;
+  color: var(--theme_light);
+  text-decoration: none;
+  letter-spacing: .1rem;
+}
+
+/* PAGE */
+.project_page {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 8rem;
+}
+
+/* HERO */
+.project_hero {
+  width: 100%;
+  height: 100vh;
+  min-height: 40rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 5%;
+}
+.project_hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 70%;
+  background: linear-gradient(transparent, var(--theme_dark));
+  z-index: 1;
+}
+.hero_bg_reel {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: .3rem;
+  opacity: .22;
+  transition: opacity 1s ease;
+}
+.hero_bg_reel::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, transparent 30%, var(--theme_dark) 80%);
+  z-index: 1;
+}
+.hero_bg_tile {
+  background-size: cover;
+  background-position: center;
+  filter: saturate(.4);
+}
+.hero_content {
+  position: relative; z-index: 2;
+  flex-direction: column;
+  gap: .8rem;
+}
+.hero_eyebrow {
+  font-size: .75rem;
+  color: var(--theme_red);
+  letter-spacing: .4rem;
+  text-transform: uppercase;
+  opacity: .8;
+}
+.project_title {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--theme_light);
+  letter-spacing: .2rem;
+  line-height: 1.15;
+}
+.project_subtitle {
+  font-size: 1rem;
+  color: var(--theme_gold);
+  letter-spacing: .4rem;
+}
+.project_meta {
+  align-items: center;
+  gap: 2rem;
+  margin-top: .5rem;
+}
+.project_date {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .75rem;
+  color: var(--theme_light);
+  opacity: .35;
+  letter-spacing: .2rem;
+}
+.project_tag {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .7rem;
+  color: var(--theme_red);
+  border: .05rem solid var(--theme_red);
+  padding: .3rem .7rem;
+  opacity: .7;
+  letter-spacing: .1rem;
+}
+.hero_scroll_hint {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+  opacity: .25;
+}
+.hero_scroll_hint p { font-size: .65rem; letter-spacing: .15rem; }
+.hero_scroll_line {
+  width: .1rem; height: 3rem;
+  background: var(--theme_light);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%,100%{transform:scaleY(1);opacity:.3} 50%{transform:scaleY(.4);opacity:.8}
+}
+
+/* INTRO TEXT */
+.project_intro {
+  width: 90%; max-width: 60rem;
+  padding: 5rem 0 3rem;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.intro_label {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .65rem;
+  color: var(--theme_red);
+  letter-spacing: .3rem;
+  opacity: .5;
+}
+.intro_text {
+  font-size: 1.1rem;
+  line-height: 2.3;
+  color: var(--theme_light);
+  opacity: .55;
+}
+
+/* SECTION HEADER */
+.section_header {
+  width: 90%; max-width: 85rem;
+  align-items: center;
+  gap: 2rem;
+  padding: 4rem 0 2rem;
+}
+.section_line {
+  flex: 1; height: .05rem;
+  background: linear-gradient(90deg, rgba(232,69,69,.3), transparent);
+}
+.section_title {
+  font-family: 'Zpix', 'Press Start 2P', monospace;
+  font-size: .75rem;
+  color: var(--theme_red);
+  letter-spacing: .3rem;
+  opacity: .6;
+  white-space: nowrap;
+}
+
+/* GALLERY */
+.project_gallery {
+  width: 90%; max-width: 85rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0 0 4rem;
+}
+.gallery_row {
+  width: 100%;
+  gap: 1.2rem;
+}
+.gallery_item {
+  position: relative;
+  overflow: hidden;
+  border-radius: .2rem;
+  cursor: pointer;
+}
+.gallery_item img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform .8s var(--ease-smooth);
+}
+.gallery_item:hover img { transform: scale(1.06); }
+.gallery_item::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(14,14,18,.15);
+  transition: background .4s ease;
+}
+.gallery_item:hover::after { background: transparent; }
+.gallery_idx {
+  position: absolute;
+  bottom: 1rem; left: 1.2rem;
+  font-family: 'Zpix','Press Start 2P',monospace;
+  font-size: .65rem;
+  color: var(--theme_light);
+  opacity: 0;
+  transform: translateY(.5rem);
+  transition: opacity .4s ease, transform .4s ease;
+  z-index: 2;
+  letter-spacing: .1rem;
+}
+.gallery_item:hover .gallery_idx { opacity: .6; transform: translateY(0); }
+
+/* Row layouts */
+.row_full .gallery_item { width: 100%; aspect-ratio: 21/9; }
+.row_2col .gallery_item { width: calc(50% - .6rem); aspect-ratio: 4/3; }
+.row_3col .gallery_item { width: calc(33.333% - .8rem); aspect-ratio: 3/4; }
+.row_1x2 .gallery_item:first-child { width: 55%; aspect-ratio: 3/4; }
+.row_1x2 .gallery_item:nth-child(2) { width: calc(45% - 1.2rem); aspect-ratio: 3/4; }
+.row_2x1 .gallery_item:first-child { width: calc(45% - 1.2rem); aspect-ratio: 4/5; }
+.row_2x1 .gallery_item:nth-child(2) { width: 55%; aspect-ratio: 4/5; }
+
+/* S4 toys — square cards */
+.toys_grid {
+  width: 90%; max-width: 85rem;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  padding: 0 0 4rem;
+}
+.toys_grid .gallery_item {
+  width: calc(25% - .9rem);
+  aspect-ratio: 1/1;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.96);
+  z-index: 9999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  cursor: pointer;
+}
+.lightbox.active { opacity: 1; pointer-events: all; }
+.lightbox img {
+  max-width: 92vw; max-height: 88vh;
+  object-fit: contain; border-radius: .2rem;
+}
+.lightbox_info {
+  margin-top: 1.2rem;
+  font-family: 'Zpix','Press Start 2P',monospace;
+  font-size: .7rem; color: var(--theme_light);
+  opacity: .35; letter-spacing: .15rem;
+}
+.lightbox_close {
+  position: absolute; top: 2rem; right: 2.5rem;
+  font-size: 1.5rem; color: var(--theme_light);
+  cursor: pointer; font-family: 'Zpix',monospace;
+  opacity: .4; transition: opacity .3s ease;
+}
+.lightbox_close:hover { opacity: 1; }
+.lightbox_nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 2rem; color: var(--theme_light);
+  cursor: pointer; font-family: 'Zpix',monospace;
+  opacity: .25; transition: opacity .3s ease;
+  padding: 2rem; z-index: 10000;
+}
+.lightbox_nav:hover { opacity: .8; }
+.lightbox_prev { left: 1rem; }
+.lightbox_next { right: 1rem; }
+
+/* FOOTER */
+.project_footer {
+  width: 90%; max-width: 85rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 0 2rem;
+  border-top: .05rem solid rgba(245,230,211,.08);
+}
+.footer_credit {
+  font-size: .7rem;
+  color: var(--theme_light);
+  opacity: .2;
+  letter-spacing: .15rem;
+  flex-direction: column;
+  gap: .4rem;
+}
+.footer_back_btn {
+  font-family: 'Zpix','Press Start 2P',monospace;
+  font-size: .8rem;
+  color: var(--theme_light);
+  text-decoration: none;
+  letter-spacing: .15rem;
+  border: .05rem solid rgba(245,230,211,.2);
+  padding: .8rem 1.6rem;
+  transition: border-color .3s ease, color .3s ease;
+}
+.footer_back_btn:hover { border-color: var(--theme_red); color: var(--theme_red); }
+
+/* SCROLL ENTRANCE */
+.reveal { opacity: 0; transform: translateY(30px); }
+</style>
+</head>
+<body>
+
+<div class="scroll_progress" id="scrollBar"></div>
+
+<nav class="project_nav">
+  <a class="project_back" href="../../index.html">← BACK</a>
+  <a class="project_brand" href="../../index.html">小黑盒幻想家</a>
+</nav>
+
+<div class="project_page">
+
+  <!-- HERO -->
+  <div class="project_hero">
+    <div class="hero_bg_reel" id="heroBgReel"></div>
+    <div class="hero_content">
+      <p class="hero_eyebrow">DESIGN WORK · 2026</p>
+      <h1 class="project_title">这！就是街舞</h1>
+      <p class="project_subtitle">品牌视觉设计</p>
+      <div class="project_meta">
+        <span class="project_date">2020 — 2023</span>
+        <span class="project_tag">BRANDING</span>
+        <span class="project_tag">VISUAL</span>
+      </div>
+    </div>
+    <div class="hero_scroll_hint">
+      <p>SCROLL</p>
+      <div class="hero_scroll_line"></div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="project_intro reveal">
+    <p class="intro_label">PROJECT OVERVIEW</p>
+    <p class="intro_text">
+      为《这！就是街舞》第三季及第四季制作的品牌视觉设计作品。第三季以嘻哈文化为核心，打造系列海报视觉；第四季聚焦潮玩 IP，设计限定款模型形象，将街舞精神融入潮流玩具语言。
+    </p>
+  </div>
+
+  <!-- SEASON 3 -->
+  <div class="section_header reveal">
+    <div class="section_line"></div>
+    <span class="section_title">第三季 · SEASON THREE · 海报设计</span>
+    <div class="section_line" style="background:linear-gradient(90deg,transparent,rgba(232,69,69,.3))"></div>
+  </div>
+
+  <div class="project_gallery" id="s3Gallery">
+    <!-- Row 1: full width hero poster -->
+    <div class="gallery_row row_full reveal">
+      <div class="gallery_item" data-idx="0" data-src="s3-01.jpg">
+        <img src="s3-01.jpg" alt="这就是街舞第三季海报 01" loading="lazy">
+        <span class="gallery_idx">01 / 09</span>
+      </div>
+    </div>
+    <!-- Row 2: 2 col -->
+    <div class="gallery_row row_2col reveal">
+      <div class="gallery_item" data-idx="1" data-src="s3-02.jpg">
+        <img src="s3-02.jpg" alt="这就是街舞第三季海报 02" loading="lazy">
+        <span class="gallery_idx">02 / 09</span>
+      </div>
+      <div class="gallery_item" data-idx="2" data-src="s3-03.jpg">
+        <img src="s3-03.jpg" alt="这就是街舞第三季海报 03" loading="lazy">
+        <span class="gallery_idx">03 / 09</span>
+      </div>
+    </div>
+    <!-- Row 3: 1+2 layout -->
+    <div class="gallery_row row_1x2 reveal">
+      <div class="gallery_item" data-idx="3" data-src="s3-04.jpg">
+        <img src="s3-04.jpg" alt="这就是街舞第三季海报 04" loading="lazy">
+        <span class="gallery_idx">04 / 09</span>
+      </div>
+      <div class="gallery_item" data-idx="4" data-src="s3-05.jpg">
+        <img src="s3-05.jpg" alt="这就是街舞第三季海报 05" loading="lazy">
+        <span class="gallery_idx">05 / 09</span>
+      </div>
+    </div>
+    <!-- Row 4: 2 col -->
+    <div class="gallery_row row_2col reveal">
+      <div class="gallery_item" data-idx="5" data-src="s3-06.jpg">
+        <img src="s3-06.jpg" alt="这就是街舞第三季海报 06" loading="lazy">
+        <span class="gallery_idx">06 / 09</span>
+      </div>
+      <div class="gallery_item" data-idx="6" data-src="s3-07.jpg">
+        <img src="s3-07.jpg" alt="这就是街舞第三季海报 07" loading="lazy">
+        <span class="gallery_idx">07 / 09</span>
+      </div>
+    </div>
+    <!-- Row 5: 2+1 -->
+    <div class="gallery_row row_2x1 reveal">
+      <div class="gallery_item" data-idx="7" data-src="s3-08.jpg">
+        <img src="s3-08.jpg" alt="这就是街舞第三季海报 08" loading="lazy">
+        <span class="gallery_idx">08 / 09</span>
+      </div>
+      <div class="gallery_item" data-idx="8" data-src="s3-09.jpg">
+        <img src="s3-09.jpg" alt="这就是街舞第三季海报 09" loading="lazy">
+        <span class="gallery_idx">09 / 09</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEASON 4 -->
+  <div class="section_header reveal">
+    <div class="section_line"></div>
+    <span class="section_title">第四季 · SEASON FOUR · 潮玩模型</span>
+    <div class="section_line" style="background:linear-gradient(90deg,transparent,rgba(232,69,69,.3))"></div>
+  </div>
+
+  <div class="toys_grid reveal" id="s4Grid">
+    <div class="gallery_item" data-idx="9" data-src="s4-01.png">
+      <img src="s4-01.png" alt="街舞第四季潮玩模型 01" loading="lazy">
+      <span class="gallery_idx">01 / 04</span>
+    </div>
+    <div class="gallery_item" data-idx="10" data-src="s4-02.png">
+      <img src="s4-02.png" alt="街舞第四季潮玩模型 02" loading="lazy">
+      <span class="gallery_idx">02 / 04</span>
+    </div>
+    <div class="gallery_item" data-idx="11" data-src="s4-03.png">
+      <img src="s4-03.png" alt="街舞第四季潮玩模型 03" loading="lazy">
+      <span class="gallery_idx">03 / 04</span>
+    </div>
+    <div class="gallery_item" data-idx="12" data-src="s4-04.png">
+      <img src="s4-04.png" alt="街舞第四季潮玩模型 04" loading="lazy">
+      <span class="gallery_idx">04 / 04</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="project_footer reveal">
+    <div class="footer_credit">
+      <span>《这！就是街舞》品牌视觉设计</span>
+      <span>© 小黑盒幻想家 · BLACKBOX DREAMER</span>
+    </div>
+    <a class="footer_back_btn" href="../../index.html">← 返回主页</a>
+  </div>
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox_close" id="lbClose">✕</span>
+  <span class="lightbox_nav lightbox_prev" id="lbPrev">‹</span>
+  <img src="" alt="" id="lbImg">
+  <p class="lightbox_info" id="lbInfo"></p>
+  <span class="lightbox_nav lightbox_next" id="lbNext">›</span>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero bg reel — fill tiles with s3 posters
+(function() {
+  var reel = document.getElementById('heroBgReel');
+  var imgs = ['s3-01.jpg','s3-02.jpg','s3-03.jpg','s3-04.jpg','s3-05.jpg','s3-06.jpg','s3-07.jpg','s3-08.jpg','s3-09.jpg'];
+  for (var i = 0; i < 9; i++) {
+    var tile = document.createElement('div');
+    tile.className = 'hero_bg_tile';
+    tile.style.backgroundImage = 'url(' + imgs[i % imgs.length] + ')';
+    reel.appendChild(tile);
+  }
+})();
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var max = document.body.scrollHeight - window.innerHeight;
+  var pct = max > 0 ? (window.scrollY / max * 100) : 0;
+  document.getElementById('scrollBar').style.height = pct + '%';
+}, { passive: true });
+
+// Scroll reveal
+document.querySelectorAll('.reveal').forEach(function(el) {
+  gsap.fromTo(el, { opacity: 0, y: 35 }, {
+    opacity: 1, y: 0, duration: 1,
+    scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+  });
+});
+
+// Lightbox
+var allItems = [];
+document.querySelectorAll('.gallery_item').forEach(function(item) {
+  var idx = parseInt(item.getAttribute('data-idx'));
+  var src = item.getAttribute('data-src');
+  allItems[idx] = src;
+  item.addEventListener('click', function() { openLightbox(idx); });
+});
+
+var lb = document.getElementById('lightbox');
+var lbImg = document.getElementById('lbImg');
+var lbInfo = document.getElementById('lbInfo');
+var currentLb = 0;
+
+function openLightbox(idx) {
+  currentLb = idx;
+  lbImg.src = allItems[idx];
+  lbInfo.textContent = (idx < 9 ? 'SEASON 3 POSTER' : 'SEASON 4 TOY MODEL') + ' — ' + String(idx + 1).padStart(2, '0');
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lb.addEventListener('click', function(e) { if (e.target === lb) closeLightbox(); });
+document.getElementById('lbPrev').addEventListener('click', function(e) {
+  e.stopPropagation();
+  openLightbox((currentLb - 1 + allItems.length) % allItems.length);
+});
+document.getElementById('lbNext').addEventListener('click', function(e) {
+  e.stopPropagation();
+  openLightbox((currentLb + 1) % allItems.length);
+});
+document.addEventListener('keydown', function(e) {
+  if (!lb.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') openLightbox((currentLb - 1 + allItems.length) % allItems.length);
+  if (e.key === 'ArrowRight') openLightbox((currentLb + 1) % allItems.length);
+});
+</script>
+</body>
+</html>
