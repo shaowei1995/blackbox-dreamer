@@ -31,6 +31,9 @@
   --theme_gold: #d4a017;
   --ease-power: cubic-bezier(.45, 0, .55, 1);
   --ease-smooth: cubic-bezier(.25, .1, .25, 1);
+  --ease-reveal: cubic-bezier(.76, 0, .24, 1);
+  --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+  --ease-out-quart: cubic-bezier(.25, 1, .5, 1);
 }
 @media (max-aspect-ratio: 3/2) { * { font-size: 1vmax; } }
 
@@ -266,8 +269,8 @@ a:focus-visible, [onclick]:focus-visible {
   transform: translateX(-101%);
   z-index: -1;
 }
-.contact_btn::before { background: var(--theme_light); transition: transform .4s ease; }
-.contact_btn::after { background: var(--theme_gold); transition: transform .4s ease .1s; }
+.contact_btn::before { background: var(--theme_light); transition: transform .45s var(--ease-reveal); }
+.contact_btn::after { background: var(--theme_gold); transition: transform .45s var(--ease-reveal) .08s; }
 .contact_btn:hover::before, .contact_btn:hover::after { transform: translateX(0); }
 .contact_btn:hover { color: var(--theme_dark); }
 
@@ -279,7 +282,7 @@ a:focus-visible, [onclick]:focus-visible {
   transform: translateY(100%);
   border-top-left-radius: 10rem;
   border-top-right-radius: 10rem;
-  transition: transform .7s var(--ease-power), border-radius .7s ease;
+  transition: transform .8s var(--ease-reveal), border-radius .8s var(--ease-out-expo);
   flex-direction: column;
   justify-content: center; align-items: center;
   background-image:
@@ -303,7 +306,7 @@ a:focus-visible, [onclick]:focus-visible {
   margin-bottom: 1rem;
   opacity: 0;
   transform: translateY(3rem);
-  transition: opacity .5s var(--ease-smooth), transform .5s var(--ease-smooth);
+  transition: opacity .6s var(--ease-out-expo), transform .6s var(--ease-out-expo);
 }
 .menu_overlay.active .menu_sel {
   opacity: 1; transform: translateY(0);
@@ -1335,8 +1338,19 @@ a:focus-visible, [onclick]:focus-visible {
   transition: transform .5s ease;
 }
 .hss_block:hover img, .hss_block:hover video { transform: scale(1.08); }
-.hss_block { transition: box-shadow .4s ease, border-color .4s ease; }
-.hss_block:hover { box-shadow: 0 0 5rem rgba(212,160,23,.2); border-color: rgba(212,160,23,.6); }
+.hss_block {
+  transition: box-shadow .6s var(--ease-out-expo), border-color .2s ease, transform .4s var(--ease-out-quart);
+  animation: hss_breathe 6s ease-in-out infinite;
+}
+@keyframes hss_breathe {
+  0%, 100% { box-shadow: 0 0 3rem rgba(212,160,23,.08); }
+  50% { box-shadow: 0 0 4.5rem rgba(212,160,23,.14); }
+}
+.hss_block:hover {
+  box-shadow: 0 0 5rem rgba(212,160,23,.25);
+  border-color: rgba(212,160,23,.6);
+  transform: translateY(-.3rem);
+}
 
 .home_skills_skill.show .role { opacity: 1; transform: translateX(0); }
 .home_skills_skill.show .title_en { opacity: 1; }
@@ -1480,7 +1494,7 @@ a:focus-visible, [onclick]:focus-visible {
   margin-top: 10rem;
   justify-content: center; align-items: center;
   box-shadow: 0 2rem 6rem rgba(0,0,0,.4);
-  transition: transform .6s var(--ease-smooth);
+  transition: transform .6s var(--ease-out-expo);
 }
 .home_vision_block:hover { transform: scale(1.03) rotate(-1deg); }
 .hvb_corner {
@@ -1660,7 +1674,7 @@ a:focus-visible, [onclick]:focus-visible {
   width: 100%; height: 100%;
   background: var(--theme_light);
   clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
-  transition: clip-path .5s var(--ease-power);
+  transition: clip-path .55s var(--ease-reveal);
   z-index: 0;
 }
 .hp_project:hover::after {
@@ -1677,7 +1691,7 @@ a:focus-visible, [onclick]:focus-visible {
   letter-spacing: calc(var(--scale_nums) * .2rem);
   margin-right: calc(var(--scale_nums) * 2rem);
   flex-shrink: 0;
-  transition: -webkit-text-stroke .5s var(--ease-smooth), color .5s var(--ease-smooth), transform .5s var(--ease-smooth);
+  transition: -webkit-text-stroke .5s var(--ease-out-expo), color .5s var(--ease-out-expo), transform .5s var(--ease-out-expo);
 }
 .hp_project:hover .hpp_num {
   color: var(--theme_gold);
@@ -1784,11 +1798,12 @@ a:focus-visible, [onclick]:focus-visible {
   transform-origin: bottom left;
   overflow: hidden;
   cursor: pointer;
-  transition: transform .4s ease, box-shadow .4s ease;
+  transition: transform .5s var(--ease-out-expo), box-shadow .6s var(--ease-out-expo), border-color .25s ease;
 }
 .hpp_plate:hover {
   z-index: 10;
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.5);
+  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.5), 0 0 2rem rgba(212,160,23,.1);
+  border-color: rgba(212,160,23,.4);
 }
 .hpp_plate img {
   position: relative;
@@ -2389,7 +2404,7 @@ a:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="project.html#illustration" data-color1="#b464dc" data-color2="#6b2d8b" data-tags="Art,Illustration" data-subtitle="HAND-DRAWN ILLUSTRATION WORKS" data-desc="从数字绘画到手绘插画，以独特的笔触和色彩诠释奇幻世界与日常美学。">
-        <div class="sc_card_bg"><img src="illustration/illust-01.png" alt="Illustration" loading="lazy"></div>
+        <div class="sc_card_bg"><img src="art-works/art-05.jpg" alt="Illustration" loading="lazy"></div>
         <span class="sc_pill">Art</span>
         <div class="sc_card_content">
           <p class="sc_card_name">ILLUST</p>
@@ -2439,7 +2454,7 @@ a:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="project.html#illustration" data-color1="#a078c8" data-color2="#5a3080" data-tags="Sketch,Drawing" data-subtitle="FREEHAND SKETCHES & DRAWINGS" data-desc="速写与手绘创作，用最纯粹的线条记录灵感闪现的瞬间，从人物到风景的自由表达。">
-        <div class="sc_card_bg"><img src="illustration/illust-03.png" alt="Sketch" loading="lazy"></div>
+        <div class="sc_card_bg"><img src="art-works/art-10.jpg" alt="Sketch" loading="lazy"></div>
         <span class="sc_pill">Sketch</span>
         <div class="sc_card_content">
           <p class="sc_card_name">SKETCH</p>
@@ -2620,17 +2635,8 @@ a:focus-visible, [onclick]:focus-visible {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2019-2026</p>
   </div>
-  <div class="hp_project" data-img="icon-illustration.png" data-project="illustration">
-    <p class="hpp_num eng">03</p>
-    <div class="hpp_info">
-      <p class="title_en">Illustration</p>
-      <p class="title_zh">+ 绘画作品集 +</p>
-    </div>
-    <span class="hpp_arrow">→</span>
-    <p class="hpp_time">2022-2026</p>
-  </div>
   <div class="hp_project" data-img="icon-music.png" data-project="music">
-    <p class="hpp_num eng">04</p>
+    <p class="hpp_num eng">03</p>
     <div class="hpp_info">
       <p class="title_en">Chiptune Music</p>
       <p class="title_zh">+ 芯片音乐创作 +</p>
@@ -2639,10 +2645,10 @@ a:focus-visible, [onclick]:focus-visible {
     <p class="hpp_time">2025-2026</p>
   </div>
   <div class="hp_project" data-img="icon-portfolio-new.png" data-project="streetdance">
-    <p class="hpp_num eng">05</p>
+    <p class="hpp_num eng">04</p>
     <div class="hpp_info">
-      <p class="title_en">This Is Street Dance</p>
-      <p class="title_zh">+ 这！就是街舞 品牌视觉 +</p>
+      <p class="title_en">Street Dance Visual</p>
+      <p class="title_zh">+ 这就是街舞视觉设计 +</p>
     </div>
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2020-2023</p>
@@ -3022,14 +3028,14 @@ function initAnimations() {
   var heroTl = gsap.timeline({ delay: .1 });
   heroTl.to('.hwm_title > div', {
     clipPath: 'inset(-30% -10% 0% -10%)',
-    stagger: .22,
-    duration: 1.15,
-    ease: 'power2.out'
+    stagger: .25,
+    duration: 1.3,
+    ease: 'power3.out'
   });
 
   // Hero scroll tip — fade in
   gsap.to('#hwScrolltip', {
-    opacity: 1, y: 0, duration: 1.15, ease: 'power2.out', delay: 1.2
+    opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', delay: 1.4
   });
 
   // Hero parallax fade — content fades up and out as user scrolls
@@ -3063,7 +3069,7 @@ function initAnimations() {
   // Showcase cards — staggered entrance with 3D rotation
   gsap.from('.sc_card', {
     y: 80, opacity: 0, rotationY: 15, scale: .9,
-    stagger: .1, duration: 1.15, ease: 'power2.out',
+    stagger: .1, duration: 1.3, ease: 'power3.out',
     scrollTrigger: { trigger: '.home_showcase', start: 'top 75%' }
   });
 
@@ -3081,12 +3087,12 @@ function initAnimations() {
     });
     gsap.from(scTitle.querySelectorAll('span'), {
       y: 40, opacity: 0, rotationX: -90, scale: .7,
-      stagger: .04, duration: 1.15, ease: 'power2.out',
+      stagger: .04, duration: 1.3, ease: 'power3.out',
       scrollTrigger: { trigger: '.home_showcase', start: 'top 80%' }
     });
   }
   gsap.from('.showcase_sub', {
-    y: 15, opacity: 0, duration: 1.15, ease: 'power2.out', delay: .3,
+    y: 15, opacity: 0, duration: 1.3, ease: 'power3.out', delay: .3,
     scrollTrigger: { trigger: '.home_showcase', start: 'top 80%' }
   });
 
@@ -3161,7 +3167,7 @@ function initAnimations() {
   document.querySelectorAll('.section_sep').forEach(function(sep) {
     gsap.from(sep, {
       opacity: 0, scaleX: 0,
-      duration: .8, ease: 'power2.out',
+      duration: 1, ease: 'power3.out',
       scrollTrigger: { trigger: sep, start: 'top 85%' }
     });
   });
@@ -3194,11 +3200,12 @@ function initAnimations() {
     gsap.from(s, {
       x: (i % 2 === 0) ? -80 : 80,
       opacity: 0,
+      rotationY: (i % 2 === 0) ? -4 : 4,
       scrollTrigger: {
         trigger: s,
         start: 'top 85%',
         end: 'top 50%',
-        scrub: 1.5
+        scrub: 1.8
       }
     });
     ScrollTrigger.create({
@@ -3210,7 +3217,7 @@ function initAnimations() {
         if (titleSpans.length) {
           gsap.fromTo(titleSpans,
             { y: 20, opacity: 0, rotationY: -40 },
-            { y: 0, opacity: 1, rotationY: 0, stagger: .03, duration: .5, ease: 'power2.out', delay: .2 }
+            { y: 0, opacity: 1, rotationY: 0, stagger: .03, duration: .6, ease: 'power3.out', delay: .2 }
           );
         }
         var num = s.querySelector('.num');
@@ -3270,7 +3277,7 @@ function initAnimations() {
   document.querySelectorAll('.home_vision_scrolllines').forEach(function(line, i) {
     gsap.from(line, {
       x: i % 2 === 0 ? -40 : 40, opacity: 0,
-      duration: .8, ease: 'power2.out',
+      duration: 1, ease: 'power3.out',
       scrollTrigger: { trigger: line, start: 'top 90%' }
     });
   });
@@ -3279,7 +3286,7 @@ function initAnimations() {
   gsap.utils.toArray('.hp_project').forEach(function(proj, i) {
     gsap.from(proj, {
       y: 40, x: (i % 2 === 0) ? -30 : 30, opacity: 0,
-      duration: 1.15, ease: 'power2.out',
+      duration: 1.3, ease: 'power3.out',
       scrollTrigger: { trigger: proj, start: 'top 88%', once: true }
     });
   });
@@ -3297,7 +3304,7 @@ function initAnimations() {
     var target = fanTargets[i] || {};
     gsap.from(plate, {
       scale: .5, opacity: 0, rotation: 0,
-      duration: 1.15, ease: 'power2.out',
+      duration: 1.3, ease: 'power3.out',
       delay: i * .08,
       scrollTrigger: { trigger: '.home_photos', start: 'top 70%', once: true }
     });
@@ -3312,15 +3319,15 @@ function initAnimations() {
 
   // Contact title — scale up entrance
   gsap.from('.hct_title', {
-    y: 60, scale: .9, opacity: 0, duration: 1.15, ease: 'power2.out',
+    y: 60, scale: .9, opacity: 0, duration: 1.3, ease: 'power3.out',
     scrollTrigger: { trigger: '.home_contact', start: 'top 75%' }
   });
   gsap.from('.hct_item', {
-    y: 25, opacity: 0, stagger: .08, duration: .5, ease: 'power2.out',
+    y: 25, opacity: 0, stagger: .1, duration: .6, ease: 'power3.out',
     scrollTrigger: { trigger: '.home_contact', start: 'top 70%' }
   });
   gsap.from('.hct_float', {
-    scale: 0, rotation: 50, stagger: .12, duration: 1.15, ease: 'power2.out',
+    scale: 0, rotation: 50, stagger: .15, duration: 1.3, ease: 'power3.out',
     scrollTrigger: { trigger: '.home_contact', start: 'top 75%' }
   });
 
@@ -3353,7 +3360,7 @@ function initAnimations() {
       onEnter: function() {
         gsap.fromTo(photosTitle.querySelectorAll('span'),
           { y: 60, opacity: 0, scaleY: 1.4 },
-          { y: 0, opacity: 1, scaleY: 1, stagger: .06, duration: 1.15, ease: 'power2.out' }
+          { y: 0, opacity: 1, scaleY: 1, stagger: .06, duration: 1.3, ease: 'power3.out' }
         );
       },
       once: true
