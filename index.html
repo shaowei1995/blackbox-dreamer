@@ -2434,11 +2434,11 @@ a, button, [onclick], [role="button"] {
 }
 .grid3d_wrap {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: .8rem;
-  padding: 1.5rem 6%;
-  width: 88%;
-  max-width: 72rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .7rem;
+  padding: 1.2rem 5%;
+  width: 92%;
+  max-width: 76rem;
   transform: rotateX(12deg) rotateY(-8deg) rotateZ(1.5deg);
   transform-style: preserve-3d;
   will-change: transform;
@@ -2446,11 +2446,11 @@ a, button, [onclick], [role="button"] {
 }
 .grid3d_card {
   position: relative;
-  aspect-ratio: 16/10;
-  border-radius: .6rem;
+  aspect-ratio: 16/9;
+  border-radius: .5rem;
   overflow: hidden;
   border: 1px solid rgba(71,133,252,.15);
-  box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(71,133,252,.05);
+  box-shadow: 0 6px 24px rgba(0,0,0,.4), 0 0 0 1px rgba(71,133,252,.05);
   transition: transform .4s var(--ease-out-expo), box-shadow .4s ease;
   cursor: pointer;
 }
@@ -2493,7 +2493,7 @@ a, button, [onclick], [role="button"] {
   transform: translateY(0);
 }
 @media (max-width: 768px) {
-  .grid3d_wrap { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+  .grid3d_wrap { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
   .grid3d_section { min-height: 45vh; }
 }
 @media (max-width: 430px) {
@@ -2515,7 +2515,7 @@ a, button, [onclick], [role="button"] {
   .hss_text .title_en_stroke { font-size: 4rem !important; }
   .hp_project { --scale_nums: .9; }
   .home_works_title p { font-size: clamp(3rem, 8vw, 6rem) !important; }
-  .grid3d_wrap { grid-template-columns: repeat(4, 1fr); gap: .9rem; width: 92%; }
+  .grid3d_wrap { grid-template-columns: repeat(5, 1fr); gap: .75rem; width: 94%; }
   .showcase_cylinder { width: min(78vw, 900px); height: min(49vw, 562px); }
   .sc_card { width: min(78vw, 900px); height: min(49vw, 562px); }
   .contact_btn { display: none; }
@@ -3062,56 +3062,45 @@ a, button, [onclick], [role="button"] {
   <div class="grid3d_side_mask right"></div>
   <div class="grid3d_stage" id="grid3dStage">
     <div class="grid3d_wrap" id="grid3dWrap">
-      <!-- Row 1 -->
       <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
         <img src="zcool-games/game-01.jpg" alt="Design" loading="lazy">
         <span class="grid3d_label">Design · 2026</span>
       </div>
       <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
         <img src="zcool-photo/photo-03.jpg" alt="Photography" loading="lazy">
-        <span class="grid3d_label">Photography</span>
-      </div>
-      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
-        <img src="works/streetdance/s3-05.jpg" alt="Street Dance" loading="lazy">
-        <span class="grid3d_label">Street Dance</span>
-      </div>
-      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
-        <img src="zcool-photo/photo-07.jpg" alt="Architecture" loading="lazy">
         <span class="grid3d_label">Architecture</span>
       </div>
-      <!-- Row 2 -->
+      <div class="grid3d_card" onclick="window.location.href='project.html#music'">
+        <img src="art-works/art-15.jpg" alt="Music" loading="lazy">
+        <span class="grid3d_label">Chiptune</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#ott'">
+        <img src="zcool-games/game-04.jpg" alt="OTT" loading="lazy">
+        <span class="grid3d_label">OTT Design</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#ip'">
+        <img src="works/streetdance/s4-01.png" alt="IP Toy" loading="lazy">
+        <span class="grid3d_label">IP · Toy</span>
+      </div>
       <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
-        <img src="zcool-photo/photo-01.jpg" alt="Photography" loading="lazy">
+        <img src="zcool-photo/photo-07.jpg" alt="Photography" loading="lazy">
         <span class="grid3d_label">Photography</span>
       </div>
-      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
-        <img src="works/streetdance/s3-01.jpg" alt="Poster Design" loading="lazy">
-        <span class="grid3d_label">Poster · 2023</span>
-      </div>
       <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
-        <img src="zcool-games/game-03.jpg" alt="Concept Art" loading="lazy">
+        <img src="zcool-games/game-03.jpg" alt="Design" loading="lazy">
         <span class="grid3d_label">Concept Art</span>
-      </div>
-      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
-        <img src="zcool-photo/photo-05.jpg" alt="Photography" loading="lazy">
-        <span class="grid3d_label">Photography</span>
-      </div>
-      <!-- Row 3 -->
-      <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
-        <img src="zcool-games/game-05.jpg" alt="Design" loading="lazy">
-        <span class="grid3d_label">Visual Design</span>
       </div>
       <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
         <img src="zcool-photo/photo-09.jpg" alt="Photography" loading="lazy">
         <span class="grid3d_label">Photography</span>
       </div>
-      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
-        <img src="works/streetdance/s3-03.jpg" alt="Street Dance" loading="lazy">
-        <span class="grid3d_label">Branding</span>
+      <div class="grid3d_card" onclick="window.location.href='project.html#ip'">
+        <img src="works/streetdance/s4-03.png" alt="IP Toy" loading="lazy">
+        <span class="grid3d_label">Model · IP</span>
       </div>
       <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
-        <img src="zcool-games/game-07.jpg" alt="Design" loading="lazy">
-        <span class="grid3d_label">Design · 2024</span>
+        <img src="zcool-games/game-06.jpg" alt="Design" loading="lazy">
+        <span class="grid3d_label">Visual · 2025</span>
       </div>
     </div>
   </div>
@@ -3139,7 +3128,7 @@ a, button, [onclick], [role="button"] {
   <div class="hp_project" data-img="icon-photo-new.png" data-project="photo">
     <p class="hpp_num eng">02</p>
     <div class="hpp_info">
-      <p class="title_en">Photography</p>
+      <p class="title_en">Architecture Photography</p>
       <p class="title_zh">+ 建筑摄影作品集 +</p>
     </div>
     <span class="hpp_arrow">→</span>
@@ -3154,14 +3143,23 @@ a, button, [onclick], [role="button"] {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2025-2026</p>
   </div>
-  <div class="hp_project" data-img="icon-portfolio-new.png" data-project="streetdance">
+  <div class="hp_project" data-img="icon-ui.png" data-project="ott">
     <p class="hpp_num eng">04</p>
     <div class="hpp_info">
-      <p class="title_en">Street Dance Visual</p>
-      <p class="title_zh">+ 这就是街舞视觉设计 +</p>
+      <p class="title_en">OTT Visual Design</p>
+      <p class="title_zh">+ OTT大屏端视觉设计 +</p>
     </div>
     <span class="hpp_arrow">→</span>
-    <p class="hpp_time">2020-2023</p>
+    <p class="hpp_time">2022-2025</p>
+  </div>
+  <div class="hp_project" data-img="icon-portfolio-new.png" data-project="ip">
+    <p class="hpp_num eng">05</p>
+    <div class="hpp_info">
+      <p class="title_en">IP Model Design</p>
+      <p class="title_zh">+ 模型IP潮玩设计 +</p>
+    </div>
+    <span class="hpp_arrow">→</span>
+    <p class="hpp_time">2020-2024</p>
   </div>
 </div>
 
@@ -3472,10 +3470,13 @@ function navTo(id) {
     });
     p.addEventListener('click', function() {
       if (p.dataset.project) {
-        if (p.dataset.project === 'streetdance') {
+        var proj = p.dataset.project;
+        if (proj === 'streetdance') {
           window.location.href = 'works/streetdance/index.html';
+        } else if (proj === 'ott' || proj === 'ip') {
+          window.location.href = 'project.html#ui';
         } else {
-          window.location.href = 'project.html#' + p.dataset.project;
+          window.location.href = 'project.html#' + proj;
         }
       }
     });
