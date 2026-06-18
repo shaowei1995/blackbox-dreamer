@@ -84,6 +84,29 @@ footer a:hover { border-color:var(--accent); color:var(--accent); }
   .g_narrow { width:100%; aspect-ratio:16/9; }
   .g_full { aspect-ratio:16/7; }
 }
+
+/* Image number labels */
+.g_num {
+  position: absolute;
+  top: .6rem; left: .6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .6rem;
+  font-weight: 500;
+  color: rgba(226,240,255,.9);
+  background: rgba(2,3,21,.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: .2rem .5rem;
+  border-radius: .25rem;
+  letter-spacing: .05em;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.g_item:hover .g_num { opacity: 1; }
+/* Always visible on touch devices */
+@media (pointer: coarse) { .g_num { opacity: .7; } }
 </style>
 </head>
 <body>
@@ -106,19 +129,19 @@ footer a:hover { border-color:var(--accent); color:var(--accent); }
 </div>
 
 <div class="gallery" id="gallery">
-  <div class="g_row"><div class="g_item g_full"><img src="002.jpg" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_half"><img src="003.gif" alt="" loading="lazy"></div><div class="g_item g_half"><img src="004.jpg" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_third"><img src="005.gif" alt="" loading="lazy"></div><div class="g_item g_third"><img src="007.jpeg" alt="" loading="lazy"></div><div class="g_item g_third"><img src="008.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_wide"><img src="009.png" alt="" loading="lazy"></div><div class="g_item g_narrow"><img src="010.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_half"><img src="011.png" alt="" loading="lazy"></div><div class="g_item g_half"><img src="012.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_third"><img src="013.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="014.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="015.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_full"><img src="017.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_full"><img src="018.jpeg" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_half"><img src="019.png" alt="" loading="lazy"></div><div class="g_item g_half"><img src="020.jpeg" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_third"><img src="021.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="022.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="023.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_wide"><img src="024.jpeg" alt="" loading="lazy"></div><div class="g_item g_narrow"><img src="025.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_half"><img src="026.png" alt="" loading="lazy"></div><div class="g_item g_half"><img src="027.png" alt="" loading="lazy"></div></div>
-  <div class="g_row"><div class="g_item g_third"><img src="028.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="029.png" alt="" loading="lazy"></div><div class="g_item g_third"><img src="031.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_full"><span class="g_num">#01 · 002.jpg</span><img src="002.jpg" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><span class="g_num">#02 · 003.gif</span><img src="003.gif" alt="" loading="lazy"></div><div class="g_item g_half"><span class="g_num">#03 · 004.jpg</span><img src="004.jpg" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><span class="g_num">#04 · 005.gif</span><img src="005.gif" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#05 · 007.jpeg</span><img src="007.jpeg" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#06 · 008.png</span><img src="008.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_wide"><span class="g_num">#07 · 009.png</span><img src="009.png" alt="" loading="lazy"></div><div class="g_item g_narrow"><span class="g_num">#08 · 010.png</span><img src="010.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><span class="g_num">#09 · 011.png</span><img src="011.png" alt="" loading="lazy"></div><div class="g_item g_half"><span class="g_num">#10 · 012.png</span><img src="012.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><span class="g_num">#11 · 013.png</span><img src="013.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#12 · 014.png</span><img src="014.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#13 · 015.png</span><img src="015.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_full"><span class="g_num">#14 · 017.png</span><img src="017.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_full"><span class="g_num">#15 · 018.jpeg</span><img src="018.jpeg" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><span class="g_num">#16 · 019.png</span><img src="019.png" alt="" loading="lazy"></div><div class="g_item g_half"><span class="g_num">#17 · 020.jpeg</span><img src="020.jpeg" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><span class="g_num">#18 · 021.png</span><img src="021.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#19 · 022.png</span><img src="022.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#20 · 023.png</span><img src="023.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_wide"><span class="g_num">#21 · 024.jpeg</span><img src="024.jpeg" alt="" loading="lazy"></div><div class="g_item g_narrow"><span class="g_num">#22 · 025.png</span><img src="025.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><span class="g_num">#23 · 026.png</span><img src="026.png" alt="" loading="lazy"></div><div class="g_item g_half"><span class="g_num">#24 · 027.png</span><img src="027.png" alt="" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><span class="g_num">#25 · 028.png</span><img src="028.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#26 · 029.png</span><img src="029.png" alt="" loading="lazy"></div><div class="g_item g_third"><span class="g_num">#27 · 031.png</span><img src="031.png" alt="" loading="lazy"></div></div>
 </div>
 
 <footer>
