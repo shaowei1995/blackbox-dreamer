@@ -191,6 +191,7 @@ a:focus-visible, [onclick]:focus-visible {
 .loading_darkblock {
   position: fixed; inset: 0;
   background: var(--theme_dark);
+  will-change: transform, border-radius;
   z-index: 10001;
   overflow: hidden;
   will-change: transform;
@@ -236,6 +237,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-family: 'Zpix', 'Press Start 2P', monospace;
   font-size: 5rem;
   color: var(--theme_gold);
+  will-change: transform, opacity, filter;
   letter-spacing: .5rem;
   text-shadow: 0 0 4rem rgba(0,84,250,.4);
 }
@@ -2724,6 +2726,7 @@ a, button, [onclick], [role="button"] {
 
 /* ===== LOADING PROGRESS ===== */
 .loading_progress {
+  z-index: 10004;
   position: absolute;
   bottom: 3.5rem; left: 50%;
   transform: translateX(-50%);
@@ -3808,19 +3811,33 @@ gsap.ticker.lagSmoothing(0);
     });
   }
   var tl = gsap.timeline({ delay: .1 });
-  tl.from('#loadBrand p', { y: 20, opacity: 0, duration: .5, ease: 'power2.out' })
-  .from('#loadBrand span', { y: 10, opacity: 0, duration: .4, ease: 'power2.out' }, .2)
-  .to('#loadBrand', { opacity: 0, scale: .9, duration: .4, ease: 'power2.in' }, .8)
+  // Phase 1: Brand reveal with scale + glow
+  tl.from('#loadBrand p', { 
+    y: 40, opacity: 0, scale: .8, 
+    duration: .7, ease: 'power3.out' 
+  })
+  .from('#loadBrand span', { 
+    y: 15, opacity: 0, letterSpacing: '-.1rem',
+    duration: .5, ease: 'power3.out' 
+  }, .25)
+  // Phase 2: Brand exits with blur + scale
+  .to('#loadBrand', { 
+    opacity: 0, scale: 1.1, filter: 'blur(10px)',
+    duration: .5, ease: 'power2.in' 
+  }, 1.2)
+  // Phase 3: Cinematic wipe — gold block slides out with curve
   .to('#loadGold', {
     xPercent: 100,
-    duration: .9,
-    ease: 'power4.inOut'
-  }, 1)
+    duration: 1.0,
+    ease: 'expo.inOut'
+  }, 1.4)
+  // Phase 4: Dark block follows with slight delay
   .to('#loadDark', {
     xPercent: 100,
-    duration: .9,
-    ease: 'power4.inOut'
-  }, 1.15)
+    duration: 1.0,
+    ease: 'expo.inOut',
+    borderRadius: '0 0 0 8rem'
+  }, 1.55)
   .set('#loading', { display: 'none' })
   .call(function() { initAnimations(); });
 })();
@@ -4110,13 +4127,28 @@ function navTo(id) {
 // ===== GSAP ANIMATIONS =====
 function initAnimations() {
   // Hero title entrance — line-mask reveal (jiejoe: clip-path wipe from bottom)
-  var heroTl = gsap.timeline({ delay: .1 });
-  heroTl.to('.hwm_title > div', {
+  var heroTl = gsap.timeline({ delay: .15 });
+  // Line 1: sweep reveal from left
+  heroTl.to('.hwm_title > div:nth-child(1)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
-    stagger: .25,
-    duration: 1.3,
-    ease: 'power3.out'
-  });
+    duration: 1.0,
+    ease: 'expo.out'
+  })
+  // Line 2: sweep reveal with offset
+  .to('.hwm_title > div:nth-child(2)', {
+    clipPath: 'inset(-30% -10% 0% -10%)',
+    duration: 1.0,
+    ease: 'expo.out'
+  }, .2)
+  // Line 3: sweep reveal last
+  .to('.hwm_title > div:nth-child(3)', {
+    clipPath: 'inset(-30% -10% 0% -10%)',
+    duration: 1.0,
+    ease: 'expo.out'
+  }, .4)
+  // Blur balls breathe in
+  .from('#blur1', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, 0)
+  .from('#blur2', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, .2);
 
   // Hero scroll tip — word-by-word stagger reveal (jiejoe: text unfolds from nothing)
   (function() {
