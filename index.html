@@ -1104,8 +1104,8 @@ a:focus-visible, [onclick]:focus-visible {
   position: relative;
   width: calc(var(--scale_nums) * 55rem);
   max-width: 90vw;
-  height: calc(var(--scale_nums) * 31rem);
-  border-radius: 2rem;
+  height: calc(var(--scale_nums) * 28rem);
+  border-radius: 1.5rem;
   overflow: hidden;
   margin-top: calc(var(--scale_nums) * 3rem);
   border: none;
@@ -1164,12 +1164,71 @@ a:focus-visible, [onclick]:focus-visible {
 }
 
 /* ===== PORTRAIT ===== */
-.home_portrait {
-  justify-content: center; align-items: center;
-  width: 100%; height: 55rem;
-  margin-bottom: 5rem;
-  position: relative;
+.home_portrait { display: none; }
+
+/* Merged About+Portrait row */
+.hac_media_row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 2rem;
+  width: min(90rem, 92vw);
+  margin: 0 auto 2rem;
+}
+.hac_media_row .hac_video {
+  flex: 1;
+  width: auto;
+  max-width: none;
+  height: calc(var(--scale_nums) * 28rem);
+  border-radius: 1.5rem;
+}
+.hac_portrait_wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  gap: 0;
   overflow: hidden;
+  border-radius: 1.5rem;
+  border: .15rem solid rgba(0,84,250,.2);
+  box-shadow: 0 1rem 5rem rgba(0,0,0,.3);
+  background: var(--theme_dark);
+}
+.hac_portrait_main {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+}
+.hac_portrait_main video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.hac_portrait_textline {
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem .6rem;
+  display: flex;
+}
+.hac_portrait_textline p {
+  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-size: .8rem;
+  font-weight: 900;
+  color: var(--theme_gold);
+  letter-spacing: .2rem;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+  opacity: .7;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) and (orientation: portrait), (max-aspect-ratio: 1/1) {
+  .hac_media_row { flex-direction: column; gap: 1.2rem; }
+  .hac_media_row .hac_video { height: auto; aspect-ratio: 16/9; }
+  .hac_portrait_wrap { height: auto; aspect-ratio: 16/9; }
+  .hac_portrait_textline { display: none; }
 }
 .home_portrait_main {
   position: relative;
@@ -2770,14 +2829,33 @@ a, button, [onclick], [role="button"] {
   <div class="showcase_dots" id="showcaseDots"></div>
 </div>
 
-<!-- About -->
+<!-- About + Portrait (merged) -->
 <div class="home_about" id="about">
   <div class="home_about_content">
     <p class="hac_title eng" text="ABOUT ME">ABOUT ME</p>
-    <div class="hac_video" id="hacVideo">
-      <video autoplay loop muted playsinline preload="auto">
-        <source src="about-animation.mp4" type="video/mp4">
-      </video>
+    <div class="hac_media_row">
+      <div class="hac_video" id="hacVideo">
+        <video autoplay loop muted playsinline preload="auto">
+          <source src="about-animation.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hac_portrait_wrap">
+        <div class="hac_portrait_textline">
+          <div class="hp_cross"></div>
+          <p>小黑盒幻想家</p>
+          <div class="hp_cross small"></div>
+        </div>
+        <div class="hac_portrait_main">
+          <video autoplay loop muted playsinline preload="auto">
+            <source src="gameboy-anim-solid.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="hac_portrait_textline">
+          <div class="hp_cross small"></div>
+          <p>creative portfolio</p>
+          <div class="hp_cross"></div>
+        </div>
+      </div>
     </div>
     <p class="hac_intro" id="hacIntro">这是一个正在做梦的终端机。欢迎访问我的内部世界——这里没有答案，只有持续的生成。游戏、视觉、音乐，是我压缩脑内旅行的三种方式。</p>
     <svg class="hac_line" id="hacLine" viewBox="0 0 800 400">
@@ -2786,25 +2864,7 @@ a, button, [onclick], [role="button"] {
   </div>
 </div>
 
-<!-- Portrait -->
-<div class="home_portrait">
-  <div class="home_portrait_textline">
-    <div class="hp_cross"></div>
-    <p>小黑盒幻想家</p>
-    <div class="hp_cross small"></div>
-  </div>
-  <div class="home_portrait_main">
-    <video autoplay loop muted playsinline preload="auto">
-      <source src="gameboy-anim-solid.mp4" type="video/mp4">
-    </video>
-  </div>
-  <div class="home_portrait_textline">
-    <div class="hp_cross small"></div>
-    <p>creative portfolio</p>
-    <div class="hp_cross"></div>
-  </div>
-  <div class="hp_line" id="hpLine"><div></div></div>
-</div>
+<!-- Portrait (removed, merged into About) -->
 
 <!-- Skills -->
 <div class="home_skills" id="skills">
@@ -3451,21 +3511,13 @@ function initAnimations() {
   })();
 
   // Portrait line — scale in
-  ScrollTrigger.create({
-    trigger: '.home_portrait',
-    start: 'top 60%',
-    onEnter: function() { document.getElementById('hpLine').classList.add('show'); },
-    once: true
-  });
+  // Portrait line animation (now inside About)
+  // ScrollTrigger.create removed — portrait merged into About section
 
-  // Portrait — subtle parallax on scroll
-  gsap.to('.home_portrait_main', {
-    y: -20,
-    scrollTrigger: { trigger: '.home_portrait', start: 'top bottom', end: 'bottom top', scrub: 3 }
-  });
-  gsap.to('.home_portrait_textline', {
-    y: -25,
-    scrollTrigger: { trigger: '.home_portrait', start: 'top bottom', end: 'bottom top', scrub: 3 }
+  // Portrait — subtle parallax (now hac_portrait_main)
+  gsap.to('.hac_portrait_main', {
+    y: -15,
+    scrollTrigger: { trigger: '.home_about', start: 'top bottom', end: 'bottom top', scrub: 3 }
   });
 
   // Section separators — fade in
