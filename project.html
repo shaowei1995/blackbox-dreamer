@@ -753,6 +753,9 @@ if (data.parent) {
   backBtn.onclick = function() { setTimeout(function() { location.reload(); }, 10); };
 }
 
+// Fix: reload page when hash changes (handles browser back from sub-project pages)
+window.addEventListener('hashchange', function() { location.reload(); });
+
 var allImages = data.images ? data.images.slice() : [];
 
 if (data.type === 'collection') {
