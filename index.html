@@ -645,6 +645,7 @@ a:focus-visible, [onclick]:focus-visible {
 
 /* 3D Scene container */
 .showcase_scene {
+  touch-action: pan-y;
   position: relative;
   z-index: 2;
   width: 100%;
@@ -2573,9 +2574,9 @@ a, button, [onclick], [role="button"] {
   .showcase_header { padding: 1.2rem 4%; flex-direction: column; gap: .4rem; }
   .showcase_title { font-size: clamp(1.4rem, 5vw, 2rem); }
   .showcase_sub { font-size: .5rem; }
-  .showcase_cylinder { width: 90vw; height: 56vw; }
-  .sc_card { width: 90vw; height: 56vw; }
-  .sc_card_name { font-size: clamp(1rem, 4vw, 1.5rem); }
+  .showcase_cylinder { width: 88vw; height: 55vw; }
+  .sc_card { width: 88vw; height: 55vw; }
+  .sc_card_name { font-size: clamp(1.1rem, 4.5vw, 1.6rem); }
   .sc_card_desc { font-size: clamp(.6rem, 2vw, .75rem); }
   .sc_btn_view { font-size: .45rem; padding: .35rem .8rem; }
   .sc_pill { font-size: .38rem; padding: .2rem .5rem; }
@@ -2713,6 +2714,124 @@ a, button, [onclick], [role="button"] {
   color: rgba(226,240,255,.3);
 }
 
+
+
+/* R6: Showcase swipe hint on mobile */
+@media (pointer: coarse) {
+  .showcase_sub::after {
+    content: ' 👈 滑动切换';
+    opacity: .6;
+  }
+  .showcase_scene { cursor: grab; }
+}
+
+/* R7: Fix About media row on very small phones */
+@media (max-width: 380px) {
+  .hac_media_row { gap: .6rem; }
+  .hac_media_row .hac_video { height: auto; aspect-ratio: 16/9; }
+  .hac_portrait_wrap { height: auto; aspect-ratio: 16/9; }
+  .hac_intro { font-size: .9rem !important; padding: 0 .8rem !important; }
+}
+
+/* R8: Skills cards better spacing on phones */
+@media (max-width: 768px) and (orientation: portrait) {
+  .hss_text .role { font-size: 1rem; opacity: .5; margin-bottom: .3rem; }
+  .hss_text .num { font-size: 2rem; opacity: .15; position: absolute; right: 0; top: 0; }
+  .hss_text { position: relative; }
+  .hss_block { border-radius: .8rem; }
+}
+
+/* R9: Projects list touch target size */
+@media (max-width: 768px) {
+  .hp_project {
+    min-height: 4.5rem;
+    padding: .8rem 1rem;
+    border-bottom-width: 1px;
+    -webkit-tap-highlight-color: rgba(0,84,250,.1);
+  }
+  .hp_project::after { display: none; }
+  .hp_project:active { background: rgba(0,84,250,.08); }
+}
+
+/* R10: Idea section mobile */
+@media (max-width: 430px) {
+  .home_idea { height: 20rem; border-bottom-left-radius: 3rem; border-bottom-right-radius: 3rem; }
+  .home_idea_container { --scale_nums: .4; }
+  .home_idea_container p:nth-child(1) { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .home_idea_container p:nth-child(2) { font-size: clamp(2.5rem, 8vw, 3.5rem); line-height: 1.1; }
+  .home_idea_container p:nth-child(3) { font-size: clamp(2rem, 7vw, 3rem); }
+}
+
+/* R11: Vision marquee text wrap fix on small screens */
+@media (max-width: 430px) {
+  .hvs_line div, .hvs_line p { white-space: nowrap; font-size: clamp(1.8rem, 6vw, 2.5rem) !important; }
+  .home_vision_scrolllines { height: 3rem; }
+  .home_vision { height: 18rem; }
+  .home_vision_block { width: 9rem; height: 9rem; margin-top: 3.5rem; border-radius: .6rem; }
+}
+
+/* R12: Photos section mobile — smaller plates, avoid overflow */
+@media (max-width: 430px) {
+  .home_photos { height: 30rem; margin-bottom: 2rem; }
+  .hpp_plate { width: 10rem; height: 13rem; border-radius: .8rem; }
+  .home_photos_plates { height: 14rem; }
+  .hpb_title { font-size: clamp(2.5rem, 8vw, 3.5rem); }
+  .photos_tip { font-size: 1rem; }
+  .photos_time { font-size: 1rem; }
+}
+
+/* R13: Contact QR code mobile */
+@media (max-width: 768px) {
+  .hct_qr { width: 7rem; height: 7rem; }
+  .hct_qr_item { padding: .8rem; }
+}
+
+/* R14: Footer messages mobile - always column layout */
+@media (max-width: 768px) {
+  .hbb_messages { flex-direction: column; align-items: center; gap: 1rem; }
+  .hbb_msg { width: 90vw; }
+  .hbb_bottom { flex-direction: column; gap: .8rem; align-items: center; }
+  .hbb_menu { justify-content: center; }
+}
+
+/* R15: Loading animation mobile — smaller text grid */
+@media (max-width: 430px) {
+  .loading_brand p { font-size: 3rem; letter-spacing: .3rem; }
+  .loading_brand span { font-size: .8rem; }
+}
+
+/* R16: Showcase dots larger on touch for tap targets */
+@media (pointer: coarse) {
+  .showcase_dots { gap: .8rem; padding: .8rem 0; }
+  .sc_dot { width: .6rem; height: .6rem; }
+  .sc_dot.active { width: 1.8rem; }
+}
+
+/* R17: Scroll progress bar thicker on mobile for visibility */
+@media (max-width: 768px) {
+  #scrollbar { width: .4rem; }
+}
+
+/* R18: Filmstrip touch scrollable */
+@media (pointer: coarse) {
+  .home_filmstrip { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* R19: Menu overlay mobile — full-width items, larger text */
+@media (max-width: 430px) {
+  .menu_selections { padding: 3rem 1rem 1.5rem; gap: .8rem; }
+  .menu_sel .sel_en { font-size: 2.8rem; line-height: 2.8rem; }
+  .menu_sel .sel_en::before { font-size: 2.8rem; line-height: 2.8rem; }
+  .menu_sel .sel_zh { font-size: .75rem; }
+}
+
+/* R20: Safe area bottom padding for gesture navigation phones */
+@media (max-width: 768px) {
+  .home_bottom { padding-bottom: max(2rem, env(safe-area-inset-bottom, 2rem)); }
+  .hbb_totop { top: -2rem; width: 3rem; height: 3rem; }
+  .hbb_totop svg { width: 1rem; height: 1rem; }
+}
+
 </style>
 </head>
 <body>
@@ -2808,7 +2927,7 @@ a, button, [onclick], [role="button"] {
     <div class="hwm_title">
       <div><p>小黑盒</p></div>
       <div><p>幻想家</p></div>
-      <div><p>做梦的<span>人</span></p></div>
+      <div><p>一个认真<span>造梦的家伙</span></p></div>
     </div>
   </div>
   <div class="hw_scrolltip" id="hwScrolltip">
@@ -2850,7 +2969,7 @@ a, button, [onclick], [role="button"] {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-03/index.html" data-color1="#ebbf9a" data-color2="#8b5010" data-tags="Design,Poster" data-subtitle="DRAMA VISUAL DESIGN" data-desc="《乡村爱情14》春节档视觉海报，以质朴温情的乡村图景呈现中国式喜剧。">
-        <div class="sc_card_bg"><img src="works/projects/proj-03/002.jpg" alt="乡村爱情14" loading="lazy"></div>
+        <div class="sc_card_bg"><img src="works/projects/proj-03/001.jpg" alt="乡村爱情14" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">乡村爱情14</p>
@@ -4203,11 +4322,14 @@ function initAnimations() {
     var rect = scene.getBoundingClientRect();
     var cx = rect.left + rect.width / 2;
     var cy = rect.top + rect.height / 2;
-    mouseX = (e.clientX - cx) / rect.width * 2;
-    mouseY = -((e.clientY - cy) / rect.height) * 2;
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+      mouseX = (e.clientX - cx) / rect.width * 2;
+      mouseY = -((e.clientY - cy) / rect.height) * 2;
+    }
 
     if (mode !== 2) return;
-    dragDelta = (e.clientX - dragStartX) / scene.clientWidth * 0.15;
+    var sensitivity = window.matchMedia('(pointer: coarse)').matches ? 0.35 : 0.15;
+    dragDelta = (e.clientX - dragStartX) / scene.clientWidth * sensitivity;
     progress = dragStartProgress - dragDelta;
     progress = progress % 1;
     if (progress < 0) progress += 1;
@@ -4219,7 +4341,8 @@ function initAnimations() {
     scene.style.cursor = 'grab';
 
     // Snap: if dragged past threshold, go next/prev
-    if (Math.abs(dragDelta) > 0.05 * stepSize) {
+    var snapThresh = window.matchMedia('(pointer: coarse)').matches ? 0.02 : 0.05;
+    if (Math.abs(dragDelta) > snapThresh * stepSize) {
       if (dragDelta > 0) goToPrev();
       else goToNext();
     } else {
