@@ -3051,9 +3051,224 @@ a, button, [onclick], [role="button"] {
   .bg_grid { display: none; }
 }
 
+
+/* R1: Floating scroll-to-top */
+.scroll_top_btn {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 3rem; height: 3rem;
+  border-radius: 50%;
+  background: rgba(2,3,21,.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(71,133,252,.2);
+  justify-content: center; align-items: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity .3s ease, transform .3s ease, background .3s ease;
+  pointer-events: none;
+}
+.scroll_top_btn.show {
+  opacity: 1; transform: translateY(0); pointer-events: all;
+}
+.scroll_top_btn:hover {
+  background: rgba(0,84,250,.3);
+  border-color: rgba(71,133,252,.5);
+}
+.scroll_top_btn svg { width: 1.2rem; height: 1.2rem; }
+@media (max-width: 768px) {
+  .scroll_top_btn { bottom: 1.2rem; right: 1.2rem; width: 2.5rem; height: 2.5rem; }
+  .scroll_top_btn svg { width: 1rem; height: 1rem; }
+}
+
+/* R2: Section progress indicator */
+.section_indicator {
+  position: fixed;
+  right: 2rem; top: 50%;
+  transform: translateY(-50%);
+  z-index: 998;
+  flex-direction: column;
+  gap: .5rem;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.section_indicator.show { opacity: 1; }
+.sec_dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(226,240,255,.15);
+  cursor: pointer;
+  transition: background .3s ease, transform .3s ease;
+}
+.sec_dot.active {
+  background: var(--theme_gold);
+  transform: scale(1.4);
+}
+.sec_dot:hover { background: rgba(226,240,255,.4); }
+@media (max-width: 768px) { .section_indicator { display: none; } }
+
+/* R3: Page exit transition */
+.page_exit {
+  position: fixed; inset: 0;
+  background: var(--theme_dark);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.page_exit.active { opacity: 1; pointer-events: all; }
+
+/* R4: Image loading shimmer */
+.sc_card_bg {
+  background: linear-gradient(110deg, rgba(226,240,255,.03) 30%, rgba(226,240,255,.06) 50%, rgba(226,240,255,.03) 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+.sc_card_bg img[src] { position: relative; z-index: 1; }
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* R5: Keyboard focus styles */
+:focus-visible {
+  outline: 2px solid var(--theme_gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+a:focus-visible, button:focus-visible, [onclick]:focus-visible {
+  outline: 2px solid var(--theme_gold);
+  outline-offset: 3px;
+}
+
+/* R7: Scroll hint entrance */
+.hw_scrolltip {
+  animation: scrollHintBounce 2s ease-in-out 3s infinite;
+}
+@keyframes scrollHintBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-.5rem); }
+}
+
+/* R8: Showcase card lift on hover */
+.sc_card.sc_active {
+  transition: transform .6s var(--ease-out-expo);
+}
+.sc_card.sc_active:hover {
+  transform: scale(1.02);
+}
+
+/* R9: Image fade-in on load */
+.hf_img img, .hpp_plate img, .hss_block img {
+  opacity: 0;
+  transition: opacity .6s ease, transform .4s ease;
+}
+.hf_img img.loaded, .hpp_plate img.loaded, .hss_block img.loaded,
+.hf_img img[complete], .hpp_plate img[complete], .hss_block img[complete] {
+  opacity: 1;
+}
+
+/* R10: Project number animation */
+.hp_project .hpp_num {
+  transition: transform .4s var(--ease-out-expo), color .4s ease, -webkit-text-stroke .4s ease;
+}
+.hp_project:hover .hpp_num {
+  transform: translateX(.5rem) scale(1.1);
+}
+
+/* R11: Contact item icons */
+.hct_item::before {
+  content: '›';
+  font-family: 'DM Mono', monospace;
+  font-size: .8rem;
+  color: var(--theme_gold);
+  opacity: .4;
+  margin-right: .5rem;
+  transition: transform .3s ease, opacity .3s ease;
+}
+.hct_item:hover::before {
+  transform: translateX(.3rem);
+  opacity: .8;
+}
+
+/* R12: Vision block glow pulse */
+.home_vision_block {
+  animation: visionGlow 4s ease-in-out infinite;
+}
+@keyframes visionGlow {
+  0%, 100% { box-shadow: 0 0 2rem rgba(0,84,250,.05); }
+  50% { box-shadow: 0 0 4rem rgba(0,84,250,.15); }
+}
+
+/* R13: Filmstrip interaction */
+.home_filmstrip:hover .hf_row {
+  animation-play-state: paused !important;
+}
+
+/* R14: Menu stagger polish */
+.menu_overlay.active .menu_sel {
+  transform: translateY(0);
+}
+.menu_sel {
+  transform: translateY(2rem);
+}
+
+/* R15: Photos fan-out smoother */
+.home_photos .home_photos_plates {
+  transition: transform .6s var(--ease-out-expo);
+}
+
+/* R16: Idea text ambient glow */
+.home_idea_container.show p span {
+  text-shadow: 0 0 3rem rgba(0,84,250,.3);
+}
+
+/* R17: Scroll progress glow */
+#scrollbar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: -.2rem;
+  width: .7rem; height: .7rem;
+  border-radius: 50%;
+  background: var(--theme_gold);
+  filter: blur(4px);
+  opacity: .6;
+  transform: translateY(calc((1 - var(--p, 0)) * -100vh));
+}
+
+/* R18: Section entrance refinement */
+.home_about_content,
+.home_skills_skill,
+.home_works,
+.home_filmstrip {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.home_about_content.visible,
+.home_skills_skill.show,
+.home_works.visible,
+.home_filmstrip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 </style>
 </head>
 <body>
+<noscript>
+<style>
+  .loading, .cursor_dot, .cursor_ring { display: none !important; }
+  .hwm_title > div { clip-path: none !important; }
+  .hwm_title > div p { opacity: 1 !important; }
+  video { display: none; }
+</style>
+<div style="position:fixed;top:0;left:0;right:0;padding:1rem;background:#0054FA;color:#fff;text-align:center;z-index:99999;font-family:sans-serif">
+  请启用 JavaScript 以获得完整体验
+</div>
+</noscript>
 
 <!-- Dynamic Background -->
 <div class="bg_dynamic">
@@ -4815,6 +5030,128 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
   });
 })();
+
+
+// ===== R1: SCROLL-TO-TOP BUTTON =====
+(function() {
+  var btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    var shouldShow = window.scrollY > window.innerHeight * 0.5;
+    if (shouldShow !== shown) {
+      shown = shouldShow;
+      btn.classList.toggle('show', shown);
+    }
+  }, { passive: true });
+})();
+
+// ===== R2: SECTION INDICATOR =====
+(function() {
+  var indicator = document.getElementById('sectionIndicator');
+  if (!indicator || window.matchMedia('(max-width: 768px)').matches) return;
+  var dots = indicator.querySelectorAll('.sec_dot');
+  var sections = [];
+  dots.forEach(function(dot) {
+    var el = document.getElementById(dot.dataset.section);
+    if (el) sections.push({ dot: dot, el: el });
+    dot.addEventListener('click', function() {
+      if (typeof lenis !== 'undefined') {
+        lenis.scrollTo(el, { duration: 1.5 });
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  var showTimeout;
+  function updateDots() {
+    var scrollY = window.scrollY;
+    var vh = window.innerHeight;
+    indicator.classList.toggle('show', scrollY > vh * 0.3);
+    var active = null;
+    sections.forEach(function(s) {
+      var rect = s.el.getBoundingClientRect();
+      if (rect.top < vh * 0.5 && rect.bottom > 0) active = s;
+    });
+    dots.forEach(function(d) { d.classList.remove('active'); });
+    if (active) active.dot.classList.add('active');
+  }
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+})();
+
+// ===== R3: PAGE EXIT TRANSITION =====
+(function() {
+  var exit = document.getElementById('pageExit');
+  if (!exit) return;
+  document.querySelectorAll('a[href]').forEach(function(a) {
+    var href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || a.target === '_blank') return;
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      exit.classList.add('active');
+      setTimeout(function() { window.location.href = href; }, 350);
+    });
+  });
+})();
+
+// ===== R9: IMAGE FADE-IN ON LOAD =====
+(function() {
+  document.querySelectorAll('.hf_img img, .hpp_plate img, .hss_block img').forEach(function(img) {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', function() { img.classList.add('loaded'); });
+    }
+  });
+})();
+
+// ===== R19: KEYBOARD NAVIGATION =====
+(function() {
+  // Make project items keyboard accessible
+  document.querySelectorAll('.hp_project, .sc_card, .menu_sel').forEach(function(el) {
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        el.click();
+      }
+    });
+  });
+})();
+
+// ===== R20: SECTION VISIBILITY FOR ENTRANCE ANIMATIONS =====
+(function() {
+  var targets = document.querySelectorAll('.home_about_content, .home_filmstrip');
+  if (!targets.length) return;
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  targets.forEach(function(t) { io.observe(t); });
+})();
+
 </script>
+
+<div class="scroll_top_btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>
+</div>
+
+<div class="section_indicator" id="sectionIndicator">
+  <div class="sec_dot" data-section="welcome" title="Home"></div>
+  <div class="sec_dot" data-section="showcase" title="Works"></div>
+  <div class="sec_dot" data-section="about" title="About"></div>
+  <div class="sec_dot" data-section="skills" title="Skills"></div>
+  <div class="sec_dot" data-section="works" title="Portfolio"></div>
+  <div class="sec_dot" data-section="photos" title="Photos"></div>
+  <div class="sec_dot" data-section="contact" title="Contact"></div>
+</div>
+<div class="page_exit" id="pageExit"></div>
 </body>
 </html>
