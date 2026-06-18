@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>小黑盒幻想家 | Creative Portfolio</title>
 <meta name="description" content="小黑盒幻想家 — 游戏开发、视觉设计、芯片音乐创作">
-<meta name="theme-color" content="#d4a017">
+<meta name="theme-color" content="#0054FA">
 <meta property="og:title" content="小黑盒幻想家 | Creative Portfolio">
 <meta property="og:description" content="游戏开发、视觉设计、芯片音乐创作">
 <meta property="og:type" content="website">
 <meta property="og:image" content="mascot-poster.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preload" href="zpix-subset.woff2" as="font" type="font/woff2" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Zpix';
@@ -26,9 +26,9 @@
 * {
   margin: 0; padding: 0; box-sizing: border-box;
   font-size: 2vmin;
-  --theme_dark: #171717;
-  --theme_light: #f5e6d3;
-  --theme_gold: #d4a017;
+  --theme_dark: #020315;
+  --theme_light: #E2F0FF;
+  --theme_gold: #0054FA;
   --ease-power: cubic-bezier(.45, 0, .55, 1);
   --ease-smooth: cubic-bezier(.25, .1, .25, 1);
   --ease-reveal: cubic-bezier(.76, 0, .24, 1);
@@ -46,7 +46,7 @@ div { display: flex; }
 body {
   background: transparent;
   color: var(--theme_light);
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  font-family: 'DM Sans', 'Zpix', -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
   min-height: 100vh;
@@ -153,7 +153,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: 4.5rem;
   line-height: 5.2rem;
   color: transparent;
-  -webkit-text-stroke: .1rem rgba(212,160,23,.5);
+  -webkit-text-stroke: .1rem rgba(0,84,250,.5);
   letter-spacing: .1rem;
   animation: ltg_drift 2s ease-in-out infinite alternate;
 }
@@ -175,7 +175,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: 5rem;
   color: var(--theme_gold);
   letter-spacing: .5rem;
-  text-shadow: 0 0 4rem rgba(212,160,23,.4);
+  text-shadow: 0 0 4rem rgba(0,84,250,.4);
 }
 .loading_brand span {
   font-family: 'Zpix', 'Press Start 2P', monospace;
@@ -408,7 +408,7 @@ a:focus-visible, [onclick]:focus-visible {
   opacity: .15;
 }
 .hw_blurball2 {
-  background: radial-gradient(circle, #c87832 0%, #8b4914 60%, #5a2d0a 100%);
+  background: radial-gradient(circle, #002787 0%, #011B5A 60%, #020315 100%);
   bottom: -25rem; right: -25rem;
   width: 60rem; height: 60rem;
   filter: blur(6rem);
@@ -447,7 +447,7 @@ a:focus-visible, [onclick]:focus-visible {
   color: var(--theme_light);
   -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_light);
   transform: translateX(15%);
-  text-shadow: 0 0 4rem rgba(245,230,211,.15);
+  text-shadow: 0 0 4rem rgba(226,240,255,.15);
   background: linear-gradient(90deg, var(--theme_light) 0%, var(--theme_light) 40%, rgba(255,255,255,.95) 50%, var(--theme_light) 60%, var(--theme_light) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -459,7 +459,7 @@ a:focus-visible, [onclick]:focus-visible {
   color: transparent;
   -webkit-text-stroke: calc(var(--scale_nums) * .25rem) var(--theme_gold);
   transform: translateX(-15%);
-  text-shadow: 0 0 4rem rgba(212,160,23,.2);
+  text-shadow: 0 0 4rem rgba(0,84,250,.2);
   animation: text_glow_pulse 4s ease-in-out infinite 3s;
 }
 .hwm_title > div:nth-child(3) p {
@@ -471,7 +471,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: calc(var(--scale_nums) * 10rem);
   color: var(--theme_gold);
   -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_gold);
-  text-shadow: 0 0 3rem rgba(212,160,23,.3);
+  text-shadow: 0 0 3rem rgba(0,84,250,.3);
 }
 
 .hw_scrolltip {
@@ -517,7 +517,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: absolute;
   bottom: -1px; left: 0; right: 0;
   height: 25rem;
-  background: linear-gradient(to bottom, transparent 0%, rgba(23,23,23,.3) 30%, rgba(23,23,23,.7) 60%, var(--theme_dark) 100%);
+  background: linear-gradient(to bottom, transparent 0%, rgba(2,3,21,.3) 30%, rgba(2,3,21,.7) 60%, var(--theme_dark) 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -541,7 +541,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 60%;
-  background: linear-gradient(to top, var(--theme_dark) 0%, rgba(23,23,23,.6) 40%, transparent 100%);
+  background: linear-gradient(to top, var(--theme_dark) 0%, rgba(2,3,21,.6) 40%, transparent 100%);
   z-index: 2;
   pointer-events: none;
 }
@@ -799,7 +799,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: absolute;
   inset: -.18rem;
   border-radius: 1.1rem;
-  background: linear-gradient(135deg, #d4a017 0%, #f0c850 25%, #eb8280 50%, #89d0ff 75%, #d4a017 100%);
+  background: linear-gradient(135deg, #a281ff 0%, #eb8280 25%, #ebbf9a 50%, #89d0ff 75%, #a281ff 100%);
   background-size: 400% 400%;
   opacity: 0;
   z-index: -1;
@@ -854,7 +854,7 @@ a:focus-visible, [onclick]:focus-visible {
 .pm_image_border {
   padding: 3px;
   border-radius: 1rem;
-  background: linear-gradient(45deg, #d4a017, #eb8280, #ebbf9a, #89d0ff);
+  background: linear-gradient(45deg, #a281ff, #eb8280, #ebbf9a, #89d0ff);
   background-size: 300% 300%;
   animation: sc_glow 4s ease infinite;
 }
@@ -986,7 +986,7 @@ a:focus-visible, [onclick]:focus-visible {
   opacity: 0;
   transform: translateY(3rem);
   transition: opacity .8s ease, transform .8s ease;
-  text-shadow: 0 0 5rem rgba(212,160,23,.15);
+  text-shadow: 0 0 5rem rgba(0,84,250,.15);
 }
 .hac_title::before,
 .hac_title::after {
@@ -1017,9 +1017,9 @@ a:focus-visible, [onclick]:focus-visible {
   animation: about_title_shimmer 8s ease-in-out infinite 1.5s;
 }
 @keyframes about_title_shimmer {
-  0%, 80%, 100% { text-shadow: 0 0 5rem rgba(212,160,23,.15); }
-  85% { text-shadow: 0 0 8rem rgba(212,160,23,.4), 0 0 2rem rgba(212,160,23,.2); }
-  90% { text-shadow: 0 0 5rem rgba(212,160,23,.15); }
+  0%, 80%, 100% { text-shadow: 0 0 5rem rgba(0,84,250,.15); }
+  85% { text-shadow: 0 0 8rem rgba(0,84,250,.4), 0 0 2rem rgba(0,84,250,.2); }
+  90% { text-shadow: 0 0 5rem rgba(0,84,250,.15); }
 }
 .hac_title.show::after {
   transform: translateY(10%) scale(.95);
@@ -1051,14 +1051,14 @@ a:focus-visible, [onclick]:focus-visible {
   opacity: 0;
   transform: translateY(2rem) scale(.95);
   transition: opacity .8s ease .4s, transform .8s ease .4s;
-  box-shadow: 0 1rem 4rem rgba(212,160,23,.1);
+  box-shadow: 0 1rem 4rem rgba(0,84,250,.1);
 }
 .hac_video::before {
   content: '';
   position: absolute;
   inset: -.2rem;
   border-radius: 2.2rem;
-  background: linear-gradient(135deg, rgba(212,160,23,.5) 0%, rgba(212,160,23,.1) 40%, rgba(139,105,20,.3) 70%, rgba(212,160,23,.5) 100%);
+  background: linear-gradient(135deg, rgba(0,84,250,.5) 0%, rgba(0,84,250,.1) 40%, rgba(0,39,135,.3) 70%, rgba(0,84,250,.5) 100%);
   background-size: 300% 300%;
   animation: hac_border_glow 8s ease infinite;
   z-index: -1;
@@ -1076,7 +1076,7 @@ a:focus-visible, [onclick]:focus-visible {
   content: '';
   position: absolute; inset: 0;
   border-radius: 2rem;
-  box-shadow: inset 0 0 3rem rgba(23,23,23,.4);
+  box-shadow: inset 0 0 3rem rgba(2,3,21,.4);
   pointer-events: none;
 }
 
@@ -1117,7 +1117,7 @@ a:focus-visible, [onclick]:focus-visible {
   border-radius: 2rem;
   overflow: hidden;
   z-index: 0;
-  border: .15rem solid rgba(212,160,23,.2);
+  border: .15rem solid rgba(0,84,250,.2);
   box-shadow: 0 1rem 5rem rgba(0,0,0,.3);
 }
 .home_portrait_main img,
@@ -1321,11 +1321,11 @@ a:focus-visible, [onclick]:focus-visible {
 
 .hss_block {
   height: 28rem; width: 28rem;
-  border: .15rem solid rgba(245,230,211,.4);
+  border: .15rem solid rgba(226,240,255,.4);
   border-radius: 1.5rem;
   overflow: hidden;
   flex-shrink: 0;
-  box-shadow: 0 0 3rem rgba(212,160,23,.08);
+  box-shadow: 0 0 3rem rgba(0,84,250,.08);
 }
 .hss_block img {
   width: 100%; height: 100%;
@@ -1343,12 +1343,12 @@ a:focus-visible, [onclick]:focus-visible {
   animation: hss_breathe 6s ease-in-out infinite;
 }
 @keyframes hss_breathe {
-  0%, 100% { box-shadow: 0 0 3rem rgba(212,160,23,.08); }
-  50% { box-shadow: 0 0 4.5rem rgba(212,160,23,.14); }
+  0%, 100% { box-shadow: 0 0 3rem rgba(0,84,250,.08); }
+  50% { box-shadow: 0 0 4.5rem rgba(0,84,250,.14); }
 }
 .hss_block:hover {
-  box-shadow: 0 0 5rem rgba(212,160,23,.25);
-  border-color: rgba(212,160,23,.6);
+  box-shadow: 0 0 5rem rgba(0,84,250,.25);
+  border-color: rgba(0,84,250,.6);
   transform: translateY(-.3rem);
 }
 
@@ -1372,8 +1372,8 @@ a:focus-visible, [onclick]:focus-visible {
 .home_idea_bg {
   position: absolute; width: 100%; height: 100%;
   background:
-    radial-gradient(circle at 30% 40%, rgba(212,160,23,.08) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(139,105,20,.06) 0%, transparent 50%);
+    radial-gradient(circle at 30% 40%, rgba(0,84,250,.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(0,39,135,.06) 0%, transparent 50%);
 }
 .home_idea_container {
   --scale_nums: 1;
@@ -1470,7 +1470,7 @@ a:focus-visible, [onclick]:focus-visible {
   transition: text-shadow .6s ease;
 }
 .hvs_line div:hover {
-  text-shadow: 0 0 3rem rgba(212,160,23,.3);
+  text-shadow: 0 0 3rem rgba(0,84,250,.3);
 }
 .hvs_line p {
   font-family: 'Zpix', 'Press Start 2P', monospace;
@@ -1528,7 +1528,7 @@ a:focus-visible, [onclick]:focus-visible {
 .hvb_content video {
   width: 22rem; height: 22rem;
   object-fit: contain;
-  filter: drop-shadow(0 0 2rem rgba(212,160,23,.3));
+  filter: drop-shadow(0 0 2rem rgba(0,84,250,.3));
 }
 .hvb_content p {
   font-family: 'Zpix', 'Press Start 2P', monospace;
@@ -1629,7 +1629,7 @@ a:focus-visible, [onclick]:focus-visible {
   flex-shrink: 0;
   overflow: hidden;
   margin-right: 1rem;
-  border: .15rem solid rgba(245,230,211,.3);
+  border: .15rem solid rgba(226,240,255,.3);
   border-radius: .5rem;
   align-items: center;
   transition: border-color .3s ease;
@@ -1802,8 +1802,8 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hpp_plate:hover {
   z-index: 10;
-  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.5), 0 0 2rem rgba(212,160,23,.1);
-  border-color: rgba(212,160,23,.4);
+  box-shadow: 0 1.5rem 4rem rgba(0,0,0,.5), 0 0 2rem rgba(0,84,250,.1);
+  border-color: rgba(0,84,250,.4);
 }
 .hpp_plate img {
   position: relative;
@@ -2009,7 +2009,7 @@ a:focus-visible, [onclick]:focus-visible {
   transform: scale(0) rotate(30deg);
   margin-left: -3rem; margin-top: -3rem;
   box-shadow: 0 2rem 5rem rgba(0,0,0,.6);
-  border: .15rem solid rgba(212,160,23,.3);
+  border: .15rem solid rgba(0,84,250,.3);
   justify-content: center; align-items: center;
   transition: transform .4s cubic-bezier(.175,.885,.32,1.275), opacity .4s ease;
   will-change: transform;
@@ -2029,7 +2029,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .section_sep_line {
   width: 40rem; height: .05rem;
-  background: linear-gradient(90deg, transparent, rgba(212,160,23,.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0,84,250,.3), transparent);
 }
 .section_sep_dot {
   width: .5rem; height: .5rem;
@@ -2086,8 +2086,8 @@ a:focus-visible, [onclick]:focus-visible {
   90% { background-position: -200% 0; }
 }
 @keyframes text_glow_pulse {
-  0%, 100% { text-shadow: 0 0 4rem rgba(212,160,23,.2); }
-  50% { text-shadow: 0 0 6rem rgba(212,160,23,.4), 0 0 2rem rgba(212,160,23,.15); }
+  0%, 100% { text-shadow: 0 0 4rem rgba(0,84,250,.2); }
+  50% { text-shadow: 0 0 6rem rgba(0,84,250,.4), 0 0 2rem rgba(0,84,250,.15); }
 }
 @keyframes move_line {
   0% { background-position: 200% 0; }
@@ -2393,7 +2393,7 @@ a:focus-visible, [onclick]:focus-visible {
     <div class="sc_edge sc_edge_right" id="scEdgeRight"></div>
     <div class="showcase_cylinder" id="showcaseCylinder">
 
-      <div class="sc_card" data-href="project.html#ui" data-color1="#d4a017" data-color2="#8b6914" data-tags="Design,UI/UX" data-subtitle="A CREATIVE DESIGN COLLECTION" data-desc="涵盖品牌设计、海报设计、包装设计等多领域的创意设计作品集，融合东方美学与现代视觉语言。">
+      <div class="sc_card" data-href="project.html#ui" data-color1="#0054FA" data-color2="#002787" data-tags="Design,UI/UX" data-subtitle="A CREATIVE DESIGN COLLECTION" data-desc="涵盖品牌设计、海报设计、包装设计等多领域的创意设计作品集，融合东方美学与现代视觉语言。">
         <div class="sc_card_bg"><img src="art-works/art-03.jpg" alt="Design" loading="lazy"></div>
         <span class="sc_pill">Design</span>
         <div class="sc_card_content">
@@ -2403,7 +2403,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#e84545" data-color2="#8b2020" data-tags="Visual,Branding" data-subtitle="STREET DANCE VISUAL DESIGN" data-desc="《这！就是街舞》第三季海报设计与第四季潮玩模型设计，将街舞精神融入视觉语言。">
+      <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#a281ff" data-color2="#5a3080" data-tags="Visual,Branding" data-subtitle="STREET DANCE VISUAL DESIGN" data-desc="《这！就是街舞》第三季海报设计与第四季潮玩模型设计，将街舞精神融入视觉语言。">
         <div class="sc_card_bg"><img src="works/streetdance/s3-01.jpg" alt="Street Dance" loading="lazy"></div>
         <span class="sc_pill">Visual</span>
         <div class="sc_card_content">
@@ -2413,7 +2413,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="project.html#photo" data-color1="#64a0c8" data-color2="#2c6a97" data-tags="Photo,Architecture" data-subtitle="ARCHITECTURAL PHOTOGRAPHY SERIES" data-desc="以建筑为画布，捕捉光影与几何的交响，记录城市肌理中的诗意瞬间。">
+      <div class="sc_card" data-href="project.html#photo" data-color1="#4785FC" data-color2="#1A3570" data-tags="Photo,Architecture" data-subtitle="ARCHITECTURAL PHOTOGRAPHY SERIES" data-desc="以建筑为画布，捕捉光影与几何的交响，记录城市肌理中的诗意瞬间。">
         <div class="sc_card_bg"><img src="zcool-photo/photo-03.jpg" alt="Photography" loading="lazy"></div>
         <span class="sc_pill">Photo</span>
         <div class="sc_card_content">
@@ -2423,7 +2423,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="project.html#games" data-color1="#dc503c" data-color2="#8b2010" data-tags="Games,Dev" data-subtitle="INDIE GAME DEVELOPMENT" data-desc="天马行空的独立游戏开发作品集，从像素风冒险到3D实验性游戏，探索互动叙事的无限可能。">
+      <div class="sc_card" data-href="project.html#games" data-color1="#eb8280" data-color2="#6b2828" data-tags="Games,Dev" data-subtitle="INDIE GAME DEVELOPMENT" data-desc="天马行空的独立游戏开发作品集，从像素风冒险到3D实验性游戏，探索互动叙事的无限可能。">
         <div class="sc_card_bg"><img src="art-works/art-12.jpg" alt="Game Dev" loading="lazy"></div>
         <span class="sc_pill">Games</span>
         <div class="sc_card_content">
@@ -2433,7 +2433,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="project.html#music" data-color1="#50c8a0" data-color2="#1a6b50" data-tags="Music,Chiptune" data-subtitle="PIXEL SOUND COMPOSITIONS" data-desc="用复古芯片音源创作现代电子音乐，在8位音色中寻找像素跳动的旋律与节奏。">
+      <div class="sc_card" data-href="project.html#music" data-color1="#80C8E6" data-color2="#2c6a97" data-tags="Music,Chiptune" data-subtitle="PIXEL SOUND COMPOSITIONS" data-desc="用复古芯片音源创作现代电子音乐，在8位音色中寻找像素跳动的旋律与节奏。">
         <div class="sc_card_bg"><img src="art-works/art-15.jpg" alt="Chiptune" loading="lazy"></div>
         <span class="sc_pill">Chiptune</span>
         <div class="sc_card_content">
@@ -2443,7 +2443,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="project.html#visual" data-color1="#c89650" data-color2="#8b6420" data-tags="Visual,Film" data-subtitle="VISUAL DESIGN & POST-PRODUCTION" data-desc="视觉设计与影视后期制作作品，包含特效合成、调色分级、动态图形设计等。">
+      <div class="sc_card" data-href="project.html#visual" data-color1="#96BBFF" data-color2="#46558F" data-tags="Visual,Film" data-subtitle="VISUAL DESIGN & POST-PRODUCTION" data-desc="视觉设计与影视后期制作作品，包含特效合成、调色分级、动态图形设计等。">
         <div class="sc_card_bg"><img src="art-works/art-20.jpg" alt="Visual" loading="lazy"></div>
         <span class="sc_pill">Visual</span>
         <div class="sc_card_content">
@@ -2453,7 +2453,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#c85050" data-color2="#6b2828" data-tags="Branding,Design" data-subtitle="STREET DANCE BRANDING WORKS" data-desc="为综艺节目《这！就是街舞》打造的系列品牌视觉，从海报到潮玩。">
+      <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#ebbf9a" data-color2="#6b5010" data-tags="Branding,Design" data-subtitle="STREET DANCE BRANDING WORKS" data-desc="为综艺节目《这！就是街舞》打造的系列品牌视觉，从海报到潮玩。">
         <div class="sc_card_bg"><img src="works/streetdance/s3-05.jpg" alt="Street Dance S3" loading="lazy"></div>
         <span class="sc_pill">Branding</span>
         <div class="sc_card_content">
@@ -2463,7 +2463,7 @@ a:focus-visible, [onclick]:focus-visible {
         </div>
       </div>
 
-      <div class="sc_card" data-href="project.html#creative" data-color1="#d4a017" data-color2="#6b5010" data-tags="Creative,Mixed" data-subtitle="EXPERIMENTAL CREATIVE WORKS" data-desc="跨界实验性创作合集，将不同媒介与技术融合，探索艺术表达的新边界。">
+      <div class="sc_card" data-href="project.html#creative" data-color1="#89d0ff" data-color2="#0f1e3e" data-tags="Creative,Mixed" data-subtitle="EXPERIMENTAL CREATIVE WORKS" data-desc="跨界实验性创作合集，将不同媒介与技术融合，探索艺术表达的新边界。">
         <div class="sc_card_bg"><img src="art-works/art-05.jpg" alt="Creative" loading="lazy"></div>
         <span class="sc_pill">Creative</span>
         <div class="sc_card_content">
@@ -3014,7 +3014,7 @@ function navTo(id) {
       var rect = block.getBoundingClientRect();
       var x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
       var y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
-      block.style.background = 'radial-gradient(circle at ' + x + '% ' + y + '%, rgba(212,160,23,.15), transparent 60%)';
+      block.style.background = 'radial-gradient(circle at ' + x + '% ' + y + '%, rgba(0,84,250,.15), transparent 60%)';
     });
     block.addEventListener('mouseleave', function() {
       block.style.background = '';
@@ -3465,13 +3465,13 @@ function initAnimations() {
       var b = parseInt(hex.slice(5,7), 16) / 255;
       return [r, g, b];
     }
-    var currentC1 = [0.83, 0.63, 0.09];  // #d4a017
-    var currentC2 = [0.55, 0.41, 0.08];  // #8b6914
-    var targetC1 = [0.83, 0.63, 0.09];
-    var targetC2 = [0.55, 0.41, 0.08];
+    var currentC1 = [0.0, 0.33, 0.98];  // #0054FA
+    var currentC2 = [0.0, 0.15, 0.53];  // #002787
+    var targetC1 = [0.0, 0.33, 0.98];
+    var targetC2 = [0.0, 0.15, 0.53];
     window.updateShowcaseColors = function(card) {
-      var c1 = card.getAttribute('data-color1') || '#d4a017';
-      var c2 = card.getAttribute('data-color2') || '#8b6914';
+      var c1 = card.getAttribute('data-color1') || '#0054FA';
+      var c2 = card.getAttribute('data-color2') || '#002787';
       targetC1 = hexToGl(c1);
       targetC2 = hexToGl(c2);
     };
