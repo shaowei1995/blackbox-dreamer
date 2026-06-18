@@ -356,10 +356,72 @@ body {
 
 /* SCROLL ENTRANCE */
 .reveal { opacity: 0; transform: translateY(30px); }
+
+/* Preloader overlay */
+.page_loader {
+  position: fixed; inset: 0;
+  background: var(--dark);
+  z-index: 10000;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  transition: opacity .6s ease;
+}
+.page_loader.done { opacity: 0; pointer-events: none; }
+.loader_spinner {
+  width: 2.5rem; height: 2.5rem;
+  border: 2px solid rgba(226,240,255,.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader_text {
+  margin-top: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .65rem;
+  color: rgba(226,240,255,.4);
+  letter-spacing: .1em;
+}
+.loader_progress {
+  margin-top: .6rem;
+  width: 8rem; height: 2px;
+  background: rgba(226,240,255,.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loader_bar {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width .3s ease;
+  border-radius: 2px;
+}
+
+/* Lazy load placeholder */
+.g_item[data-src] img {
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.g_item[data-src].loaded img {
+  opacity: 1;
+}
+.g_item[data-src]::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(226,240,255,.03);
+  z-index: 1;
+}
+.g_item[data-src].loaded::before { display: none; }
 </style>
 </head>
 <body>
 
+
+<div class="page_loader" id="pageLoader">
+  <div class="loader_spinner"></div>
+  <p class="loader_text">LOADING</p>
+  <div class="loader_progress"><div class="loader_bar" id="loaderBar"></div></div>
+</div>
 <div class="scroll_progress" id="scrollBar"></div>
 
 <nav class="project_nav">
@@ -575,6 +637,81 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowLeft') openLightbox((currentLb - 1 + allItems.length) % allItems.length);
   if (e.key === 'ArrowRight') openLightbox((currentLb + 1) % allItems.length);
 });
+
+// Preloader + lazy load for large images
+(function() {
+  var loader = document.getElementById('pageLoader');
+  var bar = document.getElementById('loaderBar');
+  var items = document.querySelectorAll('.g_item');
+  var total = items.length;
+  var loaded = 0;
+
+  // Convert large images to lazy-load (>500KB or GIF)
+  items.forEach(function(item) {
+    var img = item.querySelector('img');
+    if (!img) return;
+    var src = img.getAttribute('src');
+    // All images lazy load
+    item.setAttribute('data-src', src);
+    img.setAttribute('data-real-src', src);
+    // Set a tiny placeholder
+    img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300"><rect fill="#0a0a1a" width="100%" height="100%"/></svg>');
+  });
+
+  // Hero image loads immediately
+  var heroImg = document.querySelector('.hero_img img');
+  if (heroImg) {
+    var heroSrc = heroImg.getAttribute('src');
+    var heroReal = new Image();
+    heroReal.onload = function() {
+      heroImg.src = heroSrc;
+      checkReady();
+    };
+    heroReal.onerror = checkReady;
+    heroReal.src = heroSrc;
+  }
+
+  function checkReady() {
+    // Hide preloader after hero loads (or 3s max)
+    if (bar) bar.style.width = '100%';
+    setTimeout(function() {
+      if (loader) loader.classList.add('done');
+      setTimeout(function() { if (loader) loader.remove(); }, 600);
+    }, 300);
+    // Start lazy loading gallery images
+    lazyLoadGallery();
+  }
+
+  // Fallback: hide after 4s no matter what
+  setTimeout(checkReady, 4000);
+
+  function lazyLoadGallery() {
+    var lazyItems = document.querySelectorAll('.g_item[data-src]');
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var item = entry.target;
+        var img = item.querySelector('img');
+        var realSrc = img.getAttribute('data-real-src');
+        if (!realSrc) return;
+        var newImg = new Image();
+        newImg.onload = function() {
+          img.src = realSrc;
+          item.classList.add('loaded');
+          loaded++;
+          if (bar) bar.style.width = (loaded / total * 100) + '%';
+        };
+        newImg.onerror = function() {
+          item.classList.add('loaded');
+          loaded++;
+        };
+        newImg.src = realSrc;
+        io.unobserve(item);
+      });
+    }, { rootMargin: '200px 0px' });
+    lazyItems.forEach(function(item) { io.observe(item); });
+  }
+})();
 </script>
 </body>
 </html>
