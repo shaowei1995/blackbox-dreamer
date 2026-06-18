@@ -57,6 +57,9 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 @media (pointer: coarse) { body { cursor: auto; } }
 
@@ -445,7 +448,7 @@ a:focus-visible, [onclick]:focus-visible {
   width: 100%; height: 100svh;
   min-height: 600px;
   overflow: hidden;
-  margin-bottom: 10rem;
+  margin-bottom: 5rem;
 }
 .hw_lines {
   position: absolute; inset: 0;
@@ -589,8 +592,8 @@ a:focus-visible, [onclick]:focus-visible {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 120vh;
-  padding-bottom: 6rem;
+  min-height: 100vh;
+  padding-bottom: 4rem;
   overflow: visible;
   background: transparent;
   z-index: 3;
@@ -1047,8 +1050,8 @@ a:focus-visible, [onclick]:focus-visible {
 .home_about {
   justify-content: center; align-items: center;
   width: 100%;
-  margin-top: 2rem;
-  margin-bottom: 6.5rem;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
   --scale_nums: 0.8;
 }
 .home_about_content {
@@ -1267,7 +1270,7 @@ a:focus-visible, [onclick]:focus-visible {
 .home_portrait_main {
   position: relative;
   justify-content: center; align-items: center;
-  width: 75rem; height: 40rem;
+  width: 75rem; height: 0;
   border-radius: 2rem;
   overflow: hidden;
   z-index: 0;
@@ -1414,7 +1417,7 @@ a:focus-visible, [onclick]:focus-visible {
 .home_skills_skill {
   justify-content: center; align-items: center;
   width: 70rem;
-  margin-bottom: 15rem;
+  margin-bottom: 8rem;
 }
 .home_skills > div:nth-child(2) { transform: translateX(-20%); }
 .home_skills > div:nth-child(3) { transform: translateX(20%); }
@@ -1522,7 +1525,7 @@ a:focus-visible, [onclick]:focus-visible {
 .home_idea {
   position: relative;
   justify-content: center; align-items: center;
-  width: 100%; height: 50rem;
+  width: 100%; height: 40rem;
   margin-bottom: -3rem;
   border-bottom-left-radius: 10rem;
   border-bottom-right-radius: 10rem;
@@ -1587,7 +1590,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: relative;
   flex-direction: column;
   justify-content: center; align-items: center;
-  width: 100%; height: 65rem;
+  width: 100%; height: 50rem;
   overflow: hidden;
   background: var(--theme_gold);
   z-index: 1;
@@ -1650,7 +1653,7 @@ a:focus-visible, [onclick]:focus-visible {
 
 .home_vision_block {
   position: absolute;
-  width: 38rem; height: 38rem;
+  width: 30rem; height: 30rem;
   background: var(--theme_dark);
   border-radius: 2rem;
   margin-top: 10rem;
@@ -1689,7 +1692,7 @@ a:focus-visible, [onclick]:focus-visible {
   justify-content: center;
 }
 .hvb_content video {
-  width: 22rem; height: 22rem;
+  width: 18rem; height: 18rem;
   object-fit: contain;
   filter: drop-shadow(0 0 2rem rgba(0,84,250,.3));
 }
@@ -1708,9 +1711,9 @@ a:focus-visible, [onclick]:focus-visible {
   flex-direction: column;
   justify-content: center; align-items: center;
   width: 100%;
-  padding-top: 15rem;
-  padding-bottom: 5rem;
-  margin-bottom: 8rem;
+  padding-top: 10rem;
+  padding-bottom: 4rem;
+  margin-bottom: 5rem;
   --scale_nums: 1;
 }
 .home_works_title {
@@ -1766,7 +1769,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: relative;
   justify-content: center; align-items: center;
   width: 100%; height: 15rem;
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
   overflow: hidden;
   cursor: pointer;
 }
@@ -1933,8 +1936,8 @@ a:focus-visible, [onclick]:focus-visible {
 .home_photos {
   position: relative;
   justify-content: center; align-items: center;
-  width: 100%; height: 48rem;
-  margin-bottom: 8rem;
+  width: 100%; height: 42rem;
+  margin-bottom: 5rem;
 }
 .home_photos_box {
   position: absolute;
@@ -2014,7 +2017,7 @@ a:focus-visible, [onclick]:focus-visible {
 
 /* ===== CONTACT ===== */
 .home_contact {
-  --scale: 1;
+  --scale: .85;
   position: relative;
   justify-content: start; align-items: center;
   flex-direction: column;
@@ -2125,7 +2128,7 @@ a:focus-visible, [onclick]:focus-visible {
 .home_bottom {
   background: #010210;
   border-top: 1px solid rgba(71,133,252,.12);
-  padding: 13rem 0 3rem;
+  padding: 8rem 0 3rem;
   flex-direction: column;
   align-items: center;
   position: sticky;
@@ -3763,8 +3766,8 @@ history.scrollRestoration = 'manual';
   var grid = document.getElementById('loadTextGrid');
   var text = '小黑盒';
   var isMobile = window.innerWidth < window.innerHeight;
-  var cols = isMobile ? 10 : 20;
-  var rows = isMobile ? 18 : 25;
+  var cols = isMobile ? 12 : 25;
+  var rows = isMobile ? 20 : 30;
   var html = '';
   for (var r = 0; r < rows; r++) {
     html += '<div class="ltg_row">';
@@ -3803,7 +3806,7 @@ gsap.ticker.lagSmoothing(0);
   if (_pn && _pf) {
     var _pObj = { v: 0 };
     gsap.to(_pObj, {
-      v: 100, duration: 1.0, ease: 'power1.inOut', delay: .1,
+      v: 100, duration: 1.2, ease: 'power2.inOut', delay: .05,
       onUpdate: function() {
         var vv = Math.round(_pObj.v);
         _pn.textContent = String(vv).padStart(3, '0');
@@ -4165,7 +4168,7 @@ function initAnimations() {
         opacity: 1, y: 0, stagger: .07, duration: .8, ease: 'power3.out', delay: 1.4
       });
       gsap.to('#hwScrolltip > span', {
-        y: 5, repeat: -1, yoyo: true, duration: .85, ease: 'sine.inOut', delay: 2.5
+        y: 6, repeat: -1, yoyo: true, duration: 1.2, ease: 'sine.inOut', delay: 2
       });
     } else if (tipEl) {
       gsap.to(tipEl, { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', delay: 1.4 });
