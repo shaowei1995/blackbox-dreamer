@@ -2832,6 +2832,151 @@ a, button, [onclick], [role="button"] {
   .hbb_totop svg { width: 1rem; height: 1rem; }
 }
 
+
+
+/* ===== R2-R20: MOBILE SPACING + VIDEO + DETAIL FIXES ===== */
+
+/* R2: Reduce all major section gaps on mobile */
+@media (max-width: 768px) {
+  .home_showcase { min-height: 85vh; padding-bottom: 3rem; }
+  .home_about { margin-top: 1rem; margin-bottom: 3rem; }
+  .home_skills { padding-top: 3rem; }
+  .home_skills_skill { margin-bottom: 3rem !important; }
+  .home_skills_title { margin-bottom: 2rem; }
+  .home_idea { height: 22rem; margin-bottom: -5rem; }
+  .home_vision { height: 25rem; }
+  .home_vision_block { margin-top: 4rem; }
+  .home_works { padding-top: 8rem; padding-bottom: 3rem; margin-bottom: 3rem; }
+  .home_filmstrip { height: 10rem; }
+  .home_projects { margin-bottom: 3rem; }
+  .home_photos { height: 35rem; margin-bottom: 4rem; }
+  .home_contact { margin-bottom: 0; }
+  .home_bottom { padding-top: 6rem; }
+  .section_sep { padding: 1rem 0; }
+}
+
+/* R3: Further tighten on small phones */
+@media (max-width: 430px) {
+  .home_showcase { min-height: 75vh; padding-bottom: 2rem; }
+  .home_about { margin-bottom: 2rem; }
+  .home_skills { padding-top: 2rem; }
+  .home_skills_skill { margin-bottom: 2.5rem !important; }
+  .home_idea { height: 18rem; margin-bottom: -4rem; }
+  .home_vision { height: 20rem; }
+  .home_works { padding-top: 5rem; padding-bottom: 2rem; margin-bottom: 2rem; }
+  .home_filmstrip { height: 8rem; }
+  .home_photos { height: 28rem; margin-bottom: 3rem; }
+  .home_bottom { padding-top: 4rem; padding-bottom: 2rem; }
+  .section_sep { padding: .8rem 0; }
+}
+
+/* R4: Video containers — proper sizing on mobile, prevent overflow */
+@media (max-width: 768px) {
+  .hac_video, .hac_portrait_wrap { max-height: 50vw; }
+  .hac_video video, .hac_portrait_main video { object-fit: cover; }
+  .hss_block { max-height: 60vw; }
+  .hss_block video, .hss_block img { object-fit: cover; }
+  .hvb_content video { object-fit: cover; }
+}
+
+/* R5: Video poster/fallback — show first frame while loading */
+@media (pointer: coarse) {
+  video { background: rgba(226,240,255,.03); }
+}
+
+/* R6: About section — tighter padding */
+@media (max-width: 768px) {
+  .home_about_content { padding: 0 2%; }
+  .hac_title { margin-bottom: .8rem; }
+  .hac_intro { margin-bottom: 1rem; }
+  .hac_line { display: none; }
+}
+
+/* R7: Hero — reduce bottom spacing */
+@media (max-width: 768px) {
+  .home_welcome { margin-bottom: 0; }
+  .hw_main { margin-bottom: 2rem; }
+}
+
+/* R8: Skills title clamp for mobile */
+@media (max-width: 768px) {
+  .home_skills_title { font-size: clamp(1.2rem, 5vw, 2rem) !important; }
+  .home_skills_title span { font-size: inherit; }
+}
+
+/* R9: Works title tighter */
+@media (max-width: 768px) {
+  .hw_zh { margin-bottom: .3rem; }
+  .hw_en { margin-bottom: .3rem; }
+  .hw_line_deco { margin-bottom: .5rem; }
+}
+
+/* R10: Contact section — reduce massive scale */
+@media (max-width: 768px) {
+  .home_contact { --scale: .4; }
+  .hct_items { margin-top: 1.2rem; gap: .7rem; }
+  .hct_item { padding: .5rem .7rem; font-size: .9rem; }
+}
+
+/* R11: Showcase header tighter spacing */
+@media (max-width: 768px) {
+  .showcase_header { margin-bottom: 0; padding-bottom: .5rem; }
+  .showcase_dots { padding: .5rem 0; }
+}
+
+/* R12: Modal full-screen on mobile */
+@media (max-width: 430px) {
+  .pm_content { width: 98%; padding: .5rem; gap: .8rem; }
+  .pm_image_wrap { border-radius: .5rem; }
+  .pm_title { font-size: 1.2rem !important; }
+  .pm_desc { font-size: .8rem !important; line-height: 1.5; }
+  .pm_close { top: .5rem; right: .5rem; }
+}
+
+/* R13: Edge zones hidden on mobile (not needed with swipe) */
+@media (pointer: coarse) {
+  .sc_edge { display: none; }
+}
+
+/* R14: Filmstrip frames consistent height */
+@media (max-width: 768px) {
+  .hf_img { height: 100%; border-radius: .3rem; }
+  .home_filmstrip_text { font-size: clamp(3rem, 10vw, 5rem); }
+}
+
+/* R15: Portrait section hidden (merged into About) — ensure no ghost space */
+.home_portrait[style*="display:none"] { height: 0; margin: 0; padding: 0; overflow: hidden; }
+
+/* R16: Idea container text fix */
+@media (max-width: 768px) {
+  .home_idea_container { --scale_nums: .5 !important; margin-top: -3rem !important; }
+}
+
+/* R17: Vision block smaller on mobile */
+@media (max-width: 768px) {
+  .home_vision_block { width: 10rem; height: 10rem; }
+  .hvb_corner { font-size: .7rem; }
+  .hvb_content p { font-size: .5rem; }
+}
+
+/* R18: Footer bottom-nav single line on mobile */
+@media (max-width: 430px) {
+  .hbb_menu p { font-size: .6rem; letter-spacing: .03em; }
+  .hbb_copy { font-size: .55rem; line-height: 1.5; padding: 0 1rem; }
+}
+
+/* R19: Prevent horizontal overflow globally on mobile */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+  #home { overflow-x: hidden; }
+  .home_welcome { overflow: hidden; }
+}
+
+/* R20: Smooth scroll momentum on iOS Safari */
+@supports (-webkit-touch-callout: none) {
+  html { -webkit-overflow-scrolling: touch; }
+}
+
 </style>
 </head>
 <body>
@@ -4445,6 +4590,8 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   var isTouch = window.matchMedia('(pointer: coarse)').matches;
   function tryPlay(v) {
     v.muted = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
     var p = v.play();
     if (p && p.catch) p.catch(function() {});
   }
@@ -4456,15 +4603,21 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         try { e.target.pause(); } catch(x) {}
       }
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.05 });
   videos.forEach(function(v) {
+    v.muted = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    if (isTouch) { v.preload = 'metadata'; }
     io.observe(v);
     tryPlay(v);
   });
   if (isTouch) {
-    document.addEventListener('touchstart', function() {
-      videos.forEach(tryPlay);
-    }, { once: true });
+    ['touchstart', 'click', 'scroll'].forEach(function(evt) {
+      document.addEventListener(evt, function() {
+        videos.forEach(tryPlay);
+      }, { once: true });
+    });
   }
 })();
 </script>
