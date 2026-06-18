@@ -614,22 +614,6 @@ var projects = {
     ],
     rowPattern: ['full', '2col', '1x2', '1x2', 'full', '2col', '1x2', 'full', '2col', '2col', '1x2', '2col', '2col', '3col', 'full', '2col', '3col', '3col', '3col', '3col']
   },
-  illustration: {
-    num: '03',
-    title: 'Illustration',
-    subtitle: '+ 绘画作品集 +',
-    date: '2022 - 2026',
-    desc: '绘画是最直接的表达方式。从Q版角色设计到油画风格肖像，从概念场景到动画风插画，每一笔都是想象力的释放与风格的探索。',
-    bg: 'illustration/illust-04.jpg',
-    images: [
-      'illustration/illust-01.png',
-      'illustration/illust-02.png',
-      'illustration/illust-03.png',
-      'illustration/illust-04.jpg',
-      'illustration/illust-05.jpg'
-    ],
-    rowPattern: ['full', '2col', '1x2']
-  },
   music: {
     num: '05',
     title: 'Chiptune Music',
@@ -660,8 +644,16 @@ var projects = {
         bg: 'zcool-games/game-01.jpg'
       },
       {
-        id: null,
+        id: 'streetdance',
         num: '02',
+        title: '这就是街舞视觉设计',
+        desc: '《这！就是街舞》第三季海报 + 第四季潮玩模型设计',
+        bg: 'works/streetdance/s3-01.jpg',
+        href: 'works/streetdance/index.html'
+      },
+      {
+        id: null,
+        num: '03',
         title: '更多作品即将上线',
         desc: 'Coming Soon...',
         bg: ''
@@ -746,8 +738,12 @@ if (data.type === 'collection') {
 
     if (child.id) {
       card.addEventListener('click', function() {
-        location.hash = child.id;
-        location.reload();
+        if (child.href) {
+          window.location.href = child.href;
+        } else {
+          location.hash = child.id;
+          location.reload();
+        }
       });
     }
 
