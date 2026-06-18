@@ -2384,9 +2384,9 @@ a, button, [onclick], [role="button"] {
 .grid3d_section {
   position: relative;
   width: 100%;
-  min-height: 55vh;
+  min-height: auto;
   overflow: hidden;
-  margin: -2rem 0 0;
+  margin: -1rem 0 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2428,18 +2428,22 @@ a, button, [onclick], [role="button"] {
 .grid3d_stage {
   position: relative;
   width: 100%;
-  perspective: 1200px;
-  perspective-origin: 50% 35%;
+  perspective: 1000px;
+  perspective-origin: 50% 40%;
   transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
 }
 .grid3d_wrap {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: .7rem;
-  padding: 1.2rem 5%;
-  width: 92%;
-  max-width: 76rem;
-  transform: rotateX(12deg) rotateY(-8deg) rotateZ(1.5deg);
+  gap: .55rem;
+  padding: 0;
+  width: 72%;
+  max-width: 58rem;
+  margin: 0 auto;
+  transform: rotateX(14deg) rotateY(-6deg) rotateZ(1deg);
   transform-style: preserve-3d;
   will-change: transform;
   transition: transform 1s cubic-bezier(.16,1,.3,1);
@@ -3527,7 +3531,7 @@ function navTo(id) {
   var isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   // Base transform values (apechain exact values)
-  var baseRotX = 12, baseRotY = -8, baseRotZ = 1.5;
+  var baseRotX = 14, baseRotY = -6, baseRotZ = 1;
   var curRotX = baseRotX, curRotY = baseRotY;
   var targetRotX = baseRotX, targetRotY = baseRotY;
 
@@ -3570,7 +3574,6 @@ function navTo(id) {
     curRotX += (targetRotX - curRotX) * .05;
     curRotY += (targetRotY - curRotY) * .05;
     wrap.style.transform = 'rotateX(' + curRotX.toFixed(3) + 'deg) rotateY(' + curRotY.toFixed(3) + 'deg) rotateZ(' + baseRotZ + 'deg)';
-    requestAnimationFrame(tick);
   })();
 })();
 
