@@ -2061,6 +2061,29 @@ a:focus-visible, [onclick]:focus-visible {
   min-width: 5rem; text-align: right;
   flex-shrink: 0;
 }
+.hct_qr_item {
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+}
+.hct_qr_item .label {
+  text-align: center;
+  min-width: auto;
+}
+.hct_qr {
+  width: 8rem; height: 8rem;
+  border-radius: .6rem;
+  overflow: hidden;
+  border: 2px solid rgba(226,240,255,.12);
+  background: #fff;
+  padding: .3rem;
+}
+.hct_qr img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  display: block;
+}
 
 /* ===== FOOTER ===== */
 .home_bottom {
@@ -3120,6 +3143,10 @@ a, button, [onclick], [role="button"] {
     <div class="hct_item">
       <span class="label eng">GitHub</span>
       <a href="https://github.com/shaowei1995/blackbox-dreamer" target="_blank" style="color:var(--theme_light);text-decoration:none">github.com/shaowei1995</a>
+    </div>
+    <div class="hct_item hct_qr_item">
+      <span class="label eng">抖音</span>
+      <div class="hct_qr"><img src="douyin-qr.png" alt="抖音二维码"></div>
     </div>
   </div>
   <div class="home_contact_bottom"></div>
