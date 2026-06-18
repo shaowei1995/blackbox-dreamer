@@ -1588,7 +1588,7 @@ a:focus-visible, [onclick]:focus-visible {
   width: 100%; height: 65rem;
   overflow: hidden;
   background: var(--theme_gold);
-  z-index: -1;
+  z-index: 0;
 }
 .home_vision_scrolllines {
   position: relative;
@@ -1654,6 +1654,7 @@ a:focus-visible, [onclick]:focus-visible {
   justify-content: center; align-items: center;
   box-shadow: 0 2rem 6rem rgba(0,0,0,.4);
   transition: transform .6s var(--ease-out-expo);
+  z-index: 2;
 }
 .home_vision_block:hover { transform: scale(1.03) rotate(-1deg); }
 .hvb_corner {
@@ -2387,7 +2388,7 @@ a, button, [onclick], [role="button"] {
   .hp_line { display: none; }
 
   /* Skills */
-  .home_skills_skill { flex-direction: column !important; width: 90%; margin-bottom: 6rem; }
+  .home_skills_skill { flex-direction: column !important; width: 90%; margin-bottom: 3rem; }
   .hss_text { width: 90%; margin-right: 0; margin-bottom: 2rem; }
   .hss_block { width: 90%; height: 50vw; }
   .home_skills > div:nth-child(2),
@@ -2401,13 +2402,13 @@ a, button, [onclick], [role="button"] {
 
   /* Vision Marquee */
   .hvs_line div, .hvs_line p { font-size: 3.5rem; line-height: 3.5rem; }
-  .home_vision { height: 28rem; }
-  .home_vision_scrolllines { height: 4rem; }
+  .home_vision { height: 24rem; }
+  .home_vision_scrolllines { height: 3.5rem; }
   .home_vision_block { width: 18rem; height: 18rem; border-radius: 1.2rem; margin-top: 8rem; }
 
   /* Works */
   .home_works_title p { font-size: calc(var(--scale_nums) * 5rem); }
-  .home_filmstrip_text { font-size: 5rem; }
+  .home_filmstrip_text { font-size: 4rem; }
   .home_filmstrip_frames { height: 10rem; }
   .hf_img { height: 10rem; }
 
@@ -2420,7 +2421,7 @@ a, button, [onclick], [role="button"] {
   .float_card { display: none; }
 
   /* Photos */
-  .home_photos { height: 45rem; margin-bottom: 5rem; }
+  .home_photos { height: 38rem; margin-bottom: 3rem; }
   .home_photos_box { width: 90vw; transform: none; }
   .hpb_title { font-size: 5rem; }
   .home_photos_plates { width: 90vw; height: 22rem; justify-content: center; }
@@ -2437,7 +2438,7 @@ a, button, [onclick], [role="button"] {
   .home_contact_bottom { border-bottom-left-radius: 5rem; border-bottom-right-radius: 5rem; height: calc(var(--scale) * 8rem); bottom: calc(var(--scale) * -7rem); }
 
   /* Footer */
-  .home_bottom { padding: 6rem 0 2rem; }
+  .home_bottom { padding: 4rem 0 2rem; }
   .hbb_messages { gap: 2rem; margin-bottom: 2rem; }
   .hbb_msg { width: 80vw; }
   .hbb_menu { gap: .8rem; flex-wrap: wrap; justify-content: center; }
@@ -2613,8 +2614,8 @@ a, button, [onclick], [role="button"] {
   .sc_pill { font-size: .38rem; padding: .2rem .5rem; }
 
   /* Idea */
-  .home_idea { height: 30rem; border-bottom-left-radius: 4rem; border-bottom-right-radius: 4rem; }
-  .home_idea_container { --scale_nums: .55; margin-top: calc(var(--scale_nums) * -10rem); }
+  .home_idea { height: 28rem; border-bottom-left-radius: 4rem; border-bottom-right-radius: 4rem; margin-bottom: -6rem; }
+  .home_idea_container { --scale_nums: .5; margin-top: calc(var(--scale_nums) * -8rem); }
 
   /* Section separators */
   .section_sep { padding: 1.2rem 0; }
@@ -2786,7 +2787,7 @@ a, button, [onclick], [role="button"] {
 
 /* R10: Idea section mobile */
 @media (max-width: 430px) {
-  .home_idea { height: 20rem; border-bottom-left-radius: 3rem; border-bottom-right-radius: 3rem; }
+  .home_idea { height: 18rem; border-bottom-left-radius: 3rem; border-bottom-right-radius: 3rem; margin-bottom: -4rem; }
   .home_idea_container { --scale_nums: .4; }
   .home_idea_container p:nth-child(1) { font-size: clamp(1.5rem, 5vw, 2rem); }
   .home_idea_container p:nth-child(2) { font-size: clamp(2.5rem, 8vw, 3.5rem); line-height: 1.1; }
@@ -2869,7 +2870,7 @@ a, button, [onclick], [role="button"] {
 
 /* R2: Reduce all major section gaps on mobile */
 @media (max-width: 768px) {
-  .home_showcase { min-height: 85vh; padding-bottom: 3rem; }
+  .home_showcase { min-height: 80vh; padding-bottom: 2rem; }
   .home_about { margin-top: 1rem; margin-bottom: 3rem; }
   .home_skills { padding-top: 3rem; }
   .home_skills_skill { margin-bottom: 3rem !important; }
