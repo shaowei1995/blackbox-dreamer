@@ -4524,7 +4524,7 @@ function initAnimations() {
     }
 
     if (mode !== 2) return;
-    var sensitivity = window.matchMedia('(pointer: coarse)').matches ? 0.35 : 0.15;
+    var sensitivity = window.matchMedia('(pointer: coarse)').matches ? 0.45 : 0.4;
     dragDelta = (e.clientX - dragStartX) / scene.clientWidth * sensitivity;
     progress = dragStartProgress - dragDelta;
     progress = progress % 1;
