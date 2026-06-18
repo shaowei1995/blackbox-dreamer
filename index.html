@@ -2380,6 +2380,124 @@ a, button, [onclick], [role="button"] {
   .hpp_plate4 { transform: rotate(2deg) translate(26%, -10%); }
   .hpp_plate5 { transform: rotate(5deg) translate(34%, -8%); }
   .home_contact { --scale: .35; }
+/* ===== 3D GRID GALLERY (apechain-style) ===== */
+.grid3d_section {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  overflow: hidden;
+  margin: -2rem 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+/* Top and bottom fade masks */
+.grid3d_section::before,
+.grid3d_section::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.grid3d_section::before {
+  top: 0; height: 35%;
+  background: linear-gradient(to bottom, var(--theme_dark), transparent);
+}
+.grid3d_section::after {
+  bottom: 0; height: 45%;
+  background: linear-gradient(to top, var(--theme_dark), transparent);
+}
+/* Left/right fade masks */
+.grid3d_side_mask {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 20%;
+  z-index: 2;
+  pointer-events: none;
+}
+.grid3d_side_mask.left {
+  left: 0;
+  background: linear-gradient(to right, var(--theme_dark), transparent);
+}
+.grid3d_side_mask.right {
+  right: 0;
+  background: linear-gradient(to left, var(--theme_dark), transparent);
+}
+.grid3d_stage {
+  position: relative;
+  width: 100%;
+  perspective: 1200px;
+  perspective-origin: 50% 35%;
+  transform-style: preserve-3d;
+}
+.grid3d_wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  padding: 2rem 4%;
+  transform: rotateX(12deg) rotateY(-8deg) rotateZ(1.5deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 1s cubic-bezier(.16,1,.3,1);
+}
+.grid3d_card {
+  position: relative;
+  aspect-ratio: 16/10;
+  border-radius: .6rem;
+  overflow: hidden;
+  border: 1px solid rgba(71,133,252,.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(71,133,252,.05);
+  transition: transform .4s var(--ease-out-expo), box-shadow .4s ease;
+  cursor: pointer;
+}
+.grid3d_card:hover {
+  transform: scale(1.04) translateZ(8px);
+  box-shadow: 0 16px 48px rgba(0,84,250,.2), 0 0 0 1px rgba(71,133,252,.3);
+}
+.grid3d_card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(.7) brightness(.85);
+  transition: filter .5s ease, transform .5s ease;
+}
+.grid3d_card:hover img {
+  filter: saturate(1) brightness(1);
+  transform: scale(1.06);
+}
+.grid3d_card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(71,133,252,.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+/* Label overlay */
+.grid3d_label {
+  position: absolute;
+  bottom: .8rem; left: .8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: .55rem;
+  color: rgba(226,240,255,.5);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(.4rem);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.grid3d_card:hover .grid3d_label {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 768px) {
+  .grid3d_wrap { grid-template-columns: repeat(3, 1fr); gap: .8rem; }
+  .grid3d_section { min-height: 50vh; }
+}
+@media (max-width: 430px) {
+  .grid3d_wrap { grid-template-columns: repeat(2, 1fr); gap: .6rem; }
+}
+
 /* ===== MOBILE-FIRST (≤768px portrait phones) ===== */
 @media (max-width: 768px) and (orientation: portrait) {
   /* Nav */
@@ -2798,6 +2916,67 @@ a, button, [onclick], [role="button"] {
   <div class="hw_line_deco"></div>
 </div>
 
+<!-- 3D Grid Gallery (apechain-style) -->
+<div class="grid3d_section" id="grid3dSection">
+  <div class="grid3d_side_mask left"></div>
+  <div class="grid3d_side_mask right"></div>
+  <div class="grid3d_stage" id="grid3dStage">
+    <div class="grid3d_wrap" id="grid3dWrap">
+      <!-- Row 1 -->
+      <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
+        <img src="zcool-games/game-01.jpg" alt="Design" loading="lazy">
+        <span class="grid3d_label">Design · 2026</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
+        <img src="zcool-photo/photo-03.jpg" alt="Photography" loading="lazy">
+        <span class="grid3d_label">Photography</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
+        <img src="works/streetdance/s3-05.jpg" alt="Street Dance" loading="lazy">
+        <span class="grid3d_label">Street Dance</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
+        <img src="zcool-photo/photo-07.jpg" alt="Architecture" loading="lazy">
+        <span class="grid3d_label">Architecture</span>
+      </div>
+      <!-- Row 2 -->
+      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
+        <img src="zcool-photo/photo-01.jpg" alt="Photography" loading="lazy">
+        <span class="grid3d_label">Photography</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
+        <img src="works/streetdance/s3-01.jpg" alt="Poster Design" loading="lazy">
+        <span class="grid3d_label">Poster · 2023</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
+        <img src="zcool-games/game-03.jpg" alt="Concept Art" loading="lazy">
+        <span class="grid3d_label">Concept Art</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
+        <img src="zcool-photo/photo-05.jpg" alt="Photography" loading="lazy">
+        <span class="grid3d_label">Photography</span>
+      </div>
+      <!-- Row 3 -->
+      <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
+        <img src="zcool-games/game-05.jpg" alt="Design" loading="lazy">
+        <span class="grid3d_label">Visual Design</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#photo'">
+        <img src="zcool-photo/photo-09.jpg" alt="Photography" loading="lazy">
+        <span class="grid3d_label">Photography</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='works/streetdance/index.html'">
+        <img src="works/streetdance/s3-03.jpg" alt="Street Dance" loading="lazy">
+        <span class="grid3d_label">Branding</span>
+      </div>
+      <div class="grid3d_card" onclick="window.location.href='project.html#ui'">
+        <img src="zcool-games/game-07.jpg" alt="Design" loading="lazy">
+        <span class="grid3d_label">Design · 2024</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Filmstrip -->
 <div class="home_filmstrip">
   <p class="home_filmstrip_text">WORKS</p>
@@ -3195,6 +3374,62 @@ function navTo(id) {
       m.style.transform = 'skewX(' + currentSkew.toFixed(2) + 'deg)';
     });
     requestAnimationFrame(skewTick);
+  })();
+})();
+
+// ===== 3D GRID GALLERY =====
+(function() {
+  var wrap = document.getElementById('grid3dWrap');
+  var section = document.getElementById('grid3dSection');
+  if (!wrap || !section) return;
+
+  var isTouch = window.matchMedia('(pointer: coarse)').matches;
+
+  // Base transform values (apechain exact values)
+  var baseRotX = 12, baseRotY = -8, baseRotZ = 1.5;
+  var curRotX = baseRotX, curRotY = baseRotY;
+  var targetRotX = baseRotX, targetRotY = baseRotY;
+
+  // Scroll-driven entrance
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 85%',
+    onEnter: function() {
+      gsap.fromTo(wrap,
+        { opacity: 0, scale: .92 },
+        { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' }
+      );
+      // Stagger cards
+      gsap.fromTo('.grid3d_card',
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: .8, ease: 'power2.out', stagger: .05 }
+      );
+    },
+    once: true
+  });
+
+  if (isTouch) return;
+
+  // Mouse parallax — subtle tilt tracking
+  section.addEventListener('mousemove', function(e) {
+    var rect = section.getBoundingClientRect();
+    var nx = (e.clientX - rect.left) / rect.width - .5;   // -0.5 to 0.5
+    var ny = (e.clientY - rect.top) / rect.height - .5;
+    targetRotX = baseRotX - ny * 6;
+    targetRotY = baseRotY + nx * 10;
+  });
+
+  section.addEventListener('mouseleave', function() {
+    targetRotX = baseRotX;
+    targetRotY = baseRotY;
+  });
+
+  // Smooth lerp loop
+  (function tick() {
+    curRotX += (targetRotX - curRotX) * .05;
+    curRotY += (targetRotY - curRotY) * .05;
+    wrap.style.transform = 'rotateX(' + curRotX.toFixed(3) + 'deg) rotateY(' + curRotY.toFixed(3) + 'deg) rotateZ(' + baseRotZ + 'deg)';
+    requestAnimationFrame(tick);
   })();
 })();
 
