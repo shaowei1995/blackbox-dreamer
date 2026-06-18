@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狩慌 — 小黑盒幻想家</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+@font-face { font-family: 'Zpix'; src: url('../../zpix-subset.woff2') format('woff2'); font-display: swap; }
+:root {
+  --dark: #020315; --light: #E2F0FF; --accent: #eb8280; --accent2: #6b2020;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+div { display:flex; }
+body { background:var(--dark); color:var(--light); font-family:'DM Sans',-apple-system,'Microsoft YaHei',sans-serif; overflow-x:hidden; min-height:100vh; }
+::-webkit-scrollbar { display:none; }
+
+/* SCROLL BAR */
+.scroll_bar { position:fixed; left:0; top:0; width:.3rem; height:0; background:linear-gradient(180deg,#eb8280,#6b2020); z-index:9999; transition:none; }
+
+/* NAV */
+nav { position:fixed; top:1.5rem; left:0; right:0; padding:0 3rem; justify-content:space-between; align-items:center; z-index:100; mix-blend-mode:difference; }
+.nav_back { font-family:'Zpix',monospace; font-size:.85rem; color:var(--light); text-decoration:none; letter-spacing:.1rem; transition:color .3s,letter-spacing .3s; }
+.nav_back:hover { color:var(--accent); letter-spacing:.2rem; }
+.nav_brand { font-family:'Zpix',monospace; font-size:.8rem; color:var(--light); text-decoration:none; letter-spacing:.1rem; opacity:.6; }
+
+/* HERO */
+.hero { position:relative; width:100%; height:100svh; min-height:500px; flex-direction:column; justify-content:flex-end; padding:6rem 5% 4rem; overflow:hidden; }
+.hero_bg { position:absolute; inset:0; background:linear-gradient(180deg,rgba(2,3,21,0) 40%,var(--dark) 100%); z-index:1; pointer-events:none; }
+.hero_img { position:absolute; inset:0; }
+.hero_img img { width:100%; height:100%; object-fit:cover; filter:brightness(.45) saturate(.8); }
+.hero_content { position:relative; z-index:2; flex-direction:column; gap:.8rem; }
+.hero_tag { font-family:'DM Mono',monospace; font-size:.65rem; color:var(--accent); letter-spacing:.3rem; text-transform:uppercase; opacity:.8; }
+.hero_title { font-family:'Zpix','Press Start 2P',monospace; font-size:clamp(2.5rem,5vw,5rem); color:var(--light); letter-spacing:.2rem; line-height:1.15; }
+.hero_sub { font-size:1rem; color:rgba(226,240,255,.6); letter-spacing:.2rem; }
+.hero_scroll { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); z-index:2; flex-direction:column; align-items:center; gap:.6rem; opacity:.3; }
+.hero_scroll p { font-family:'DM Mono',monospace; font-size:.6rem; letter-spacing:.15rem; }
+.hero_scroll_line { width:.05rem; height:2.5rem; background:var(--light); animation:scrollPulse 2s ease infinite; }
+@keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:.3} 50%{transform:scaleY(.4);opacity:.8} }
+
+/* GALLERY */
+.gallery { width:90%; max-width:80rem; flex-direction:column; gap:.8rem; margin:4rem auto; padding-bottom:6rem; }
+.g_row { width:100%; gap:.8rem; flex-wrap:wrap; }
+.g_item { position:relative; overflow:hidden; border-radius:.4rem; cursor:pointer; background:rgba(226,240,255,.04); border:1px solid rgba(226,240,255,.06); transition:border-color .3s; }
+.g_item:hover { border-color:rgba(235,130,128,.3); }
+.g_item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s var(--ease),filter .4s; filter:saturate(.85); }
+.g_item:hover img { transform:scale(1.04); filter:saturate(1); }
+.g_full { width:100%; aspect-ratio:16/6; }
+.g_half { width:calc(50% - .4rem); aspect-ratio:4/3; }
+.g_third { width:calc(33.333% - .55rem); aspect-ratio:3/4; }
+.g_wide { width:60%; aspect-ratio:3/2; }
+.g_narrow { width:calc(40% - .8rem); aspect-ratio:3/4; }
+
+/* LIGHTBOX */
+.lb { position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:9998; flex-direction:column; justify-content:center; align-items:center; opacity:0; pointer-events:none; transition:opacity .3s; cursor:pointer; }
+.lb.open { opacity:1; pointer-events:all; }
+.lb img { max-width:92vw; max-height:88vh; object-fit:contain; border-radius:.3rem; }
+.lb_close { position:absolute; top:1.5rem; right:2rem; font-size:1.5rem; color:var(--light); opacity:.5; cursor:pointer; transition:opacity .3s; }
+.lb_close:hover { opacity:1; }
+.lb_nav { position:absolute; top:50%; transform:translateY(-50%); font-size:2.5rem; color:var(--light); opacity:.25; cursor:pointer; padding:1.5rem; transition:opacity .3s; z-index:10; }
+.lb_nav:hover { opacity:.8; }
+.lb_prev { left:0; }
+.lb_next { right:0; }
+.lb_info { position:absolute; bottom:1.5rem; font-family:'DM Mono',monospace; font-size:.65rem; color:var(--light); opacity:.3; letter-spacing:.1rem; }
+
+/* FOOTER */
+footer { width:100%; justify-content:center; align-items:center; padding:2rem; border-top:1px solid rgba(226,240,255,.06); }
+footer a { font-family:'Zpix',monospace; font-size:.8rem; color:var(--light); text-decoration:none; letter-spacing:.15rem; border:1px solid rgba(226,240,255,.2); padding:.7rem 1.5rem; border-radius:.3rem; transition:border-color .3s,color .3s; }
+footer a:hover { border-color:var(--accent); color:var(--accent); }
+
+@media (max-width:768px) {
+  nav { padding:0 1.2rem; top:1rem; }
+  .hero { padding:4rem 4% 3rem; }
+  .hero_title { font-size:clamp(1.8rem,7vw,3rem); }
+  .gallery { width:96%; gap:.5rem; margin:2.5rem auto; }
+  .g_row { gap:.5rem; }
+  .g_half { width:100%; aspect-ratio:16/9; }
+  .g_third { width:calc(50% - .25rem); aspect-ratio:1/1; }
+  .g_wide { width:100%; aspect-ratio:16/9; }
+  .g_narrow { width:100%; aspect-ratio:16/9; }
+  .g_full { aspect-ratio:16/7; }
+}
+</style>
+</head>
+<body>
+<div class="scroll_bar" id="scrollBar"></div>
+
+<nav>
+  <a class="nav_back" href="../../project.html#ui">← 2026设计合集</a>
+  <a class="nav_brand" href="../../index.html">小黑盒幻想家</a>
+</nav>
+
+<div class="hero">
+  <div class="hero_img"><img src="001.png" alt="狩慌" loading="eager"></div>
+  <div class="hero_bg"></div>
+  <div class="hero_content">
+    <p class="hero_tag">Design Work · 悬疑剧集</p>
+    <h1 class="hero_title">《狩慌》</h1>
+    <p class="hero_sub">优酷港剧场概念海报</p>
+  </div>
+  <div class="hero_scroll"><p>SCROLL</p><div class="hero_scroll_line"></div></div>
+</div>
+
+<div class="gallery" id="gallery">
+  <div class="g_row"><div class="g_item g_full"><img src="001.png" alt="图1" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><img src="002.jpg" alt="图2" loading="lazy"></div><div class="g_item g_half"><img src="003.jpeg" alt="图3" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><img src="004.png" alt="图4" loading="lazy"></div><div class="g_item g_third"><img src="005.png" alt="图5" loading="lazy"></div><div class="g_item g_third"><img src="006.png" alt="图6" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_wide"><img src="007.png" alt="图7" loading="lazy"></div><div class="g_item g_narrow"><img src="008.png" alt="图8" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><img src="009.png" alt="图9" loading="lazy"></div><div class="g_item g_half"><img src="010.png" alt="图10" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><img src="011.jpeg" alt="图11" loading="lazy"></div><div class="g_item g_third"><img src="012.jpeg" alt="图12" loading="lazy"></div><div class="g_item g_third"><img src="013.jpeg" alt="图13" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_full"><img src="014.jpeg" alt="图14" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_full"><img src="015.png" alt="图15" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><img src="016.jpeg" alt="图16" loading="lazy"></div><div class="g_item g_half"><img src="017.jpeg" alt="图17" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><img src="018.png" alt="图18" loading="lazy"></div><div class="g_item g_third"><img src="019.png" alt="图19" loading="lazy"></div><div class="g_item g_third"><img src="020.png" alt="图20" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_wide"><img src="021.png" alt="图21" loading="lazy"></div><div class="g_item g_narrow"><img src="022.png" alt="图22" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_half"><img src="023.jpeg" alt="图23" loading="lazy"></div><div class="g_item g_half"><img src="024.png" alt="图24" loading="lazy"></div></div>
+  <div class="g_row"><div class="g_item g_third"><img src="025.png" alt="图25" loading="lazy"></div><div class="g_item g_third"><img src="026.png" alt="图26" loading="lazy"></div><div class="g_item g_third"><img src="027.png" alt="图27" loading="lazy"></div></div>
+</div>
+
+<footer>
+  <a href="../../project.html#ui">← 返回设计合集</a>
+</footer>
+
+<div class="lb" id="lb">
+  <span class="lb_close" id="lbClose">✕</span>
+  <span class="lb_nav lb_prev" id="lbPrev">‹</span>
+  <img id="lbImg" src="" alt="">
+  <span class="lb_nav lb_next" id="lbNext">›</span>
+  <p class="lb_info" id="lbInfo"></p>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Scroll progress bar
+window.addEventListener('scroll', function() {
+  var p = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('scrollBar').style.height = p + '%';
+}, {passive:true});
+
+// Gallery entrance
+document.querySelectorAll('.g_item').forEach(function(el, i) {
+  gsap.fromTo(el, {opacity:0, y:30}, {
+    opacity:1, y:0, duration:.8, ease:'power2.out',
+    scrollTrigger: {trigger:el, start:'top 90%', once:true},
+    delay: (i % 4) * .08
+  });
+});
+
+// Lightbox
+var imgs = Array.from(document.querySelectorAll('.g_item img')).map(function(el) {return el.src;});
+var lb = document.getElementById('lb');
+var lbImg = document.getElementById('lbImg');
+var lbInfo = document.getElementById('lbInfo');
+var cur = 0;
+function openLb(i) {
+  cur = i; lbImg.src = imgs[i];
+  lbInfo.textContent = (i+1) + ' / ' + imgs.length;
+  lb.classList.add('open'); document.body.style.overflow='hidden';
+}
+function closeLb() { lb.classList.remove('open'); document.body.style.overflow=''; }
+document.querySelectorAll('.g_item').forEach(function(el,i) {
+  el.addEventListener('click', function() {openLb(i);});
+});
+document.getElementById('lbClose').addEventListener('click', closeLb);
+lb.addEventListener('click', function(e) { if(e.target===lb) closeLb(); });
+document.getElementById('lbPrev').addEventListener('click', function(e) {
+  e.stopPropagation(); openLb((cur-1+imgs.length)%imgs.length);
+});
+document.getElementById('lbNext').addEventListener('click', function(e) {
+  e.stopPropagation(); openLb((cur+1)%imgs.length);
+});
+document.addEventListener('keydown', function(e) {
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLb();
+  if(e.key==='ArrowLeft') openLb((cur-1+imgs.length)%imgs.length);
+  if(e.key==='ArrowRight') openLb((cur+1)%imgs.length);
+});
+</script>
+</body>
+</html>
