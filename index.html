@@ -562,7 +562,6 @@ a:focus-visible, [onclick]:focus-visible {
   transform: translateX(3%);
 }
 .hwm_title > div:nth-child(3) p .hc_gold {
-  font-size: calc(var(--scale_nums) * 10rem);
   color: var(--theme_gold);
   -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_gold);
   text-shadow: 0 0 3rem rgba(0,84,250,.3);
@@ -572,8 +571,6 @@ a:focus-visible, [onclick]:focus-visible {
 .hc {
   display: inline-block;
   will-change: transform, opacity, filter;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
 }
 .hc_sep {
   display: inline-block;
@@ -4282,9 +4279,9 @@ function initAnimations() {
     opacity: 0, y: 25, scale: .85, filter: 'blur(6px)'
   });
 
-  // Line 3 "造梦的人": explosive from scale 0 with deep blur
+  // Line 3 "造梦的人": from below with deep blur
   gsap.set('.hwm_title > div:nth-child(3) .hc_gold', {
-    opacity: 0, y: 100, scale: 0, filter: 'blur(28px)', rotationY: -40
+    opacity: 0, y: 60, scale: .5, filter: 'blur(20px)', rotationY: -30
   });
 
   var heroTl = gsap.timeline({ delay: .15 });
@@ -4338,20 +4335,13 @@ function initAnimations() {
     duration: .45,
     ease: 'power2.out'
   }, 1.1)
-  // "造梦的人" — explosive scale punch, each char overshoots then settles
+  // "造梦的人" — dramatic entrance, direct to scale 1
   .to('.hwm_title > div:nth-child(3) .hc_gold', {
-    opacity: 1, y: 0, scale: 1.2, filter: 'blur(0px)', rotationY: 0,
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
     stagger: .09,
-    duration: .7,
-    ease: 'back.out(3.5)'
+    duration: .9,
+    ease: 'elastic.out(1, .5)'
   }, 1.6)
-  // Scale settle with bounce
-  .to('.hwm_title > div:nth-child(3) .hc_gold', {
-    scale: 1,
-    stagger: .06,
-    duration: .5,
-    ease: 'elastic.out(1.2, .35)'
-  }, 2.15)
 
   // Glow burst on gold chars — intense flash then fade to ambient
   .to('.hwm_title > div:nth-child(3) .hc_gold', {
