@@ -9,14 +9,14 @@
 <meta property="og:title" content="小黑盒幻想家 | Creative Portfolio">
 <meta property="og:description" content="游戏开发、视觉设计、芯片音乐创作">
 <meta property="og:type" content="website">
-<meta property="og:image" content="mascot-poster.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/mascot-poster.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preload" href="zpix-subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/zpix-subset.woff2" as="font" type="font/woff2" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 @font-face {
   font-family: 'Zpix';
-  src: url('zpix-subset.woff2') format('woff2');
+  src: url('https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/zpix-subset.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -81,7 +81,7 @@ body {
 .bg_layer {
   position: absolute; inset: -10%;
   width: 120%; height: 120%;
-  background-image: url('bg-texture.jpg'), url('bg-texture.jpg'), url('bg-texture.jpg');
+  background-image: url('https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/bg-texture.jpg'), url('https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/bg-texture.jpg'), url('https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/bg-texture.jpg');
   background-size: auto 110vh, auto 110vh, auto 110vh;
   background-position: 0% center, 50% center, 100% center;
   background-repeat: no-repeat, no-repeat, no-repeat;
@@ -791,13 +791,13 @@ a:focus-visible, [onclick]:focus-visible {
   line-height: 1rem;
   border: 1px solid rgba(255,255,255,.1);
   opacity: 0;
-  transition: opacity .4s ease;
+  transition: opacity .35s var(--ease-out-expo) .05s;
 }
 .sc_card.sc_active .sc_pill {
   opacity: 1;
 }
 
-/* Content overlay — bottom */
+/* Content overlay — bottom (jiejoe: cascading child reveals) */
 .sc_card_content {
   position: absolute;
   inset: 0;
@@ -806,11 +806,21 @@ a:focus-visible, [onclick]:focus-visible {
   padding: 1.8rem;
   z-index: 3;
   color: #fff;
-  opacity: 0;
-  transform: translateY(.5rem);
-  transition: opacity .4s ease, transform .4s ease;
 }
-.sc_card.sc_active .sc_card_content {
+.sc_card_content > * {
+  opacity: 0;
+  transform: translateY(.6rem);
+}
+.sc_card_name {
+  transition: opacity .5s var(--ease-out-expo) .12s, transform .5s var(--ease-out-expo) .12s;
+}
+.sc_card_desc {
+  transition: opacity .45s var(--ease-out-quart) .22s, transform .45s var(--ease-out-quart) .22s;
+}
+.sc_card_actions {
+  transition: opacity .4s ease .32s, transform .4s ease .32s;
+}
+.sc_card.sc_active .sc_card_content > * {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1861,12 +1871,12 @@ a:focus-visible, [onclick]:focus-visible {
   letter-spacing: calc(var(--scale_nums) * .2rem);
   margin-right: calc(var(--scale_nums) * 2rem);
   flex-shrink: 0;
-  transition: -webkit-text-stroke .5s var(--ease-out-expo), color .5s var(--ease-out-expo), transform .5s var(--ease-out-expo);
+  transition: -webkit-text-stroke .35s var(--ease-out-expo), color .35s var(--ease-out-expo) .05s, transform .5s var(--ease-out-quart);
 }
 .hp_project:hover .hpp_num {
   color: #fff;
   -webkit-text-stroke: 0;
-  transform: translateX(.5rem);
+  transform: translateX(.5rem) scale(1.05);
 }
 }
 .hpp_info {
@@ -1892,7 +1902,7 @@ a:focus-visible, [onclick]:focus-visible {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: background-position .6s ease, color .4s ease;
+  transition: background-position .7s var(--ease-reveal) .06s, -webkit-text-fill-color .4s ease .1s;
 }
 .hp_project:hover .hpp_info .title_en {
   background-position: -100% 0;
@@ -1923,8 +1933,8 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: calc(var(--scale_nums) * 2rem);
   color: var(--theme_gold);
   opacity: 0;
-  transform: translateX(-1rem);
-  transition: opacity .4s ease, transform .4s ease;
+  transform: translateX(-1.5rem);
+  transition: opacity .3s ease .15s, transform .5s cubic-bezier(.22, 1, .36, 1) .12s;
   z-index: 1;
 }
 .hp_project:hover .hpp_arrow {
@@ -2080,17 +2090,30 @@ a:focus-visible, [onclick]:focus-visible {
   gap: 1.5rem; align-items: center;
   font-size: 1.1rem;
   opacity: .6;
-  transition: opacity .4s ease, transform .4s ease;
+  transition: opacity .4s ease, transform .45s var(--ease-out-quart), border-color .2s ease, background .5s ease;
   cursor: default;
   width: 100%;
   max-width: 36rem;
   justify-content: flex-start;
-  padding: .6rem 1rem;
+  padding: .6rem 1rem .6rem 1.2rem;
   border-radius: .5rem;
   border: 1px solid rgba(226,240,255,.06);
   background: rgba(226,240,255,.02);
+  position: relative;
+  overflow: hidden;
 }
-.hct_item:hover { opacity: 1; transform: translateX(.5rem); border-color: rgba(0,84,250,.2); }
+.hct_item::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 2px; height: 100%;
+  background: var(--theme_gold);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .25s var(--ease-out-expo);
+}
+.hct_item:hover::after { transform: scaleY(1); }
+.hct_item:hover { opacity: 1; transform: translateX(.5rem); border-color: rgba(0,84,250,.25); background: rgba(226,240,255,.04); }
 .hct_item .label {
   font-family: 'DM Mono', 'Zpix', monospace;
   font-size: .6rem;
@@ -2179,10 +2202,10 @@ a:focus-visible, [onclick]:focus-visible {
   text-transform: uppercase;
   letter-spacing: .1em;
   cursor: pointer;
-  transition: color .3s ease, letter-spacing .3s ease;
+  transition: color .3s ease, letter-spacing .3s ease, transform .3s var(--ease-out-quart);
   letter-spacing: .05rem;
 }
-.hbb_menu p:hover { color: var(--theme_light); letter-spacing: .15rem; }
+.hbb_menu p:hover { color: var(--theme_light); letter-spacing: .15rem; transform: translateY(-.12rem); }
 .hbb_copy {
   font-family: 'DM Mono', monospace;
   font-size: .65rem;
@@ -3358,7 +3381,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
 
 <!-- Floating Project Card -->
 <div class="float_card" id="floatCard">
-  <img id="floatImg" src="games-collection.jpg" alt="preview">
+  <img id="floatImg" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/games-collection.jpg" alt="preview">
 </div>
 
 <!-- ==================== MAIN CONTENT ==================== -->
@@ -3401,7 +3424,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <div class="showcase_cylinder" id="showcaseCylinder">
 
       <div class="sc_card" data-href="works/projects/proj-01/index.html" data-color1="#4785FC" data-color2="#1A3570" data-tags="Design,Poster" data-subtitle="FILM POSTER DESIGN" data-desc="电影《长安的荔枝》国际版及制式海报，以唐代诗意为底色，融合现代视觉语言。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-01/002.jpg" alt="长安的荔枝" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-01/002.jpg" alt="长安的荔枝" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">长安的荔枝</p>
@@ -3411,7 +3434,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-02/index.html" data-color1="#eb8280" data-color2="#6b1a1a" data-tags="Design,Poster" data-subtitle="YOUKU DRAMA POSTER" data-desc="优酷港剧场《狩慌》概念海报，悬疑氛围与视觉张力的极致呈现。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-02/001.png" alt="狩慌" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-02/001.png" alt="狩慌" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">狩慌</p>
@@ -3421,7 +3444,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-03/index.html" data-color1="#ebbf9a" data-color2="#8b5010" data-tags="Design,Poster" data-subtitle="DRAMA VISUAL DESIGN" data-desc="《乡村爱情14》春节档视觉海报，以质朴温情的乡村图景呈现中国式喜剧。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-03/001.jpg" alt="乡村爱情14" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-03/001.jpg" alt="乡村爱情14" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">乡村爱情14</p>
@@ -3431,7 +3454,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-04/index.html" data-color1="#a281ff" data-color2="#4a1a80" data-tags="Design,Poster" data-subtitle="ANCIENT MYSTERY DRAMA" data-desc="《清明上河图密码》影视海报，古典与悬疑交织，北宋市井气韵跃然纸上。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-04/001.png" alt="清明上河图密码" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-04/001.png" alt="清明上河图密码" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">清明上河图密码</p>
@@ -3441,7 +3464,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-05/index.html" data-color1="#80C8E6" data-color2="#1a4060" data-tags="Design,Poster" data-subtitle="THRILLER DRAMA POSTER" data-desc="《白夜破晓》影视海报设计，在黑白之间营造极致的悬疑张力与视觉冲击。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-05/001.png" alt="白夜破晓" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-05/001.png" alt="白夜破晓" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">白夜破晓</p>
@@ -3451,7 +3474,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-06/index.html" data-color1="#96BBFF" data-color2="#1a2a60" data-tags="Design,Poster" data-subtitle="HK DRAMA POSTER" data-desc="《新闻女王2》影视海报设计，强势回归，权力与欲望的视觉战场。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-06/001.png" alt="新闻女王2" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/projects/proj-06/001.png" alt="新闻女王2" loading="lazy"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">新闻女王2</p>
@@ -3461,7 +3484,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#ebbf9a" data-color2="#6b5010" data-tags="Branding,Design" data-subtitle="STREET DANCE VISUAL" data-desc="《这！就是街舞》第三季海报设计与第四季潮玩模型，将街舞精神融入视觉语言。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/streetdance/s3-01.jpg" alt="街舞" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/works/streetdance/s3-01.jpg" alt="街舞" loading="lazy"></div>
         <span class="sc_pill">Branding</span>
         <div class="sc_card_content">
           <p class="sc_card_name">这就是街舞</p>
@@ -3471,7 +3494,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="project.html#photo" data-color1="#4785FC" data-color2="#1A3570" data-tags="Photo,Architecture" data-subtitle="ARCHITECTURAL PHOTOGRAPHY" data-desc="以建筑为画布，捕捉光影与几何的交响，记录城市肌理中的诗意瞬间。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="zcool-photo/photo-03.jpg" alt="Photography" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/zcool-photo/photo-03.jpg" alt="Photography" loading="lazy"></div>
         <span class="sc_pill">Photo</span>
         <div class="sc_card_content">
           <p class="sc_card_name">建筑摄影</p>
@@ -3492,7 +3515,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <div class="hac_media_row">
       <div class="hac_video" id="hacVideo">
         <video autoplay loop muted playsinline preload="none">
-          <source src="about-animation.mp4" type="video/mp4">
+          <source src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/about-animation.mp4" type="video/mp4">
         </video>
       </div>
       <div class="hac_portrait_wrap">
@@ -3503,7 +3526,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
         </div>
         <div class="hac_portrait_main">
           <video autoplay loop muted playsinline preload="none">
-            <source src="gameboy-anim-solid.mp4" type="video/mp4">
+            <source src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/gameboy-anim-solid.mp4" type="video/mp4">
           </video>
         </div>
         <div class="hac_portrait_textline">
@@ -3535,7 +3558,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     </div>
     <div class="hss_block">
       <video autoplay loop muted playsinline preload="none">
-        <source src="skill-game.mp4" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/skill-game.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -3548,7 +3571,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       <p class="num eng">02</p>
     </div>
     <div class="hss_block">
-      <img src="skill-photo.webp" alt="visual design" loading="lazy">
+      <img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/skill-photo.webp" alt="visual design" loading="lazy">
     </div>
   </div>
   <div class="home_skills_skill">
@@ -3561,7 +3584,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     </div>
     <div class="hss_block">
       <video autoplay loop muted playsinline preload="none">
-        <source src="skill-music.mp4" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/skill-music.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -3598,7 +3621,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <p class="hvb_corner hvb_c4">+</p>
     <div class="hvb_content">
       <video autoplay loop muted playsinline preload="none">
-        <source src="mascot-live-solid.mp4" type="video/mp4">
+        <source src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/mascot-live-solid.mp4" type="video/mp4">
       </video>
       <p>小黑盒幻想家</p>
     </div>
@@ -3625,7 +3648,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
 
 <!-- Projects List -->
 <div class="home_projects">
-  <div class="hp_project" data-img="icon-ui.png" data-project="ui">
+  <div class="hp_project" data-img="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-ui.png" data-project="ui">
     <p class="hpp_num eng">01</p>
     <div class="hpp_info">
       <p class="title_en">Design Collection</p>
@@ -3634,7 +3657,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2024-2026</p>
   </div>
-  <div class="hp_project" data-img="icon-photo-new.png" data-project="photo">
+  <div class="hp_project" data-img="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-photo-new.png" data-project="photo">
     <p class="hpp_num eng">02</p>
     <div class="hpp_info">
       <p class="title_en">Architecture Photography</p>
@@ -3643,7 +3666,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2019-2026</p>
   </div>
-  <div class="hp_project" data-img="icon-music.png" data-project="music">
+  <div class="hp_project" data-img="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-music.png" data-project="music">
     <p class="hpp_num eng">03</p>
     <div class="hpp_info">
       <p class="title_en">Chiptune Music</p>
@@ -3652,7 +3675,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2025-2026</p>
   </div>
-  <div class="hp_project" data-img="icon-ui.png" data-project="ott">
+  <div class="hp_project" data-img="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-ui.png" data-project="ott">
     <p class="hpp_num eng">04</p>
     <div class="hpp_info">
       <p class="title_en">OTT Visual Design</p>
@@ -3661,7 +3684,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <span class="hpp_arrow">→</span>
     <p class="hpp_time">2022-2025</p>
   </div>
-  <div class="hp_project" data-img="icon-portfolio-new.png" data-project="ip">
+  <div class="hp_project" data-img="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-portfolio-new.png" data-project="ip">
     <p class="hpp_num eng">05</p>
     <div class="hpp_info">
       <p class="title_en">IP Model Design</p>
@@ -3678,11 +3701,11 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   <div class="home_photos_box">
     <p class="hpb_title eng">PHOTOS</p>
     <div class="home_photos_plates">
-      <div class="hpp_plate hpp_plate1"><img src="f487e3da-f7d4-412f-9257-d91e617fd7f7.jpg" alt="photo" loading="lazy"></div>
-      <div class="hpp_plate hpp_plate2"><img src="ac84482e-9c15-4875-8e77-428025b07413.jpg" alt="photo" loading="lazy"></div>
-      <div class="hpp_plate hpp_plate3"><img src="23778e51-2a7c-4164-9e5f-cf3490a9c557.jpg" alt="photo" loading="lazy"></div>
-      <div class="hpp_plate hpp_plate4"><img src="75be0496-293c-4aab-b970-7b60957d8067.jpg" alt="photo" loading="lazy"></div>
-      <div class="hpp_plate hpp_plate5"><img src="4ccefb35-67a4-4bea-a771-af1f5c20dca9.jpg" alt="photo" loading="lazy"></div>
+      <div class="hpp_plate hpp_plate1"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/f487e3da-f7d4-412f-9257-d91e617fd7f7.jpg" alt="photo" loading="lazy"></div>
+      <div class="hpp_plate hpp_plate2"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/ac84482e-9c15-4875-8e77-428025b07413.jpg" alt="photo" loading="lazy"></div>
+      <div class="hpp_plate hpp_plate3"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/23778e51-2a7c-4164-9e5f-cf3490a9c557.jpg" alt="photo" loading="lazy"></div>
+      <div class="hpp_plate hpp_plate4"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/75be0496-293c-4aab-b970-7b60957d8067.jpg" alt="photo" loading="lazy"></div>
+      <div class="hpp_plate hpp_plate5"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/4ccefb35-67a4-4bea-a771-af1f5c20dca9.jpg" alt="photo" loading="lazy"></div>
     </div>
     <p class="photos_tip eng">explore more photos</p>
     <p class="photos_time eng">2019 <span>—</span> 2026</p>
@@ -3694,9 +3717,9 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
 <div class="home_contact" id="contact">
   <div class="home_contact_text">
     <p class="hct_title eng">contact</p>
-    <img class="hct_float hct_float1" src="icon-games.jpg" alt="" loading="lazy">
-    <img class="hct_float hct_float2" src="icon-photo.jpg" alt="" loading="lazy">
-    <img class="hct_float hct_float3" src="icon-art.jpg" alt="" loading="lazy">
+    <img class="hct_float hct_float1" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-games.jpg" alt="" loading="lazy">
+    <img class="hct_float hct_float2" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-photo.jpg" alt="" loading="lazy">
+    <img class="hct_float hct_float3" src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/icon-art.jpg" alt="" loading="lazy">
   </div>
   <div class="hct_items">
     <div class="hct_item">
@@ -3717,7 +3740,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     </div>
     <div class="hct_item hct_qr_item">
       <span class="label eng">抖音</span>
-      <div class="hct_qr"><img src="douyin-qr.png" alt="抖音二维码"></div>
+      <div class="hct_qr"><img src="https://cdn.jsdelivr.net/gh/shaowei1995/blackbox-dreamer@main/douyin-qr.png" alt="抖音二维码"></div>
     </div>
   </div>
   <div class="home_contact_bottom"></div>
@@ -3956,6 +3979,20 @@ gsap.ticker.lagSmoothing(0);
   })();
 })();
 
+// ===== FILMSTRIP SCROLL-VELOCITY SKEW =====
+// jiejoe: elements visually "lean into" scroll momentum, then spring back — inertia feeling
+(function() {
+  var filmRow = document.getElementById('filmRow1');
+  if (!filmRow) return;
+  var quickSkew = gsap.quickTo(filmRow, 'skewX', { duration: 0.9, ease: 'power3.out' });
+  var lastY = window.scrollY;
+  window.addEventListener('scroll', function() {
+    var dy = window.scrollY - lastY;
+    lastY = window.scrollY;
+    quickSkew(Math.max(-3.5, Math.min(3.5, dy * -0.09)));
+  }, { passive: true });
+})();
+
 // ===== MENU =====
 function toggleMenu() {
   var toggle = document.getElementById('menuToggle');
@@ -4130,26 +4167,32 @@ function navTo(id) {
 
 // ===== GSAP ANIMATIONS =====
 function initAnimations() {
-  // Hero title entrance — line-mask reveal (jiejoe: clip-path wipe from bottom)
+  // Hero title entrance — clip-path wipe + 3D rotationX flip (jiejoe: physical card rotating into view)
+  gsap.set('.hwm_title > div', {
+    rotationX: -18, transformPerspective: 1200, transformOrigin: '50% 100%'
+  });
   var heroTl = gsap.timeline({ delay: .15 });
-  // Line 1: sweep reveal from left
+  // Line 1: sweep reveal + 3D flip from bottom-pivot
   heroTl.to('.hwm_title > div:nth-child(1)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
-    duration: 1.0,
+    rotationX: 0,
+    duration: 1.1,
     ease: 'expo.out'
   })
-  // Line 2: sweep reveal with offset
+  // Line 2: sweep reveal + flip, offset
   .to('.hwm_title > div:nth-child(2)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
-    duration: 1.0,
+    rotationX: 0,
+    duration: 1.1,
     ease: 'expo.out'
-  }, .2)
-  // Line 3: sweep reveal last
+  }, .22)
+  // Line 3: sweep reveal + flip, last
   .to('.hwm_title > div:nth-child(3)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
-    duration: 1.0,
+    rotationX: 0,
+    duration: 1.1,
     ease: 'expo.out'
-  }, .4)
+  }, .44)
   // Blur balls breathe in
   .from('#blur1', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, 0)
   .from('#blur2', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, .2);
@@ -4257,7 +4300,8 @@ function initAnimations() {
         aboutIntro.appendChild(span);
       });
       gsap.to(aboutIntro.querySelectorAll('span'), {
-        opacity: 1, y: 0, stagger: 0.01,
+        opacity: 1, y: 0,
+        stagger: { each: 0.008, from: 'start', ease: 'power2.in' },
         scrollTrigger: {
           trigger: '.home_about',
           start: 'top 70%',
@@ -4342,6 +4386,11 @@ function initAnimations() {
       start: 'top 78%',
       onEnter: function() {
         s.classList.add('show');
+        // Sub-cascade: role label → title chars → description (jiejoe: content builds from top)
+        var role = s.querySelector('.role');
+        if (role) gsap.from(role, { y: 10, opacity: 0, duration: .4, ease: 'power3.out' });
+        var titleZh = s.querySelector('.title_zh');
+        if (titleZh) gsap.from(titleZh, { y: 10, opacity: 0, duration: .5, ease: 'power2.out', delay: .42 });
         var titleSpans = s.querySelectorAll('.title_en span');
         if (titleSpans.length) {
           gsap.fromTo(titleSpans,
@@ -4457,7 +4506,8 @@ function initAnimations() {
     scrollTrigger: { trigger: '.home_contact', start: 'top 75%' }
   });
   gsap.from('.hct_item', {
-    y: 25, opacity: 0, stagger: .1, duration: .6, ease: 'power3.out',
+    y: 30, opacity: 0, rotationX: -18, transformPerspective: 800, transformOrigin: '50% 0%',
+    stagger: .13, duration: .8, ease: 'power3.out',
     scrollTrigger: { trigger: '.home_contact', start: 'top 70%' }
   });
   gsap.from('.hct_float', {
