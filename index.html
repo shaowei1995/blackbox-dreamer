@@ -508,9 +508,9 @@ a:focus-visible, [onclick]:focus-visible {
 .hw_main {
   position: absolute;
   justify-content: center;
-  width: 82rem; height: 42rem;
+  width: 65rem; height: 38rem;
   margin-bottom: 6rem;
-  --scale_nums: 1.15;
+  --scale_nums: 1;
 }
 .hwm_title {
   position: absolute;
@@ -526,7 +526,7 @@ a:focus-visible, [onclick]:focus-visible {
 .hwm_title p {
   position: relative;
   font-family: 'Zpix', 'Press Start 2P', monospace;
-  font-size: clamp(4rem, calc(var(--scale_nums) * 11rem), 16rem);
+  font-size: clamp(3.5rem, calc(var(--scale_nums) * 10rem), 12rem);
   font-weight: 900;
   line-height: 1.15;
   letter-spacing: clamp(.2rem, calc(var(--scale_nums) * .5rem), .8rem);
@@ -535,8 +535,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hwm_title > div:first-child p {
   color: var(--theme_light);
-  font-size: clamp(5rem, calc(var(--scale_nums) * 15rem), 22rem);
-  -webkit-text-stroke: calc(var(--scale_nums) * .2rem) var(--theme_light);
+  -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_light);
   transform: translateX(15%);
   text-shadow: 0 0 4rem rgba(226,240,255,.2), 0 0 8rem rgba(71,133,252,.1);
 }
@@ -2410,7 +2409,7 @@ a, button, [onclick], [role="button"] {
 
 /* ===== RESPONSIVE ===== */
 @media (max-aspect-ratio: 3/2) {
-  .hw_main { --scale_nums: 1.35; }
+  .hw_main { --scale_nums: 1.3; }
 }
 @media (max-aspect-ratio: 1/1) {
   /* Showcase */
@@ -2439,7 +2438,7 @@ a, button, [onclick], [role="button"] {
   .menu_sel .sel_en::before { font-size: 3rem; line-height: 3rem; }
 
   /* Hero */
-  .hw_main { --scale_nums: .78; width: 92vw; height: auto; margin-top: 18vh; margin-left: 4vw; margin-bottom: 0; }
+  .hw_main { --scale_nums: .65; width: 92vw; height: auto; margin-top: 18vh; margin-left: 4vw; margin-bottom: 0; }
   .hw_blurball1 { width: 40rem; height: 40rem; top: -15rem; left: -15rem; }
   .hw_blurball2 { width: 35rem; height: 35rem; bottom: -15rem; right: -15rem; }
   .hw_scrolltip p, .hw_scrolltip span { font-size: .6rem; }
@@ -2529,7 +2528,7 @@ a, button, [onclick], [role="button"] {
   .sc_btn_view { font-size: .4rem; padding: .3rem .8rem; }
   .sc_pill { font-size: .35rem; padding: .2rem .4rem; }
   .showcase_title { font-size: 1.6rem; }
-  .hw_main { --scale_nums: .6; margin-top: 15vh; }
+  .hw_main { --scale_nums: .5; margin-top: 15vh; }
   .home_about { --scale_nums: .7; }
   .home_idea { height: 28rem; }
   .home_idea_container { --scale_nums: .45; }
@@ -2555,7 +2554,7 @@ a, button, [onclick], [role="button"] {
   .home_bottom { padding: 4rem 0 2rem; }
 }
 @media (max-aspect-ratio: 1/2) {
-  .hw_main { --scale_nums: .5; margin-top: 12vh; }
+  .hw_main { --scale_nums: .4; margin-top: 12vh; }
   .home_about { --scale_nums: .6; }
   .home_idea { height: 22rem; }
   .home_idea_container { --scale_nums: .35; }
@@ -2584,7 +2583,7 @@ a, button, [onclick], [role="button"] {
   .contact_btn { display: none; }
 
   /* Hero */
-  .hw_main { --scale_nums: .55; width: 96vw; margin-top: 14vh; margin-left: 2vw; }
+  .hw_main { --scale_nums: .46; width: 96vw; margin-top: 14vh; margin-left: 2vw; }
   .hwm_title > div p { letter-spacing: .15rem; }
   .hw_scrolltip { display: none; }
   .hw_blurball1 { width: 30rem; height: 30rem; top: -10rem; left: -10rem; }
@@ -2692,7 +2691,7 @@ a, button, [onclick], [role="button"] {
 
 /* ===== LANDSCAPE MOBILE (height < 500px) ===== */
 @media (max-height: 500px) and (orientation: landscape) {
-  .hw_main { --scale_nums: .65; margin-top: 8vh; }
+  .hw_main { --scale_nums: .55; margin-top: 8vh; }
   .home_welcome { min-height: 100svh; }
   .hw_scrolltip { display: none; }
   .menubox_nav { top: .6rem; right: .6rem; padding: .35rem .8rem; gap: .6rem; }
@@ -2703,7 +2702,7 @@ a, button, [onclick], [role="button"] {
 /* ===== SMALL PHONES (<=430px) ===== */
 @media (max-width: 430px) {
   * { font-size: clamp(11px, 1.3vw, 14px); }
-  .hw_main { --scale_nums: .45; }
+  .hw_main { --scale_nums: .4; }
   .hac_title { font-size: clamp(2rem, 7vw, 2.8rem); letter-spacing: .15rem; }
   .hss_text .title_en, .hss_text .title_en_stroke { font-size: clamp(2rem, 7vw, 2.8rem) !important; }
   .home_works_title p { font-size: clamp(2rem, 7vw, 2.8rem) !important; }
