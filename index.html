@@ -561,11 +561,13 @@ a:focus-visible, [onclick]:focus-visible {
   -webkit-text-stroke: calc(var(--scale_nums) * .2rem) var(--theme_light);
   transform: translateX(3%);
 }
-.hwm_title > div:nth-child(3) p span {
+.hwm_title > div:nth-child(3) p .hc_gold {
   font-size: calc(var(--scale_nums) * 10rem);
   color: var(--theme_gold);
   -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_gold);
   text-shadow: 0 0 3rem rgba(0,84,250,.3);
+  -webkit-text-fill-color: var(--theme_gold);
+  background: none !important;
 }
 
 .hw_scrolltip {
@@ -3469,9 +3471,9 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   <div class="hw_blurball hw_blurball2" id="blur2"></div>
   <div class="hw_main">
     <div class="hwm_title">
-      <div><p>小黑盒</p></div>
-      <div><p>幻想家</p></div>
-      <div><p>认真<span>造梦的人</span></p></div>
+      <div><p><span class="hc">小</span><span class="hc">黑</span><span class="hc">盒</span></p></div>
+      <div><p><span class="hc">幻</span><span class="hc">想</span><span class="hc">家</span></p></div>
+      <div><p><span class="hc">认</span><span class="hc">真</span><span class="hc_sep"></span><span class="hc hc_gold">造</span><span class="hc hc_gold">梦</span><span class="hc hc_gold">的</span><span class="hc hc_gold">人</span></p></div>
     </div>
   </div>
   <div class="hw_scrolltip" id="hwScrolltip">
@@ -4236,48 +4238,108 @@ function navTo(id) {
 
 // ===== GSAP ANIMATIONS =====
 function initAnimations() {
-  // Hero title entrance — clip-path wipe + 3D rotationX flip (jiejoe: physical card rotating into view)
+  // Hero title entrance — per-character stagger reveal with blur dissolve + 3D depth
   gsap.set('.hwm_title > div', {
-    rotationX: -18, transformPerspective: 1200, transformOrigin: '50% 100%'
+    rotationX: -12, transformPerspective: 1200, transformOrigin: '50% 100%'
   });
+
+  // Set initial state for all characters
+  gsap.set('.hwm_title .hc', {
+    opacity: 0, y: 40, scale: .7, filter: 'blur(12px)', rotationY: -15
+  });
+
   var heroTl = gsap.timeline({ delay: .15 });
-  // Line 1: sweep reveal + 3D flip from bottom-pivot
+
+  // Line 1 "小黑盒": sweep reveal + characters cascade in from below with blur dissolve
   heroTl.to('.hwm_title > div:nth-child(1)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
     rotationX: 0,
-    duration: 1.1,
+    duration: 1.2,
     ease: 'expo.out'
   })
-  // Line 2: sweep reveal + flip, offset
+  .to('.hwm_title > div:nth-child(1) .hc', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
+    stagger: .08,
+    duration: .9,
+    ease: 'back.out(1.4)'
+  }, .05)
+
+  // Line 2 "幻想家": characters slide in from right with rotation
   .to('.hwm_title > div:nth-child(2)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
     rotationX: 0,
-    duration: 1.1,
+    duration: 1.2,
     ease: 'expo.out'
-  }, .22)
-  // Line 3: sweep reveal + flip, last
+  }, .3)
+  .to('.hwm_title > div:nth-child(2) .hc', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
+    stagger: .1,
+    duration: .85,
+    ease: 'back.out(1.2)'
+  }, .35)
+
+  // Line 3 "认真 造梦的人": two-phase — first "认真", then "造梦的人" with emphasis
   .to('.hwm_title > div:nth-child(3)', {
     clipPath: 'inset(-30% -10% 0% -10%)',
     rotationX: 0,
-    duration: 1.1,
+    duration: 1.2,
     ease: 'expo.out'
-  }, .44)
+  }, .6)
+  // "认真" — subtle entrance
+  .to('.hwm_title > div:nth-child(3) .hc:not(.hc_gold)', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
+    stagger: .08,
+    duration: .8,
+    ease: 'power3.out'
+  }, .65)
+  // "造梦的人" — dramatic entrance with overshoot
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
+    stagger: .1,
+    duration: 1,
+    ease: 'elastic.out(1, .6)'
+  }, .9)
+  // After all text lands, pulse glow on the gold characters
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    textShadow: '0 0 4rem rgba(0,84,250,.6), 0 0 8rem rgba(100,40,200,.3)',
+    duration: .6,
+    ease: 'power2.in',
+    yoyo: true,
+    repeat: 1
+  }, 1.8)
+
+  // Subtle idle float — each character bobs gently at different rates
+  .add(function() {
+    document.querySelectorAll('.hwm_title .hc').forEach(function(c, i) {
+      gsap.to(c, {
+        y: -3 + Math.random() * 6 - 3,
+        duration: 2.5 + Math.random() * 2,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: i * .12
+      });
+    });
+  }, 2.4)
+
   // Blur balls breathe in
   .from('#blur1', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, 0)
   .from('#blur2', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, .2);
 
-  // Hero scroll tip — word-by-word stagger reveal (jiejoe: text unfolds from nothing)
+  // Hero scroll tip — character-by-character stagger reveal
   (function() {
     var tipEl = document.getElementById('hwScrolltip');
     var tipP = tipEl ? tipEl.querySelector('p') : null;
     if (tipEl && tipP) {
-      var words = tipP.textContent.trim().split(' ');
-      tipP.innerHTML = words.map(function(w) {
-        return '<span class="hw_tip_word" style="display:inline-block;opacity:0;transform:translateY(8px)">' + w + '</span>';
-      }).join(' ');
+      var text = tipP.textContent.trim();
+      tipP.innerHTML = text.split('').map(function(ch) {
+        if (ch === ' ') return ' ';
+        return '<span class="hw_tip_char" style="display:inline-block;opacity:0;transform:translateY(6px) scale(.8);filter:blur(4px)">' + ch + '</span>';
+      }).join('');
       gsap.set(tipEl, { opacity: 1 });
-      gsap.to(tipEl.querySelectorAll('.hw_tip_word'), {
-        opacity: 1, y: 0, stagger: .07, duration: .8, ease: 'power3.out', delay: 1.4
+      gsap.to(tipEl.querySelectorAll('.hw_tip_char'), {
+        opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+        stagger: .04, duration: .6, ease: 'back.out(1.5)', delay: 1.8
       });
       gsap.to('#hwScrolltip > span', {
         y: 6, repeat: -1, yoyo: true, duration: 1.2, ease: 'sine.inOut', delay: 2
