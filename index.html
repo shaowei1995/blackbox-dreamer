@@ -535,8 +535,10 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hwm_title > div:first-child p {
   color: var(--theme_light);
-  -webkit-text-stroke: calc(var(--scale_nums) * .15rem) var(--theme_light);
-  transform: translateX(15%);
+  font-size: clamp(5rem, calc(var(--scale_nums) * 16rem), 20rem);
+  -webkit-text-stroke: calc(var(--scale_nums) * .25rem) var(--theme_light);
+  letter-spacing: clamp(.3rem, calc(var(--scale_nums) * .8rem), 1.2rem);
+  transform: translateX(10%);
   text-shadow: 0 0 4rem rgba(226,240,255,.2), 0 0 8rem rgba(71,133,252,.1);
 }
 .hwm_title > div:first-child .hc {
