@@ -569,6 +569,21 @@ a:focus-visible, [onclick]:focus-visible {
   -webkit-text-fill-color: var(--theme_gold);
   background: none !important;
 }
+.hc {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.hc_sep {
+  display: inline-block;
+  width: calc(var(--scale_nums) * .8rem);
+}
+@keyframes hc_shimmer {
+  0% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
+  50% { filter: brightness(1.6) drop-shadow(0 0 1.5rem rgba(71,133,252,.5)); }
+  100% { filter: brightness(1) drop-shadow(0 0 0 transparent); }
+}
 
 .hw_scrolltip {
   position: absolute; bottom: 2.5rem;
@@ -4238,89 +4253,153 @@ function navTo(id) {
 
 // ===== GSAP ANIMATIONS =====
 function initAnimations() {
-  // Hero title entrance — per-character stagger reveal with blur dissolve + 3D depth
+  // Hero title entrance — distinct personality per line
+
+  // Container 3D perspective
   gsap.set('.hwm_title > div', {
     rotationX: -12, transformPerspective: 1200, transformOrigin: '50% 100%'
   });
 
-  // Set initial state for all characters
-  gsap.set('.hwm_title .hc', {
-    opacity: 0, y: 40, scale: .7, filter: 'blur(12px)', rotationY: -15
+  // Line 1 "小黑盒": random scatter → snap into place (digital reassembly)
+  gsap.set('.hwm_title > div:nth-child(1) .hc', function(i) {
+    return {
+      opacity: 0,
+      x: gsap.utils.random(-60, 60),
+      y: gsap.utils.random(-80, 80),
+      scale: 0,
+      rotation: gsap.utils.random(-30, 30),
+      filter: 'blur(18px)'
+    };
+  });
+
+  // Line 2 "幻想家": 3D flip from behind (rotateX from -90)
+  gsap.set('.hwm_title > div:nth-child(2) .hc', {
+    opacity: 0, y: 50, scale: .2, filter: 'blur(22px)', rotationX: -90
+  });
+
+  // Line 3 "认真": gentle fade from below
+  gsap.set('.hwm_title > div:nth-child(3) .hc:not(.hc_gold)', {
+    opacity: 0, y: 25, scale: .85, filter: 'blur(6px)'
+  });
+
+  // Line 3 "造梦的人": explosive from scale 0 with deep blur
+  gsap.set('.hwm_title > div:nth-child(3) .hc_gold', {
+    opacity: 0, y: 100, scale: 0, filter: 'blur(28px)', rotationY: -40
   });
 
   var heroTl = gsap.timeline({ delay: .15 });
 
-  // Line 1 "小黑盒": sweep reveal + characters cascade in from below with blur dissolve
+  // LINE 1 "小黑盒" — scattered pixels snap together like digital assembly
   heroTl.to('.hwm_title > div:nth-child(1)', {
-    clipPath: 'inset(-30% -10% 0% -10%)',
-    rotationX: 0,
-    duration: 1.2,
-    ease: 'expo.out'
+    clipPath: 'inset(-30% -10% 0% -10%)', rotationX: 0,
+    duration: 1.2, ease: 'expo.out'
   })
   .to('.hwm_title > div:nth-child(1) .hc', {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
-    stagger: .08,
-    duration: .9,
-    ease: 'back.out(1.4)'
-  }, .05)
-
-  // Line 2 "幻想家": characters slide in from right with rotation
-  .to('.hwm_title > div:nth-child(2)', {
-    clipPath: 'inset(-30% -10% 0% -10%)',
-    rotationX: 0,
-    duration: 1.2,
-    ease: 'expo.out'
-  }, .3)
-  .to('.hwm_title > div:nth-child(2) .hc', {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
-    stagger: .1,
-    duration: .85,
-    ease: 'back.out(1.2)'
-  }, .35)
-
-  // Line 3 "认真 造梦的人": two-phase — first "认真", then "造梦的人" with emphasis
-  .to('.hwm_title > div:nth-child(3)', {
-    clipPath: 'inset(-30% -10% 0% -10%)',
-    rotationX: 0,
-    duration: 1.2,
-    ease: 'expo.out'
-  }, .6)
-  // "认真" — subtle entrance
-  .to('.hwm_title > div:nth-child(3) .hc:not(.hc_gold)', {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
-    stagger: .08,
-    duration: .8,
-    ease: 'power3.out'
+    opacity: 1, x: 0, y: 0, scale: 1, rotation: 0, filter: 'blur(0px)',
+    stagger: { each: .1, from: 'random' },
+    duration: .65,
+    ease: 'back.out(2.5)'
+  }, .08)
+  // Digital flicker after snap-in
+  .to('.hwm_title > div:nth-child(1) .hc', {
+    opacity: .2, duration: .04, stagger: { each: .02, from: 'random' }
   }, .65)
-  // "造梦的人" — dramatic entrance with overshoot
-  .to('.hwm_title > div:nth-child(3) .hc_gold', {
-    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationY: 0,
-    stagger: .1,
-    duration: 1,
-    ease: 'elastic.out(1, .6)'
-  }, .9)
-  // After all text lands, pulse glow on the gold characters
-  .to('.hwm_title > div:nth-child(3) .hc_gold', {
-    textShadow: '0 0 4rem rgba(0,84,250,.6), 0 0 8rem rgba(100,40,200,.3)',
-    duration: .6,
-    ease: 'power2.in',
-    yoyo: true,
-    repeat: 1
-  }, 1.8)
+  .to('.hwm_title > div:nth-child(1) .hc', {
+    opacity: 1, duration: .08, stagger: { each: .02, from: 'random' }
+  }, .72)
+  .to('.hwm_title > div:nth-child(1) .hc', {
+    opacity: .6, duration: .03, stagger: { each: .015, from: 'end' }
+  }, .82)
+  .to('.hwm_title > div:nth-child(1) .hc', {
+    opacity: 1, duration: .1, stagger: .02
+  }, .88)
 
-  // Subtle idle float — each character bobs gently at different rates
+  // LINE 2 "幻想家" — 3D flip from center outward (center char first)
+  .to('.hwm_title > div:nth-child(2)', {
+    clipPath: 'inset(-30% -10% 0% -10%)', rotationX: 0,
+    duration: 1.2, ease: 'expo.out'
+  }, .55)
+  .to('.hwm_title > div:nth-child(2) .hc', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', rotationX: 0,
+    stagger: { each: .14, from: 'center' },
+    duration: 1,
+    ease: 'elastic.out(1, .45)'
+  }, .6)
+
+  // LINE 3 container reveal
+  .to('.hwm_title > div:nth-child(3)', {
+    clipPath: 'inset(-30% -10% 0% -10%)', rotationX: 0,
+    duration: 1.2, ease: 'expo.out'
+  }, 1)
+  // "认真" — soft typewriter-style, one by one with pause
+  .to('.hwm_title > div:nth-child(3) .hc:not(.hc_gold)', {
+    opacity: 1, y: 0, scale: 1, filter: 'blur(0px)',
+    stagger: .18,
+    duration: .45,
+    ease: 'power2.out'
+  }, 1.1)
+  // "造梦的人" — explosive scale punch, each char overshoots then settles
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    opacity: 1, y: 0, scale: 1.2, filter: 'blur(0px)', rotationY: 0,
+    stagger: .09,
+    duration: .7,
+    ease: 'back.out(3.5)'
+  }, 1.6)
+  // Scale settle with bounce
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    scale: 1,
+    stagger: .06,
+    duration: .5,
+    ease: 'elastic.out(1.2, .35)'
+  }, 2.15)
+
+  // Glow burst on gold chars — intense flash then fade to ambient
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    textShadow: '0 0 5rem rgba(0,84,250,.9), 0 0 12rem rgba(100,40,200,.5), 0 0 2rem rgba(71,133,252,.8)',
+    duration: .25,
+    ease: 'power3.in'
+  }, 2.15)
+  .to('.hwm_title > div:nth-child(3) .hc_gold', {
+    textShadow: '0 0 3rem rgba(0,84,250,.3)',
+    duration: 1.5,
+    ease: 'power2.out'
+  }, 2.4)
+
+  // Shimmer sweep — light passes across each character sequentially
+  .add(function() {
+    document.querySelectorAll('.hwm_title .hc').forEach(function(c, i) {
+      gsap.fromTo(c,
+        { filter: 'brightness(1)' },
+        { filter: 'brightness(1.8)',
+          duration: .15,
+          delay: i * .05,
+          yoyo: true,
+          repeat: 1,
+          ease: 'power2.inOut'
+        }
+      );
+    });
+  }, 2.8)
+
+  // Idle: float + gold breathing glow
   .add(function() {
     document.querySelectorAll('.hwm_title .hc').forEach(function(c, i) {
       gsap.to(c, {
-        y: -3 + Math.random() * 6 - 3,
-        duration: 2.5 + Math.random() * 2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: i * .12
+        y: gsap.utils.random(-5, 5),
+        rotation: gsap.utils.random(-.8, .8),
+        duration: gsap.utils.random(2.2, 4),
+        repeat: -1, yoyo: true, ease: 'sine.inOut',
+        delay: i * .15
       });
     });
-  }, 2.4)
+    // Gold chars: continuous breathing glow
+    gsap.to('.hwm_title > div:nth-child(3) .hc_gold', {
+      textShadow: '0 0 4.5rem rgba(0,84,250,.55), 0 0 9rem rgba(100,40,200,.25)',
+      duration: 2.2,
+      repeat: -1, yoyo: true, ease: 'sine.inOut',
+      stagger: .35
+    });
+  }, 3.2)
 
   // Blur balls breathe in
   .from('#blur1', { scale: .5, opacity: 0, duration: 1.5, ease: 'power2.out' }, 0)
