@@ -197,7 +197,6 @@ a:focus-visible, [onclick]:focus-visible {
   will-change: transform, border-radius;
   z-index: 10001;
   overflow: hidden;
-  will-change: transform;
   border-radius: 0;
   transition: border-radius .3s ease .5s;
 }
@@ -327,7 +326,7 @@ a:focus-visible, [onclick]:focus-visible {
   border-radius: 1.5rem;
   font-family: 'DM Sans', 'Zpix', sans-serif;
   font-size: 1.3rem; letter-spacing: .08rem;
-  color: #fff;
+  color: var(--theme_light);
   background: var(--theme_gold);
   cursor: pointer;
   overflow: hidden;
@@ -361,8 +360,8 @@ a:focus-visible, [onclick]:focus-visible {
   flex-direction: column;
   justify-content: center; align-items: center;
   background-image:
-    linear-gradient(0deg, transparent 2.9rem, #ddd 3rem),
-    linear-gradient(90deg, transparent 2.9rem, #ddd 3rem);
+    linear-gradient(0deg, transparent 2.9rem, rgba(71,133,252,.06) 3rem),
+    linear-gradient(90deg, transparent 2.9rem, rgba(71,133,252,.06) 3rem);
   background-size: 3rem 3rem;
 }
 .menu_overlay.active {
@@ -645,7 +644,7 @@ a:focus-visible, [onclick]:focus-visible {
     repeating-radial-gradient(
       circle at 50% 50%,
       transparent 0px, transparent 45px,
-      rgba(212, 160, 23, 0.05) 47px, transparent 49px
+      rgba(0, 84, 250, 0.05) 47px, transparent 49px
     ),
     url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
   animation: sc_ripple 25s linear infinite;
@@ -790,7 +789,7 @@ a:focus-visible, [onclick]:focus-visible {
   -webkit-backdrop-filter: blur(16px);
   font-family: 'Zpix', 'Press Start 2P', monospace;
   font-size: .5rem;
-  color: #fff;
+  color: var(--theme_light);
   text-transform: uppercase;
   letter-spacing: .06rem;
   z-index: 5;
@@ -811,7 +810,7 @@ a:focus-visible, [onclick]:focus-visible {
   justify-content: flex-end;
   padding: 1.8rem;
   z-index: 3;
-  color: #fff;
+  color: var(--theme_light);
 }
 .sc_card_content > * {
   opacity: 0;
@@ -836,7 +835,7 @@ a:focus-visible, [onclick]:focus-visible {
   text-transform: uppercase;
   letter-spacing: .08rem;
   line-height: 1.1;
-  color: #fff;
+  color: var(--theme_light);
 }
 .sc_card_desc {
   font-family: 'DM Sans', -apple-system, 'Microsoft YaHei', sans-serif;
@@ -858,7 +857,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-family: 'DM Sans', 'Zpix', sans-serif;
   font-size: .65rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--theme_light);
   background: var(--theme_gold);
   cursor: pointer;
   transition: background .3s ease, transform .2s ease;
@@ -891,7 +890,7 @@ a:focus-visible, [onclick]:focus-visible {
   transition: all .4s cubic-bezier(.4,0,.2,1);
 }
 .sc_dot.active {
-  background: #fff;
+  background: var(--theme_light);
   width: 1.8rem;
   border-radius: .3rem;
 }
@@ -974,7 +973,7 @@ a:focus-visible, [onclick]:focus-visible {
   flex: 1;
   flex-direction: column;
   gap: 1rem;
-  color: #fff;
+  color: var(--theme_light);
   min-width: 0;
 }
 .pm_tags {
@@ -1025,7 +1024,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-family: 'DM Sans', 'Zpix', sans-serif;
   font-size: .65rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--theme_light);
   background: var(--theme_gold);
   text-decoration: none;
   text-transform: uppercase;
@@ -1055,7 +1054,7 @@ a:focus-visible, [onclick]:focus-visible {
 .pm_close:hover {
   background: rgba(255,255,255,.12);
   border-color: rgba(255,255,255,.5);
-  color: #fff;
+  color: var(--theme_light);
   transform: rotate(90deg);
 }
 .pm_close svg {
@@ -1217,7 +1216,6 @@ a:focus-visible, [onclick]:focus-visible {
 }
 
 /* ===== PORTRAIT ===== */
-.home_portrait { display: none; }
 
 /* Merged About+Portrait row */
 .hac_media_row {
@@ -1282,42 +1280,6 @@ a:focus-visible, [onclick]:focus-visible {
   .hac_media_row .hac_video { height: auto; aspect-ratio: 16/9; }
   .hac_portrait_wrap { height: auto; aspect-ratio: 16/9; }
   .hac_portrait_textline { display: none; }
-}
-.home_portrait_main {
-  position: relative;
-  justify-content: center; align-items: center;
-  width: 75rem; height: 0;
-  border-radius: 2rem;
-  overflow: hidden;
-  z-index: 0;
-  border: .15rem solid rgba(0,84,250,.2);
-  box-shadow: 0 1rem 5rem rgba(0,0,0,.3);
-}
-.home_portrait_main img,
-.home_portrait_main video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform .5s ease;
-}
-.home_portrait_main:hover img,
-.home_portrait_main:hover video { transform: scale(1.05); }
-
-.home_portrait_textline {
-  height: 40rem;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  margin: 0 2rem;
-}
-.home_portrait_textline p {
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
-  font-size: 1rem;
-  font-weight: 900;
-  color: var(--theme_gold);
-  letter-spacing: .2rem;
-  writing-mode: vertical-rl;
-  text-transform: uppercase;
 }
 .hp_cross {
   position: relative;
@@ -1866,7 +1828,7 @@ a:focus-visible, [onclick]:focus-visible {
 .hp_project:hover::after {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
-.hp_project:hover { color: #fff; }
+.hp_project:hover { color: var(--theme_light); }
 .hp_project > * { position: relative; z-index: 1; }
 
 .hpp_num {
@@ -1880,10 +1842,9 @@ a:focus-visible, [onclick]:focus-visible {
   transition: -webkit-text-stroke .35s var(--ease-out-expo), color .35s var(--ease-out-expo) .05s, transform .5s var(--ease-out-quart);
 }
 .hp_project:hover .hpp_num {
-  color: #fff;
+  color: var(--theme_light);
   -webkit-text-stroke: 0;
   transform: translateX(.5rem) scale(1.05);
-}
 }
 .hpp_info {
   flex: 1; flex-direction: column;
@@ -1912,7 +1873,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hp_project:hover .hpp_info .title_en {
   background-position: -100% 0;
-  -webkit-text-fill-color: #fff;
+  -webkit-text-fill-color: var(--theme_light);
 }
 .hpp_info .title_zh {
   font-size: calc(var(--scale_nums) * 1rem);
@@ -2144,7 +2105,7 @@ a:focus-visible, [onclick]:focus-visible {
   border-radius: .6rem;
   overflow: hidden;
   border: 2px solid rgba(226,240,255,.12);
-  background: #fff;
+  background: var(--theme_light);
   padding: .3rem;
 }
 .hct_qr img {
@@ -2155,7 +2116,7 @@ a:focus-visible, [onclick]:focus-visible {
 
 /* ===== FOOTER ===== */
 .home_bottom {
-  background: #010210;
+  background: var(--theme_dark);
   border-top: 1px solid rgba(71,133,252,.12);
   padding: 8rem 0 3rem;
   flex-direction: column;
@@ -2344,10 +2305,6 @@ a, button, [onclick], [role="button"] {
   0%, 85%, 100% { background-position: 200% 0; }
   90% { background-position: -200% 0; }
 }
-@keyframes text_glow_pulse {
-  0%, 100% { text-shadow: 0 0 4rem rgba(0,84,250,.2); }
-  50% { text-shadow: 0 0 6rem rgba(0,84,250,.4), 0 0 2rem rgba(0,84,250,.15); }
-}
 @keyframes move_line {
   0% { background-position: 200% 0; }
   100% { background-position: 0 0; }
@@ -2416,9 +2373,6 @@ a, button, [onclick], [role="button"] {
   .hac_title { font-size: calc(var(--scale_nums) * 6rem); }
   .hac_title::before, .hac_title::after { font-size: calc(var(--scale_nums) * 6rem); }
   .hac_video { width: 85vw; height: auto; aspect-ratio: 16/9; max-width: none; }
-  .home_portrait { height: auto; min-height: 30rem; flex-direction: column; padding: 3rem 0; }
-  .home_portrait_main { width: 90vw; height: auto; aspect-ratio: 16/9; border-radius: 1rem; }
-  .home_portrait_textline { display: none; }
   .hp_line { display: none; }
 
   /* Skills */
@@ -2539,6 +2493,7 @@ a, button, [onclick], [role="button"] {
   .hpp_plate4 { transform: rotate(2deg) translate(26%, -10%); }
   .hpp_plate5 { transform: rotate(5deg) translate(34%, -8%); }
   .home_contact { --scale: .35; }
+}
 /* ===== MOBILE-FIRST (<=768px portrait phones) ===== */
 @media (max-width: 768px) and (orientation: portrait) {
   /* Nav */
@@ -2559,9 +2514,6 @@ a, button, [onclick], [role="button"] {
   .hac_title { font-size: clamp(2.5rem, 8vw, 3.5rem); letter-spacing: .25rem; }
   .hac_intro { font-size: clamp(.9rem, 3.5vw, 1.1rem) !important; line-height: 1.75; padding: 0 1.2rem; max-width: 100%; }
   .hac_video { width: 94vw; }
-  .home_portrait { height: auto; min-height: 28rem; flex-direction: column; padding: 2rem 0; }
-  .home_portrait_main { width: 92vw; height: auto; aspect-ratio: 16/9; border-radius: .8rem; }
-  .home_portrait_textline { display: none; }
   .hp_line { display: none; }
 
   /* Skills */
@@ -2728,7 +2680,7 @@ a, button, [onclick], [role="button"] {
     --theme_dark: #000000;
   }
   .hac_title, .home_works_title p, .hss_text .title_en {
-    -webkit-text-fill-color: #ffffff !important;
+    -webkit-text-fill-color: var(--theme_light) !important;
     background: none !important;
   }
 }
@@ -3006,7 +2958,6 @@ a, button, [onclick], [role="button"] {
 }
 
 /* R15: Portrait section hidden (merged into About) — ensure no ghost space */
-.home_portrait[style*="display:none"] { height: 0; margin: 0; padding: 0; overflow: hidden; }
 
 /* R16: Idea container text fix */
 @media (max-width: 768px) {
@@ -3423,7 +3374,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <div class="showcase_cylinder" id="showcaseCylinder">
 
       <div class="sc_card" data-href="works/projects/proj-01/index.html" data-color1="#4785FC" data-color2="#1A3570" data-tags="Design,Poster" data-subtitle="FILM POSTER DESIGN" data-desc="电影《长安的荔枝》国际版及制式海报，以唐代诗意为底色，融合现代视觉语言。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-01/002.jpg" alt="长安的荔枝" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-01/002.jpg" alt="长安的荔枝"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">长安的荔枝</p>
@@ -3433,7 +3384,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-02/index.html" data-color1="#eb8280" data-color2="#6b1a1a" data-tags="Design,Poster" data-subtitle="YOUKU DRAMA POSTER" data-desc="优酷港剧场《狩慌》概念海报，悬疑氛围与视觉张力的极致呈现。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-02/001.png" alt="狩慌" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-02/001.png" alt="狩慌"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">狩慌</p>
@@ -3443,7 +3394,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-03/index.html" data-color1="#ebbf9a" data-color2="#8b5010" data-tags="Design,Poster" data-subtitle="DRAMA VISUAL DESIGN" data-desc="《乡村爱情14》春节档视觉海报，以质朴温情的乡村图景呈现中国式喜剧。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-03/001.jpg" alt="乡村爱情14" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-03/001.jpg" alt="乡村爱情14"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">乡村爱情14</p>
@@ -3453,7 +3404,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-04/index.html" data-color1="#a281ff" data-color2="#4a1a80" data-tags="Design,Poster" data-subtitle="ANCIENT MYSTERY DRAMA" data-desc="《清明上河图密码》影视海报，古典与悬疑交织，北宋市井气韵跃然纸上。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-04/001.png" alt="清明上河图密码" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-04/001.png" alt="清明上河图密码"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">清明上河图密码</p>
@@ -3463,7 +3414,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-05/index.html" data-color1="#80C8E6" data-color2="#1a4060" data-tags="Design,Poster" data-subtitle="THRILLER DRAMA POSTER" data-desc="《白夜破晓》影视海报设计，在黑白之间营造极致的悬疑张力与视觉冲击。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-05/001.png" alt="白夜破晓" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-05/001.png" alt="白夜破晓"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">白夜破晓</p>
@@ -3473,7 +3424,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/projects/proj-06/index.html" data-color1="#96BBFF" data-color2="#1a2a60" data-tags="Design,Poster" data-subtitle="HK DRAMA POSTER" data-desc="《新闻女王2》影视海报设计，强势回归，权力与欲望的视觉战场。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-06/001.png" alt="新闻女王2" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/projects/proj-06/001.png" alt="新闻女王2"></div>
         <span class="sc_pill">Poster</span>
         <div class="sc_card_content">
           <p class="sc_card_name">新闻女王2</p>
@@ -3483,7 +3434,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="works/streetdance/index.html" data-color1="#ebbf9a" data-color2="#6b5010" data-tags="Branding,Design" data-subtitle="STREET DANCE VISUAL" data-desc="《这！就是街舞》第三季海报设计与第四季潮玩模型，将街舞精神融入视觉语言。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/streetdance/s3-01.jpg" alt="街舞" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="works/streetdance/s3-01.jpg" alt="街舞"></div>
         <span class="sc_pill">Branding</span>
         <div class="sc_card_content">
           <p class="sc_card_name">这就是街舞</p>
@@ -3493,7 +3444,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
       </div>
 
       <div class="sc_card" data-href="project.html#photo" data-color1="#4785FC" data-color2="#1A3570" data-tags="Photo,Architecture" data-subtitle="ARCHITECTURAL PHOTOGRAPHY" data-desc="以建筑为画布，捕捉光影与几何的交响，记录城市肌理中的诗意瞬间。">
-        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="zcool-photo/photo-03.jpg" alt="Photography" loading="lazy"></div>
+        <div class="sc_card_bg"><img loading="lazy" fetchpriority="low" src="zcool-photo/photo-03.jpg" alt="Photography"></div>
         <span class="sc_pill">Photo</span>
         <div class="sc_card_content">
           <p class="sc_card_name">建筑摄影</p>
@@ -3809,6 +3760,9 @@ history.scrollRestoration = 'manual';
 <script>
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+var _pageVisible = true;
+document.addEventListener('visibilitychange', function() { _pageVisible = !document.hidden; });
+
 // ===== LENIS SMOOTH SCROLL (jiejoe signature) =====
 var lenis = new Lenis({
   lerp: 0.06,
@@ -3974,7 +3928,7 @@ gsap.ticker.lagSmoothing(0);
     sy += (ty - sy) * 0.04;
     spotlight.style.setProperty('--sx', sx.toFixed(1) + '%');
     spotlight.style.setProperty('--sy', sy.toFixed(1) + '%');
-    requestAnimationFrame(drift);
+    if (_pageVisible) requestAnimationFrame(drift);
   })();
 })();
 
@@ -3996,7 +3950,7 @@ gsap.ticker.lagSmoothing(0);
     b1.style.marginTop = by1.toFixed(1) + 'px';
     b2.style.marginLeft = bx2.toFixed(1) + 'px';
     b2.style.marginTop = by2.toFixed(1) + 'px';
-    requestAnimationFrame(drift);
+    if (_pageVisible) requestAnimationFrame(drift);
   })();
 })();
 
@@ -4774,7 +4728,8 @@ function initAnimations() {
       gl.uniform3fv(uColor1, currentC1);
       gl.uniform3fv(uColor2, currentC2);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(render);
+      if (_pageVisible) requestAnimationFrame(render);
+      else document.addEventListener('visibilitychange', function resume() { document.removeEventListener('visibilitychange', resume); requestAnimationFrame(render); }, { once: true });
     })();
   })();
 
@@ -4852,7 +4807,8 @@ function initAnimations() {
     var activeIdx = getActiveIndex();
     updateDots(activeIdx);
 
-    requestAnimationFrame(renderWheel);
+    if (_pageVisible) requestAnimationFrame(renderWheel);
+    else document.addEventListener('visibilitychange', function resume() { document.removeEventListener('visibilitychange', resume); lastTime = performance.now(); requestAnimationFrame(renderWheel); }, { once: true });
   }
 
   function getActiveIndex() {
