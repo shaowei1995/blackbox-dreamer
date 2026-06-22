@@ -763,6 +763,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .sc_card.sc_active .sc_card_bg img {
   filter: grayscale(0) brightness(1);
+  transition: filter 1.15s var(--ease-power), transform .8s var(--ease-out-quart);
 }
 .sc_card:hover .sc_card_bg img {
   transform: scale(1.05);
@@ -2195,7 +2196,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hbb_totop:hover {
   transform: translateX(-50%) translateY(-.3rem);
-  box-shadow: 0 .5rem 2rem rgba(0,0,0,.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,.5), 0 1rem 2rem rgba(0,84,250,.15), 0 3rem 5rem rgba(0,84,250,.06);
 }
 .hbb_totop svg { width: 1.2rem; height: 1.2rem; }
 
@@ -3221,7 +3222,6 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
 
 /* R18: Section entrance refinement */
 .home_about_content,
-.home_skills_skill,
 .home_works,
 .home_filmstrip {
   opacity: 0;
@@ -3229,7 +3229,6 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   transition: opacity .8s ease, transform .8s ease;
 }
 .home_about_content.visible,
-.home_skills_skill.show,
 .home_works.visible,
 .home_filmstrip.visible {
   opacity: 1;
@@ -4143,6 +4142,43 @@ function navTo(id) {
   });
 })();
 
+// ===== SHOWCASE CARD INNER PARALLAX (jiejoe: micro-shift within active card) =====
+(function() {
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  var range = 12;
+  var lerp = 0.07;
+  document.querySelectorAll('.sc_card').forEach(function(card) {
+    var tx = 0, ty = 0, cx = 0, cy = 0;
+    var rafId = null;
+    function tick() {
+      cx += (tx - cx) * lerp;
+      cy += (ty - cy) * lerp;
+      var img = card.querySelector('.sc_card_bg img');
+      if (img && card.classList.contains('sc_active')) {
+        img.style.transform = 'scale(1.05) translate(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px)';
+      }
+      if (Math.abs(tx - cx) > 0.05 || Math.abs(ty - cy) > 0.05) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        rafId = null;
+      }
+    }
+    card.addEventListener('mousemove', function(e) {
+      if (!card.classList.contains('sc_active')) return;
+      var rect = card.getBoundingClientRect();
+      var nx = (e.clientX - rect.left) / rect.width - 0.5;
+      var ny = (e.clientY - rect.top) / rect.height - 0.5;
+      tx = -nx * range * 2;
+      ty = -ny * range * 2;
+      if (!rafId) rafId = requestAnimationFrame(tick);
+    });
+    card.addEventListener('mouseleave', function() {
+      tx = 0; ty = 0;
+      if (!rafId) rafId = requestAnimationFrame(tick);
+    });
+  });
+})();
+
 // ===== GSAP ANIMATIONS =====
 function initAnimations() {
   // Container 3D perspective for cinematic depth
@@ -4554,10 +4590,25 @@ function initAnimations() {
     scrollTrigger: { trigger: '.home_contact', start: 'top 75%' }
   });
 
-  // Footer — gentle fade in
-  gsap.from('.home_bottom', {
-    y: 30, opacity: 0, duration: .6, ease: 'power2.out',
-    scrollTrigger: { trigger: '.home_bottom', start: 'top 90%' }
+  // Footer — staggered "dealt cards" choreography (jiejoe: each message block from distinct direction)
+  var footerMsgs = gsap.utils.toArray('.hbb_msg');
+  if (footerMsgs.length >= 3) {
+    gsap.from(footerMsgs[0], {
+      x: -50, opacity: 0, rotation: -2, duration: .9, ease: 'power3.out',
+      scrollTrigger: { trigger: '.home_bottom', start: 'top 88%' }
+    });
+    gsap.from(footerMsgs[1], {
+      y: -35, opacity: 0, scale: .92, duration: .9, ease: 'power3.out', delay: .12,
+      scrollTrigger: { trigger: '.home_bottom', start: 'top 88%' }
+    });
+    gsap.from(footerMsgs[2], {
+      x: 50, opacity: 0, rotation: 2, duration: .9, ease: 'power3.out', delay: .24,
+      scrollTrigger: { trigger: '.home_bottom', start: 'top 88%' }
+    });
+  }
+  gsap.from('.hbb_bottom', {
+    y: 20, opacity: 0, duration: .6, ease: 'power2.out', delay: .35,
+    scrollTrigger: { trigger: '.home_bottom', start: 'top 85%' }
   });
 
   // Idea section — parallax on large text
@@ -5001,6 +5052,7 @@ function initAnimations() {
 
 // ===== MENU CHARACTER SPLIT =====
 (function() {
+  var scrambleChars = '!@#$%&*+=-~/\\|<>?:;01';
   document.querySelectorAll('.sel_en').forEach(function(el) {
     var text = el.getAttribute('text') || el.textContent;
     var html = '';
@@ -5009,6 +5061,38 @@ function initAnimations() {
     }
     el.innerHTML = html;
     el.setAttribute('text', text);
+
+    var parent = el.closest('.menu_sel');
+    if (!parent) return;
+    var scrambleTimer = null;
+    parent.addEventListener('mouseenter', function() {
+      if (scrambleTimer) return;
+      var chars = el.querySelectorAll('.char');
+      var original = text.split('');
+      var iterations = new Array(original.length).fill(0);
+      var maxIter = 5;
+      scrambleTimer = setInterval(function() {
+        var allDone = true;
+        chars.forEach(function(c, i) {
+          if (iterations[i] >= maxIter + i) {
+            c.textContent = original[i];
+          } else {
+            allDone = false;
+            c.textContent = scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+            iterations[i]++;
+          }
+        });
+        if (allDone) {
+          clearInterval(scrambleTimer);
+          scrambleTimer = null;
+        }
+      }, 35);
+    });
+    parent.addEventListener('mouseleave', function() {
+      if (scrambleTimer) { clearInterval(scrambleTimer); scrambleTimer = null; }
+      var chars = el.querySelectorAll('.char');
+      text.split('').forEach(function(ch, i) { if (chars[i]) chars[i].textContent = ch; });
+    });
   });
 })();
 
