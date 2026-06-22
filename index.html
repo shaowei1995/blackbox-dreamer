@@ -106,7 +106,7 @@ body {
 /* Apechain dot-grid pattern overlay */
 .bg_grid {
   position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(71,133,252,.12) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(0,84,250,.12) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none;
   mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 0%, transparent 70%);
@@ -360,8 +360,8 @@ a:focus-visible, [onclick]:focus-visible {
   flex-direction: column;
   justify-content: center; align-items: center;
   background-image:
-    linear-gradient(0deg, transparent 2.9rem, rgba(71,133,252,.06) 3rem),
-    linear-gradient(90deg, transparent 2.9rem, rgba(71,133,252,.06) 3rem);
+    linear-gradient(0deg, transparent 2.9rem, rgba(0,84,250,.06) 3rem),
+    linear-gradient(90deg, transparent 2.9rem, rgba(0,84,250,.06) 3rem);
   background-size: 3rem 3rem;
 }
 .menu_overlay.active {
@@ -526,7 +526,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: min(30vw, 35vh);
   -webkit-text-stroke: min(0.3vw, 0.4vh) var(--theme_light);
   letter-spacing: min(1vw, 1.5vh);
-  text-shadow: 0 0 min(2vw, 3vh) rgba(226,240,255,.2), 0 0 min(4vw, 6vh) rgba(71,133,252,.1);
+  text-shadow: 0 0 min(2vw, 3vh) rgba(226,240,255,.2), 0 0 min(4vw, 6vh) rgba(0,84,250,.1);
   background: linear-gradient(90deg, var(--theme_light) 0%, var(--theme_light) 40%, rgba(255,255,255,.95) 50%, var(--theme_light) 60%, var(--theme_light) 100%);
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -784,7 +784,7 @@ a:focus-visible, [onclick]:focus-visible {
   position: absolute;
   top: 1rem; left: 1rem;
   padding: .35rem .8rem;
-  border-radius: .4rem;
+  border-radius: .35rem;
   background: rgba(0,0,0,.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -824,7 +824,7 @@ a:focus-visible, [onclick]:focus-visible {
   transition: opacity .45s var(--ease-out-quart) .22s, transform .45s var(--ease-out-quart) .22s;
 }
 .sc_card_actions {
-  transition: opacity .4s ease .32s, transform .4s ease .32s;
+  transition: opacity .4s var(--ease-out-quart) .32s, transform .4s var(--ease-out-quart) .32s;
 }
 .sc_card.sc_active .sc_card_content > * {
   opacity: 1;
@@ -984,7 +984,7 @@ a:focus-visible, [onclick]:focus-visible {
 .pm_tags span {
   padding: .25rem .6rem;
   border: 1px solid rgba(255,255,255,.3);
-  border-radius: .25rem;
+  border-radius: .35rem;
   font-family: 'Zpix', 'Press Start 2P', monospace;
   font-size: .5rem;
   text-transform: uppercase;
@@ -1019,7 +1019,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .pm_btn_launch {
   position: relative;
-  padding: .5rem 1.6rem;
+  padding: .5rem 1.4rem;
   border: none;
   border-radius: 2rem;
   font-family: 'DM Sans', 'Zpix', sans-serif;
@@ -1107,7 +1107,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: calc(var(--scale_nums) * 10rem);
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: calc(var(--scale_nums) * .1rem) rgba(71,133,252,.3);
+  -webkit-text-stroke: calc(var(--scale_nums) * .1rem) rgba(0,84,250,.3);
   letter-spacing: calc(var(--scale_nums) * .5rem);
   text-transform: uppercase;
 }
@@ -1171,7 +1171,7 @@ a:focus-visible, [onclick]:focus-visible {
   content: '';
   position: absolute;
   inset: -.2rem;
-  border-radius: 2.2rem;
+  border-radius: 1.7rem;
   background: linear-gradient(135deg, rgba(0,84,250,.5) 0%, rgba(0,84,250,.1) 40%, rgba(0,39,135,.3) 70%, rgba(0,84,250,.5) 100%);
   background-size: 300% 300%;
   animation: hac_border_glow 8s ease infinite;
@@ -1709,7 +1709,7 @@ a:focus-visible, [onclick]:focus-visible {
   opacity: 0;
   transform: translateY(10%);
   color: transparent;
-  -webkit-text-stroke: .1rem #4785FC;
+  -webkit-text-stroke: .1rem var(--theme_gold);
   transition: color .6s ease;
 }
 .home_works_title p.filled {
@@ -1809,13 +1809,13 @@ a:focus-visible, [onclick]:focus-visible {
   height: calc(var(--scale_nums) * 14rem);
   padding-left: 5%;
   padding-right: 5%;
-  border-top: .1rem solid var(--theme_light);
+  border-top: .1rem solid rgba(226,240,255,.12);
   cursor: pointer;
   z-index: 0;
   overflow: hidden;
 }
 .hp_project:last-child {
-  border-bottom: .1rem solid var(--theme_light);
+  border-bottom: .1rem solid rgba(226,240,255,.12);
 }
 .hp_project::after {
   content: '';
@@ -2118,7 +2118,7 @@ a:focus-visible, [onclick]:focus-visible {
 /* ===== FOOTER ===== */
 .home_bottom {
   background: var(--theme_dark);
-  border-top: 1px solid rgba(71,133,252,.12);
+  border-top: 1px solid rgba(0,84,250,.12);
   padding: 8rem 0 3rem;
   flex-direction: column;
   align-items: center;
@@ -2168,7 +2168,6 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: .8rem;
   color: rgba(226,240,255,.4);
   text-transform: uppercase;
-  letter-spacing: .1em;
   cursor: pointer;
   transition: color .3s ease, letter-spacing .3s ease, transform .3s var(--ease-out-quart);
   letter-spacing: .05rem;
@@ -2281,11 +2280,11 @@ a, button, [onclick], [role="button"] {
   opacity: .5;
   background: linear-gradient(var(--theme_dark), var(--theme_dark)) padding-box,
               linear-gradient(135deg, #a281ff, #eb8280, #ebbf9a, #89d0ff) border-box;
-  transition: width .3s ease, height .3s ease, opacity .3s ease;
+  transition: transform .2s ease, opacity .2s ease;
   will-change: transform;
 }
 .cursor_ring.hover {
-  width: 5rem; height: 5rem;
+  transform: scale(1.67);
   opacity: .85;
 }
 .cursor_dot.hover {
@@ -2825,6 +2824,7 @@ a, button, [onclick], [role="button"] {
 /* R17: Scroll progress bar thicker on mobile for visibility */
 @media (max-width: 768px) {
   #scrollbar { width: .4rem; }
+  #scrollbar::after { width: .8rem; height: .8rem; left: -.15rem; }
 }
 
 /* R18: Filmstrip touch scrollable */
@@ -3043,7 +3043,7 @@ a, button, [onclick], [role="button"] {
   background: rgba(2,3,21,.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(71,133,252,.2);
+  border: 1px solid rgba(0,84,250,.2);
   justify-content: center; align-items: center;
   cursor: pointer;
   z-index: 999;
@@ -3057,7 +3057,7 @@ a, button, [onclick], [role="button"] {
 }
 .scroll_top_btn:hover {
   background: rgba(0,84,250,.3);
-  border-color: rgba(71,133,252,.5);
+  border-color: rgba(0,84,250,.5);
 }
 .scroll_top_btn svg { width: 1.2rem; height: 1.2rem; }
 @media (max-width: 768px) {
@@ -4236,7 +4236,7 @@ function initAnimations() {
 
   // Glow burst on gold "造梦的人"
   .to('.hwm_title > div:nth-child(3) p span', {
-    textShadow: '0 0 5rem rgba(0,84,250,.9), 0 0 12rem rgba(100,40,200,.5), 0 0 2rem rgba(71,133,252,.8)',
+    textShadow: '0 0 5rem rgba(0,84,250,.9), 0 0 12rem rgba(100,40,200,.5), 0 0 2rem rgba(0,84,250,.8)',
     duration: .25, ease: 'power3.in'
   }, 2.2)
   .to('.hwm_title > div:nth-child(3) p span', {
