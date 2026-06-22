@@ -3928,6 +3928,7 @@ gsap.ticker.lagSmoothing(0);
     spotlight.style.setProperty('--sx', sx.toFixed(1) + '%');
     spotlight.style.setProperty('--sy', sy.toFixed(1) + '%');
     if (_pageVisible) requestAnimationFrame(drift);
+    else document.addEventListener('visibilitychange', function resume() { document.removeEventListener('visibilitychange', resume); requestAnimationFrame(drift); }, { once: true });
   })();
 })();
 
@@ -3950,6 +3951,7 @@ gsap.ticker.lagSmoothing(0);
     b2.style.marginLeft = bx2.toFixed(1) + 'px';
     b2.style.marginTop = by2.toFixed(1) + 'px';
     if (_pageVisible) requestAnimationFrame(drift);
+    else document.addEventListener('visibilitychange', function resume() { document.removeEventListener('visibilitychange', resume); requestAnimationFrame(drift); }, { once: true });
   })();
 })();
 
