@@ -3901,6 +3901,7 @@ gsap.ticker.lagSmoothing(0);
   var rScaleX = 1, rScaleY = 1, rAngle = 0;
   // Magnetic zone: nearest interactive element cache
   var _magnetEls = null, _magnetTarget = null, _magnetFrame = 0;
+  var _lastScanX = 0, _lastScanY = 0;
   document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
   var hovers = 'a, [onclick], .menu_toggle, .contact_btn, .hp_project, .hpp_plate, .hf_img, .hbb_menu p, .brand_logo, .menu_sel, .sc_card, .showcase_viewall';
   document.querySelectorAll(hovers).forEach(function(el) {
