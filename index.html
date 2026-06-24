@@ -77,7 +77,6 @@ body {
   background: url('bg-abstract.jpg') center center / cover no-repeat;
   opacity: .35;
 }
-}
 
 /* Noise grain overlay (jiejoe signature) */
 body::after {
@@ -413,6 +412,13 @@ a:focus-visible, [onclick]:focus-visible {
   flex-shrink: 0;
 }
 .hwm_mascot video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.hwm_mascot_fallback {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -3238,8 +3244,8 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     <div class="hwm_mascot">
       <video autoplay loop muted playsinline preload="auto">
         <source src="mascot-live.webm" type="video/webm">
-        <source src="mascot-live-solid.mp4" type="video/mp4">
       </video>
+      <img src="gameboy.png" alt="小黑盒" class="hwm_mascot_fallback">
     </div>
   </div>
   <div class="hw_scrolltip" id="hwScrolltip">
@@ -3804,6 +3810,16 @@ gsap.ticker.lagSmoothing(0);
       requestAnimationFrame(tick);
     }, { once: true });
   })();
+})();
+
+// ===== MASCOT VIDEO FALLBACK =====
+(function() {
+  var v = document.querySelector('.hwm_mascot video');
+  var fb = document.querySelector('.hwm_mascot_fallback');
+  if (!v || !fb) return;
+  v.addEventListener('playing', function() { fb.style.display = 'none'; });
+  v.addEventListener('error', function() { v.style.display = 'none'; });
+  if (v.readyState >= 2) fb.style.display = 'none';
 })();
 
 // ===== SCROLL VELOCITY SKEW (jiejoe: decorative elements react to scroll momentum) =====
