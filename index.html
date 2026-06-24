@@ -116,7 +116,7 @@ a:focus-visible, [onclick]:focus-visible {
   outline-offset: .2rem;
 }
 
-.eng { font-family: 'Zpix', 'Press Start 2P', 'eng', monospace; font-weight: 900; }
+.eng { font-family: var(--ff-pixel); font-weight: 900; }
 
 /* ===== LOADING ===== */
 .loading {
@@ -264,7 +264,7 @@ a:focus-visible, [onclick]:focus-visible {
   width: 8.5rem; height: 2.2rem;
   border: none;
   border-radius: 1.5rem;
-  font-family: 'DM Sans', 'Zpix', sans-serif;
+  font-family: var(--ff-body);
   font-size: 1.3rem; letter-spacing: .08rem;
   color: var(--theme_light);
   background: var(--theme_gold);
@@ -330,7 +330,7 @@ a:focus-visible, [onclick]:focus-visible {
 .menu_overlay.active .menu_sel:nth-child(3) { transition-delay: .35s; }
 .menu_overlay.active .menu_sel:nth-child(4) { transition-delay: .45s; }
 .menu_sel .sel_zh {
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-family: var(--ff-pixel);
   font-size: 1rem;
   font-weight: 900;
   color: var(--theme_light);
@@ -610,7 +610,7 @@ a:focus-visible, [onclick]:focus-visible {
 .showcase_sub {
   font-family: var(--ff-mono);
   font-size: .7rem;
-  color: rgba(226,240,255,.4);
+  color: rgba(226,240,255,.55);
   text-transform: uppercase;
   letter-spacing: .2rem;
 }
@@ -786,7 +786,7 @@ a:focus-visible, [onclick]:focus-visible {
   padding: .5rem 1.4rem;
   border: none;
   border-radius: 2rem;
-  font-family: 'DM Sans', 'Zpix', sans-serif;
+  font-family: var(--ff-body);
   font-size: .65rem;
   font-weight: 600;
   color: var(--theme_light);
@@ -941,7 +941,7 @@ a:focus-visible, [onclick]:focus-visible {
   font-size: .85rem;
   line-height: 1.7;
   opacity: .65;
-  font-family: -apple-system, 'Microsoft YaHei', sans-serif;
+  font-family: var(--ff-body);
   margin: 0;
 }
 .pm_actions {
@@ -954,7 +954,7 @@ a:focus-visible, [onclick]:focus-visible {
   padding: .5rem 1.6rem;
   border: none;
   border-radius: 2rem;
-  font-family: 'DM Sans', 'Zpix', sans-serif;
+  font-family: var(--ff-body);
   font-size: .65rem;
   font-weight: 600;
   color: var(--theme_light);
@@ -1197,7 +1197,7 @@ a:focus-visible, [onclick]:focus-visible {
   display: flex;
 }
 .hac_portrait_textline p {
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-family: var(--ff-pixel);
   font-size: .8rem;
   font-weight: 900;
   color: var(--theme_gold);
@@ -1579,7 +1579,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hvb_corner {
   position: absolute;
-  font-family: 'Zpix', -apple-system, sans-serif;
+  font-family: var(--ff-pixel);
   font-size: 1.5rem;
   font-weight: 900;
   color: var(--theme_gold);
@@ -1660,7 +1660,7 @@ a:focus-visible, [onclick]:focus-visible {
   margin-bottom: calc(var(--scale_nums) * .2rem);
 }
 .hw_en {
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-family: var(--ff-pixel);
   font-size: calc(var(--scale_nums) * .6rem);
   letter-spacing: calc(var(--scale_nums) * .05rem);
   text-transform: uppercase;
@@ -1820,7 +1820,7 @@ a:focus-visible, [onclick]:focus-visible {
 .hp_project:hover .hpp_info p { color: rgba(255,255,255,.8); }
 .hpp_time {
   flex-shrink: 0;
-  font-family: 'Zpix', -apple-system, 'Microsoft YaHei', sans-serif;
+  font-family: var(--ff-pixel);
   font-size: calc(var(--scale_nums) * 1rem);
   font-weight: 900;
   color: var(--theme_light);
@@ -2080,7 +2080,7 @@ a:focus-visible, [onclick]:focus-visible {
   letter-spacing: .1em;
 }
 .hbb_msg .msg_val {
-  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-family: var(--ff-body);
   font-size: 1rem;
   font-weight: 500;
   color: var(--theme_light);
@@ -2141,7 +2141,7 @@ a, button, [onclick], [role="button"] {
 }
 
 /* Apechain shimmer on links */
-.hbb_menu p, .brand_logo, .project_back {
+.hbb_menu p, .brand_logo {
   position: relative;
 }
 .hbb_menu p::after {
@@ -2237,10 +2237,6 @@ a, button, [onclick], [role="button"] {
 }
 
 /* ===== KEYFRAMES ===== */
-@keyframes text_shimmer {
-  0%, 85%, 100% { background-position: 200% 0; }
-  90% { background-position: -200% 0; }
-}
 @keyframes move_line {
   0% { background-position: 200% 0; }
   100% { background-position: 0 0; }
@@ -2471,11 +2467,6 @@ a, button, [onclick], [role="button"] {
   .hpp_arrow { display: none; }
   .float_card { display: none; }
 
-  /* 3D Grid */
-  .grid3d_wrap { grid-template-columns: repeat(2, 1fr); gap: .6rem; width: 96%; padding: 1rem 2%; }
-  .grid3d_section { min-height: 40vh; }
-  .grid3d_card { border-radius: .4rem; }
-
   /* Works title */
   .home_works_title p { font-size: clamp(2.5rem, 9vw, 4rem) !important; }
   .hw_zh { font-size: clamp(.8rem, 3vw, .95rem); text-align: center; padding: 0 1.5rem; }
@@ -2558,7 +2549,6 @@ a, button, [onclick], [role="button"] {
   .hpb_title { font-size: clamp(2rem, 7vw, 2.8rem); }
   .home_bottom { padding: 3rem 0 1.5rem; }
   .menubox_nav { padding: .35rem .7rem; gap: .6rem; }
-  .grid3d_wrap { gap: .5rem; padding: .8rem 2%; }
   .hbb_menu p { font-size: .65rem; }
   .showcase_cylinder { width: 93vw; height: 58vw; }
   .sc_card { width: 93vw; height: 58vw; }
@@ -2568,7 +2558,6 @@ a, button, [onclick], [role="button"] {
 /* ===== R6: PM Modal mobile fix ===== */
 @media (max-width: 768px) {
   .pm_content { flex-direction: column; width: 96%; gap: 1rem; padding: 1rem 0; max-height: 90vh; overflow-y: auto; }
-  .pm_image_wrap { width: 100%; max-width: 100%; border-radius: .8rem; }
   .pm_title { font-size: clamp(1.2rem, 5vw, 1.8rem); }
   .pm_subtitle { font-size: clamp(.4rem, 1.5vw, .55rem); letter-spacing: .08rem; }
   .pm_desc { font-size: clamp(.75rem, 2.5vw, .9rem); line-height: 1.6; }
@@ -2600,7 +2589,6 @@ a, button, [onclick], [role="button"] {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .grid3d_wrap { transform: none !important; }
 }
 
 /* ===== R10: Print / high-contrast ===== */
@@ -2871,7 +2859,6 @@ a, button, [onclick], [role="button"] {
 /* R12: Modal full-screen on mobile */
 @media (max-width: 430px) {
   .pm_content { width: 98%; padding: .5rem; gap: .8rem; }
-  .pm_image_wrap { border-radius: .5rem; }
   .pm_title { font-size: 1.2rem !important; }
   .pm_desc { font-size: .8rem !important; line-height: 1.5; }
   .pm_close { top: .5rem; right: .5rem; }
@@ -3102,10 +3089,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   50% { box-shadow: 0 0 4rem rgba(0,84,250,.15); }
 }
 
-/* R13: Filmstrip interaction */
-.home_filmstrip:hover .hf_row {
-  animation-play-state: paused !important;
-}
+/* R13: Page exit */
 
 /* R14: Menu stagger polish */
 .menu_overlay.active .menu_sel {
@@ -3208,26 +3192,6 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   box-shadow: 0 2rem 6rem rgba(0,0,0,.5), 0 0 2rem rgba(0,84,250,.18), 0 0 5rem rgba(0,84,250,.06) !important;
 }
 
-/* S6-R2: Section heading glow burst keyframe */
-@keyframes heading_glow_burst {
-  0%   { filter: brightness(1); }
-  25%  { filter: brightness(1.6); }
-  100% { filter: brightness(1); }
-}
-
-.home_separator {
-  position: relative;
-  overflow: visible;
-}
-.home_separator .sep_wipe {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--theme_gold, #ebbf9a);
-  transform-origin: left center;
-  transform: scaleX(0);
-  pointer-events: none;
-  z-index: 1;
-}
 
 </style>
 </head>
@@ -3279,7 +3243,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
 <!-- Navigation -->
 <div class="menubox_nav">
   <a class="contact_btn" href="#contact"><span style="position:relative;z-index:1">CONTACT</span></a>
-  <div class="menu_toggle" id="menuToggle" onclick="toggleMenu()">
+  <div class="menu_toggle" id="menuToggle" onclick="toggleMenu()" aria-label="菜单" role="button" tabindex="0">
     <span></span><span></span><span></span>
   </div>
 </div>
@@ -3826,7 +3790,7 @@ gsap.ticker.lagSmoothing(0);
   var _magnetEls = null, _magnetTarget = null, _magnetFrame = 0;
   var _lastScanX = 0, _lastScanY = 0;
   document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-  var hovers = 'a, [onclick], .menu_toggle, .contact_btn, .hp_project, .hpp_plate, .hf_img, .hbb_menu p, .brand_logo, .menu_sel, .sc_card, .showcase_viewall';
+  var hovers = 'a, [onclick], .menu_toggle, .contact_btn, .hp_project, .hpp_plate, .hf_img, .hbb_menu p, .brand_logo, .menu_sel, .sc_card';
   document.querySelectorAll(hovers).forEach(function(el) {
     el.addEventListener('mouseenter', function() { dot.classList.add('hover'); ring.classList.add('hover'); });
     el.addEventListener('mouseleave', function() { dot.classList.remove('hover'); ring.classList.remove('hover'); });
@@ -5292,7 +5256,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
   window.openProjectModal = function(card) {
     var img = card.querySelector('.sc_card_bg img');
-    if (img) pmImg.src = img.src;
+    if (img) { pmImg.src = img.src; pmImg.alt = img.alt || ''; }
     pmTitle.textContent = card.dataset.title || card.querySelector('.sc_card_name').textContent;
     pmSubtitle.textContent = card.dataset.subtitle || '';
     pmDesc.textContent = card.dataset.desc || card.querySelector('.sc_card_desc').textContent;
@@ -5411,7 +5375,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 
 // ===== R20: SECTION VISIBILITY FOR ENTRANCE ANIMATIONS =====
 (function() {
-  var targets = document.querySelectorAll('.home_about_content, .home_filmstrip');
+  var targets = document.querySelectorAll('.home_about_content, .home_works, .home_filmstrip');
   if (!targets.length) return;
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
