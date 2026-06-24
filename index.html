@@ -87,13 +87,14 @@ body {
   height: .05rem;
   left: -50%;
   background: linear-gradient(90deg, transparent 0%, rgba(0,84,250,.18) 35%, rgba(71,133,252,.32) 50%, rgba(0,84,250,.18) 65%, transparent 100%);
+  transform: rotate(var(--angle, 0deg));
   animation: bg_line_slide var(--dur, 18s) linear infinite;
   animation-delay: var(--delay, 0s);
   will-change: transform;
 }
 @keyframes bg_line_slide {
-  0%   { transform: translateX(-25%) rotate(var(--angle, 0deg)); }
-  100% { transform: translateX(25%) rotate(var(--angle, 0deg)); }
+  0%   { translate: -25% 0; }
+  100% { translate: 25% 0; }
 }
 
 /* Noise grain overlay (jiejoe signature) */
@@ -4363,7 +4364,7 @@ function initAnimations() {
   document.querySelectorAll('.home_skills_skill').forEach(function(s, i) {
     gsap.fromTo(s,
       { x: (i % 2 === 0) ? -80 : 80, opacity: 0, rotationY: (i % 2 === 0) ? -4 : 4 },
-      { x: 0, opacity: 1, rotationY: 0, scrollTrigger: {
+      { x: 0, opacity: 1, rotationY: 0, clearProps: 'transform', scrollTrigger: {
         trigger: s, start: 'top 85%', end: 'top 50%', scrub: 1.8
       }}
     );
