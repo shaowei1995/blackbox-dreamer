@@ -34,12 +34,6 @@
   --ease-reveal: cubic-bezier(.76, 0, .24, 1);
   --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
   --ease-out-quart: cubic-bezier(.25, 1, .5, 1);
-  /* Apechain fluid typography scale */
-  --fs-hero: clamp(4rem, 10vw, 10rem);
-  --fs-display: clamp(2.5rem, 6vw, 6rem);
-  --fs-title: clamp(1.8rem, 4vw, 4rem);
-  --fs-body: clamp(.95rem, 1.5vw, 1.2rem);
-  --fs-caption: clamp(.7rem, 1vw, .85rem);
   --ff-pixel: 'Zpix', 'Press Start 2P', monospace;
   --ff-body: 'DM Sans', -apple-system, 'Microsoft YaHei', 'PingFang SC', sans-serif;
   --ff-mono: 'DM Mono', 'Courier New', monospace;
@@ -439,6 +433,7 @@ a:focus-visible, [onclick]:focus-visible {
   letter-spacing: 0.5vw;
   text-transform: uppercase;
   white-space: nowrap;
+  opacity: 0;
 }
 .hwm_title > div:first-child p {
   color: var(--theme_light);
@@ -764,7 +759,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .sc_card_name {
   font-family: var(--ff-pixel);
-  font-size: var(--fs-title);
+  font-size: 2.8rem;
   text-transform: uppercase;
   letter-spacing: .08rem;
   line-height: 1.2;
@@ -772,7 +767,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .sc_card_desc {
   font-family: var(--ff-body);
-  font-size: var(--fs-caption);
+  font-size: .85rem;
   letter-spacing: .04rem;
   color: rgba(255,255,255,.75);
   margin-top: .8rem;
@@ -1248,36 +1243,6 @@ a:focus-visible, [onclick]:focus-visible {
   100% { transform: rotate(90deg) scale(.7); }
 }
 
-.hp_line {
-  position: absolute; top: 7.5rem;
-}
-.hp_line div {
-  position: relative;
-  justify-content: center; align-items: center;
-  width: 110vw; height: .1rem;
-  background: linear-gradient(90deg, transparent, var(--theme_gold), transparent);
-  transform: scaleX(0);
-  transition: transform .3s ease;
-  z-index: 1;
-}
-.hp_line div::before {
-  content: ''; position: absolute;
-  width: 40rem; height: 1rem;
-  border-radius: 100%;
-  background: var(--theme_gold);
-  filter: blur(.3rem); opacity: .6;
-  z-index: -1;
-}
-.hp_line div::after {
-  content: ''; position: absolute;
-  width: 100vw; height: .5rem;
-  border-radius: 50%;
-  background: var(--theme_gold);
-  filter: blur(1rem); opacity: .8;
-  z-index: -1;
-}
-.hp_line.show div { transform: scaleX(1); }
-
 /* ===== SKILLS ===== */
 .home_skills {
   flex-direction: column;
@@ -1377,7 +1342,7 @@ a:focus-visible, [onclick]:focus-visible {
 }
 .hss_text .title_zh {
   font-family: var(--ff-body);
-  font-size: var(--fs-body);
+  font-size: 1.1rem;
   line-height: 1.6;
   letter-spacing: .02em;
   font-weight: 400;
@@ -1698,6 +1663,7 @@ a:focus-visible, [onclick]:focus-visible {
   color: transparent;
   pointer-events: none;
   z-index: 2;
+  transition: letter-spacing .6s cubic-bezier(.76,0,.24,1);
 }
 .home_filmstrip_frames {
   position: absolute;
@@ -2267,9 +2233,6 @@ a, button, [onclick], [role="button"] {
 .hct_float3 { animation: hct_float_3 3.2s ease-in-out infinite 1.6s; }
 
 /* ===== RESPONSIVE ===== */
-@media (max-aspect-ratio: 3/2) {
-
-}
 @media (max-aspect-ratio: 1/1) {
   /* Showcase */
   .showcase_header { padding: 2rem 5%; margin-bottom: 1rem; flex-direction: column; gap: .8rem; }
@@ -2304,7 +2267,6 @@ a, button, [onclick], [role="button"] {
   .hac_title { font-size: calc(var(--scale_nums) * 6rem); }
   .hac_title::before, .hac_title::after { font-size: calc(var(--scale_nums) * 6rem); }
   .hac_video { width: 85vw; height: auto; aspect-ratio: 16/9; max-width: none; }
-  .hp_line { display: none; }
 
   /* Skills */
   .home_skills_skill { flex-direction: column !important; width: 90%; margin-bottom: 3rem; }
@@ -2443,7 +2405,6 @@ a, button, [onclick], [role="button"] {
   .hac_title { font-size: clamp(2.5rem, 8vw, 3.5rem); letter-spacing: .25rem; }
   .hac_intro { font-size: clamp(.9rem, 3.5vw, 1.1rem) !important; line-height: 1.75; padding: 0 1.2rem; max-width: 100%; }
   .hac_video { width: 94vw; }
-  .hp_line { display: none; }
 
   /* Skills */
   .home_skills_skill { flex-direction: column !important; width: 92%; margin-bottom: 4rem; }
@@ -3172,10 +3133,7 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
   transition-duration: .06s;
 }
 
-/* S5-R3: Filmstrip speed-burst hover indicator (jiejoe: hvf_frame velocity) */
-.home_filmstrip_text {
-  transition: letter-spacing .6s cubic-bezier(.76,0,.24,1);
-}
+/* S5-R3: Filmstrip speed-burst hover */
 .home_filmstrip:hover .home_filmstrip_text {
   letter-spacing: .08em;
 }
@@ -3432,8 +3390,6 @@ a:focus-visible, button:focus-visible, [onclick]:focus-visible {
     </svg>
   </div>
 </div>
-
-<!-- Portrait (removed, merged into About) -->
 
 <!-- Skills -->
 <div class="home_skills" id="skills">
@@ -4317,10 +4273,6 @@ function initAnimations() {
       once: true
     });
   })();
-
-  // Portrait line — scale in
-  // Portrait line animation (now inside About)
-  // ScrollTrigger.create removed — portrait merged into About section
 
   // Portrait — subtle parallax (now hac_portrait_main)
   gsap.to('.hac_portrait_main', {
